@@ -1,32 +1,36 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+
+import ca.cmpt276.magnesium.healthinspectionviewer.R;
 
 public class ReadingCSVInspection {
     private ArrayList<InspectionReport> inspection;
-    private static String filePath;
+//    private static String filePath;
+    private static Context context;
 
-    public ReadingCSVInspection(String fileLocation) {
-        filePath = fileLocation;
+    public ReadingCSVInspection(Context cont) {
+        context = cont;
         setInspectionList(getInspectionFromTextFile());
     }
 
     public static ArrayList<InspectionReport> getInspectionFromTextFile(){
-        FileInputStream fis = null;
-        InputStreamReader is = null;
+        InputStream is = null;
         BufferedReader bufferedReader = null;
         ArrayList<InspectionReport> inspectionArrayList = new ArrayList<InspectionReport>();
 
         try{
-            fis = new FileInputStream(filePath);
-            is =  new InputStreamReader(fis);
-            bufferedReader = new BufferedReader(is);
+            is =  context.getResources().openRawResource(R.raw.inspectionreports_itr1);
+            bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
             //Save line we get from csv file
             String line = null;
@@ -40,19 +44,31 @@ public class ReadingCSVInspection {
                 //read line
                 line = bufferedReader.readLine();
 
-                //Check if line exists
                 if(line == null){
                     break;
-                }else{
-                    strInspection = line.split(",");
-
-                    //InspectionReport(String track, String date, String inspecType, int critical,
-                    //                            int nonCritical, String hazardRate, String statement)
-
-                    inspectionArrayList.add(new InspectionReport(strInspection[0],strInspection[1], strInspection[2],
-                                                    Integer.parseInt(strInspection[3]), Integer.parseInt(strInspection[4]),
-                                                    strInspection[5], strInspection[6]));
                 }
+
+                strInspection = line.trim().split(",");
+                Log.d("STRING_INPECTION_LENGTH", "" + strInspection.length);
+
+                //InspectionReport(String track, String date, String inspecType, int critical,
+                //                            int nonCritical, String hazardRate, String statement)
+                String violation;
+                if(strInspection.length == 6){
+                    violation = " ";
+                }else {
+                    violation = strInspection[6];
+                    for (int i = 7; i < strInspection.length; i++) {
+                        violation += "," + strInspection[i];
+                    }
+                }
+
+                inspectionArrayList.add(new InspectionReport(strInspection[0],strInspection[1], strInspection[2],
+                        Integer.parseInt(strInspection[3]), Integer.parseInt(strInspection[4]),
+                        strInspection[5], violation));
+
+
+
             }
         }catch (Exception e){
             Log.d("DEBUG FILE ERROR", "Error Reading File");
@@ -61,7 +77,6 @@ public class ReadingCSVInspection {
             try {
                 bufferedReader.close();
                 is.close();
-                fis.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
