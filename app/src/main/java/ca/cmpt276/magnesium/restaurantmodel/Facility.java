@@ -27,6 +27,29 @@ public class Facility {
     private Facility(String trackingNumber) {
         // Should only ever be called by DatabaseReader factory
     }
+//--------------------------------------------------
+    // add for testing UI
+    private int iconID;
+    public Facility(String trackingNumber, String name, String address, String city, FacilityType facilityType, double latitude, double longitude, int iconID) {
+        this.trackingNumber = trackingNumber;
+        this.name = name;
+        this.address = address;
+        this.city = city;
+        this.facilityType = facilityType;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.iconID =iconID;
+    }
+
+    public int getIconID() {
+        return iconID;
+    }
+
+//--------------------------------------------------------------------------------------------
+
+
+
+
 
     // Getters and setters provided for use by other classes.
     // Any string representation of this object should be called via this object's toString()

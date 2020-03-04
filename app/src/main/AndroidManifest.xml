@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ca.cmpt276.magnesium.healthinspectionviewer">
 
     <application
@@ -9,7 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".InspectionActivity"
+            android:label="@string/inspection_title"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".RestaurantActivity"
+            android:label="@string/restaurant_title"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RestaurantsListActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".StartActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
