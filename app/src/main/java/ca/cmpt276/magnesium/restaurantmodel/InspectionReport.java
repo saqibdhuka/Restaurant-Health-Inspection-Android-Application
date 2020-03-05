@@ -45,7 +45,11 @@ public class InspectionReport {
         this.violations = violations;
     }
 
-//--------------------------------------------------------------------------------------------
+    public ArrayList<Integer> getViolations() {
+        return violations;
+    }
+
+    //--------------------------------------------------------------------------------------------
 
 
 

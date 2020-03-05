@@ -24,18 +24,23 @@
     <string name="inspection_violation">Violation :</string>
 
 
-    <!--  Restaurant List View -->
+    <!--  Restaurant List View  -->
     <string name="resListView_res_icon">restaurant icon</string>
     <string name="resListView_issue"># of issues :</string>
     <string name="resListView_hazard">Hazard level :</string>
     <string name="resListView_inspection">Last Inspection :</string>
 
 
-    <!--  Restaurant List View -->
+    <!--  Inspection List View  -->
     <string name="inspectionListView_hazard">Hazard level :</string>
     <string name="inspectionListView_crit"># critical issues :</string>
     <string name="inspectionListView_noncrit"># non-critical issues :</string>
     <string name="inspectionListView_date">Date :</string>
+
+    <!-- Violation List View  -->
+    <string name="violationArrayList_vio_text">Nature of Violation :</string>
+    <string name="violationArrayList_issue_text">Issue :</string>
+
 
     <!--  sample string for generate UI  -->
     <string name="sample_restaurant_name">Sample Restaurant</string>
@@ -49,6 +54,9 @@
     <string name="sample_noncrit_num">2</string>
     <string name="sample_inspection_date_full">2019-02-27</string>
     <string name="sample_inspection_type">Follow-Up</string>
+    <string name="sample_violation_nature">Plans/construction/alterations</string>
+    <string name="sample_violation_issue">non-critical</string>
+    <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
 
 
 </resources>
