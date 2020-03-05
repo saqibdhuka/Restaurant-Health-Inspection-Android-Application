@@ -32,7 +32,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_list);
 
-        addDefaultRest();
+        addTestRest();
         populateListView();
     }
 
@@ -80,7 +80,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
         });
     }
 
-    private void addDefaultRest() {
+    private void addTestRest() {
         facilities.add(new Facility("0001","rest1","123 street","Surrey",Restaurant,47.08,60.32,R.drawable.burger));
         facilities.add(new Facility("0012","rest2","452 road","Surrey",Restaurant,234.23,83.64,R.drawable.fish));
         facilities.add(new Facility("3154","rest3","123 str","Surrey",Restaurant,12.58,23.34,R.drawable.kitchen));

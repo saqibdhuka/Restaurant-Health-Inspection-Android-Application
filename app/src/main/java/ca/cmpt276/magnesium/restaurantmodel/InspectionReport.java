@@ -30,6 +30,25 @@ public class InspectionReport {
         // TODO implement constructor
     }
 
+
+
+//--------------------------------------------------
+    // add for testing UI
+
+    public InspectionReport(String trackingNumber, String inspectionDate, InspectionType inspectionType, int numCritical, int numNonCritical, HazardRating hazardRating, ArrayList<Integer> violations) {
+        this.trackingNumber = trackingNumber;
+        this.inspectionDate = inspectionDate;
+        this.inspectionType = inspectionType;
+        this.numCritical = numCritical;
+        this.numNonCritical = numNonCritical;
+        this.hazardRating = hazardRating;
+        this.violations = violations;
+    }
+
+//--------------------------------------------------------------------------------------------
+
+
+
     // Getters and setters provided for use by other classes.
     // Any string representation of this object should be called via this object's toString()
     // method.

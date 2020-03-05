@@ -1,5 +1,7 @@
 package ca.cmpt276.magnesium.healthinspectionviewer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -10,7 +12,14 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
 
+import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+
 public class InspectionActivity extends AppCompatActivity {
+
+    public static Intent makeInspectionIntent(Context context, int inspectionID){
+        Intent intent = new Intent(context, InspectionActivity.class);
+        return intent;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
