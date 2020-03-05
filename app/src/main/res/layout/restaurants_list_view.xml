@@ -1,100 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/restArrayList_layout"
+    android:id="@+id/resArrayList_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="10dp">
 
     <ImageView
-        android:id="@+id/restArrayList_res_icon"
-        android:layout_width="105dp"
-        android:layout_height="101dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:adjustViewBounds="true"
-        android:maxHeight="60dp"
-        android:minHeight="60dp"
+        android:contentDescription="@string/resListView_res_icon"
+        android:id="@+id/resArrayList_res_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver30_guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/kitchen" />
 
     <TextView
-        android:id="@+id/restArrayList_res_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="55dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/restArrayList_res_icon"
+        android:id="@+id/resArrayList_res_name"
         android:text="@string/sample_restaurant_name"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:maxLines="1"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/resArrayList_ver30_guideline"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/restArrayList_res_issue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/restArrayList_res_name"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="19dp"
-        android:layout_toEndOf="@+id/restArrayList_res_icon"
-        android:text="@string/sample_issue"
-        android:textSize="12sp" />
+        android:id="@+id/resArrayList_res_issue"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_margin="5dp"
+        android:maxLines="1"
+        android:text="@string/resListView_issue"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver65_guideline"
+        app:layout_constraintStart_toStartOf="@+id/resArrayList_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_name" />
 
     <TextView
-        android:id="@+id/restArrayList_res_hazard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/restArrayList_res_name"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="222dp"
-        android:layout_marginTop="21dp"
-        android:text="@string/sample_hazard"
-        android:textSize="12sp" />
+        android:id="@+id/resArrayList_res_issue_num"
+        android:text="@string/sample_issue_num"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver65_guideline"
+        app:layout_constraintStart_toStartOf="@+id/resArrayList_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_issue" />
+
+    <TextView
+        android:id="@+id/resArrayList_res_inspection"
+        android:text="@string/resListView_inspection"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_margin="5dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/resArrayList_ver65_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_name" />
+
+    <TextView
+        android:id="@+id/resArrayList_res_inspection_date"
+        android:text="@string/sample_inspection_date"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resArrayList_res_issue_num"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection" />
+
+    <TextView
+        android:id="@+id/resArrayList_res_hazard"
+        android:text="@string/resListView_hazard"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintStart_toStartOf="@+id/resArrayList_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_issue_num" />
+
+
+    <TextView
+        android:id="@+id/resArrayList_res_hazard_lv"
+        android:text="@string/sample_hazard_lv"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintStart_toEndOf="@+id/resArrayList_res_hazard"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection_date" />
 
     <View
-        android:id="@+id/restArrayList_res_hazard_color"
-        android:layout_width="20dp"
-        android:layout_height="14sp"
-        android:layout_below="@+id/restArrayList_res_hazard"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="246dp"
-        android:layout_marginTop="13dp"
+        android:id="@+id/resArrayList_res_hazard_color"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="5dp"
+        android:maxLines="1"
+        app:autoSizeTextType="uniform"
         android:background="@color/colorGreen"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/resArrayList_res_hazard_lv"
+        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection_date" />
 
-    <TextView
-        android:id="@+id/restArrayList_res_inspection"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/resArrayList_ver30_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/restArrayList_res_name"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="23dp"
-        android:layout_marginEnd="13dp"
-        android:text="@string/sample_inspection"
-        android:textSize="12sp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.3" />
 
-    <TextView
-        android:id="@+id/restArrayList_res_issue_num"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/resArrayList_ver65_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/restArrayList_res_issue"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="11dp"
-        android:layout_toEndOf="@+id/restArrayList_res_icon"
-        android:text="@string/sample_issue_num"
-        android:textSize="12sp" />
-
-    <TextView
-        android:id="@+id/restArrayList_res_inspection_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/restArrayList_res_inspection"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="28dp"
-        android:text="@string/sample_inspection_date"
-        android:textSize="12sp" />
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.6" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,9 +62,9 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
                 Facility restaurant = getItem(position);
 
-                TextView resName = (TextView) convertView.findViewById(R.id.restArrayList_res_name);
+                TextView resName = (TextView) convertView.findViewById(R.id.resArrayList_res_name);
                 resName.setText(restaurant.getName());
-                ImageView icon = (ImageView) convertView.findViewById(R.id.restArrayList_res_icon);
+                ImageView icon = (ImageView) convertView.findViewById(R.id.resArrayList_res_icon);
                 icon.setImageResource(restaurant.getIconID());
 
                 return convertView;
@@ -74,7 +74,9 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
         lv.setOnItemClickListener(
                 (parent, view, position, id) -> {
-
+                    // test for display restaurant
+                    Intent intent = RestaurantActivity.makeRestaurantIntent(RestaurantsListActivity.this, position);
+                    startActivity(intent);
         });
     }
 

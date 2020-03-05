@@ -11,13 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".InspectionActivity"
-            android:label="@string/inspection_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".RestaurantActivity"
             android:label="@string/restaurant_title"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".InspectionActivity"
+            android:label="@string/inspection_title"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RestaurantsListActivity"
             android:theme="@style/AppTheme.NoActionBar" />

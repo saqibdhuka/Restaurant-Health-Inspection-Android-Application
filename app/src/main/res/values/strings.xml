@@ -1,26 +1,40 @@
 <resources>
     <string name="app_name">Health Inspection Viewer</string>
 
-        <!--  Start Screen  -->
+    <!--  Start Screen  -->
     <string name="start_welcome_sentence">Welcome To</string>
-    <string name="start_skip_button">SKIP</string>
 
-        <!--  Restaurant List Screen  -->
+    <!--  Restaurant List Screen  -->
     <string name="resList_title">Surrey Restaurants</string>
 
-        <!--  Restaurant Screen  -->
+    <!--  Restaurant Screen  -->
     <string name="restaurant_title">Restaurant</string>
+    <string name="res_icon">restaurant icon</string>
+    <string name="res_address">Address :</string>
+    <string name="res_GPS_text">GPS coords :</string>
+    <string name="res_latitude">Latitude :</string>
+    <string name="res_Longitude">Longitude :</string>
+    <string name="res_inspection">Inspection :</string>
 
-        <!--  Inspection Screen  -->
+
+
+    <!--  Inspection Screen  -->
     <string name="inspection_title">Inspection</string>
 
+    <!--  Restaurant List View -->
+    <string name="resListView_res_icon">restaurant icon</string>
+    <string name="resListView_issue"># of issues :</string>
+    <string name="resListView_hazard">Hazard level :</string>
+    <string name="resListView_inspection">Last Inspection :</string>
 
-        <!--  Restaurant Array List-->
+    <!--  sample string for generate UI  -->
     <string name="sample_restaurant_name">Sample Restaurant</string>
-    <string name="sample_issue"># of issues :</string>
     <string name="sample_issue_num">2</string>
-    <string name="sample_hazard">Hazard level :</string>
-    <string name="sample_inspection">Last Inspection :</string>
+    <string name="sample_hazard_lv">Moderate</string>
     <string name="sample_inspection_date">Dec 2020</string>
+    <string name="sample_address">12808 King George Blvd</string>
+    <string name="sample_lat">49.20611</string>
+    <string name="sample_long">-122.867</string>
+
 
 </resources>
