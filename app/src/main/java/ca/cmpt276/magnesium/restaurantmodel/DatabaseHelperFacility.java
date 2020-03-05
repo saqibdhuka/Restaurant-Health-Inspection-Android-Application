@@ -18,11 +18,7 @@ import java.sql.Statement;
 public class DatabaseHelperFacility extends SQLiteOpenHelper {
 
     public static final String DATABASE_FACILITY_NAME = "factility.db";
-    public static final String DATABASE_PATH = "C:/Users/saqib/Documents/CMPT 276/Magnesium Group project/prj/app/src/main/res/";
     public static final String TABLE_FACILITY_NAME = "factility_table";
-
-//    public static final String filePath = "C:\\Users\\saqib\\Documents\\CMPT 276\\Magnesium Group project\\prj\\restaurants_itr1.csv";
-
 
     //Facility database column names
     public static final String COL_1 ="TrackingNumber";
@@ -38,39 +34,6 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
         super(context, DATABASE_FACILITY_NAME, null, 1);
         contextActivity = context;
     }
-
-//    public void createDatabase(){
-//        String url = "jdbc:sqlite:" + DATABASE_PATH + DATABASE_FACILITY_NAME;
-//        try {
-//            try {
-//                Class.forName("org.sqlite.JDBC");
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Connection conn = DriverManager.getConnection(url);
-//            Statement stm = conn.createStatement();
-//
-//            try{
-//                stm.execute("CREATE DATABASE " + DATABASE_FACILITY_NAME);
-//                stm.execute("CREATE TABLE " + TABLE_FACILITY_NAME);
-//                conn.commit();
-//            }catch (SQLException s){
-//                stm.execute("OPEN DATABASE " + DATABASE_FACILITY_NAME);
-//            }
-//
-//            insertData();
-//            conn.commit();
-//            stm.close();
-//            conn.close();
-//
-//            Log.d("SUCCESS OR FAILURE", "SUCCESS");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {

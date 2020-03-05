@@ -18,7 +18,6 @@ import java.sql.Statement;
 public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
     public static final String DATABASE_INSP_NAME = "inspection.db";
-    public static final String DATABASE_PATH = "C:\\Users\\saqib\\Documents\\CMPT 276\\Magnesium Group project\\prj\\";
     public static final String TABLE_INSP_NAME = "inspection_table";
 
     //Inspection database column names
@@ -37,39 +36,6 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
     }
 
 
-//    public void createDatabase(){
-//
-//        String url = "jdbc:sqlite:" + DATABASE_PATH + DATABASE_INSP_NAME;
-//        try {
-//            try {
-//                Class.forName("org.sqlite.JDBC");
-//            } catch (ClassNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Connection conn = DriverManager.getConnection(url);
-//            Statement stm = conn.createStatement();
-//
-//            try{
-//                stm.execute("CREATE DATABASE " + DATABASE_INSP_NAME);
-//                stm.execute("CREATE TABLE " + TABLE_INSP_NAME);
-//                conn.commit();
-//            }catch (SQLException s){
-//                stm.execute("OPEN DATABASE " + DATABASE_INSP_NAME);
-//            }
-//
-//            insertData();
-//            conn.commit();
-//            stm.close();
-//            conn.close();
-//
-//            Log.d("SUCCESS OR FAILURE", "SUCCESS");
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
@@ -80,7 +46,9 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
                 COL_4 + " INTEGER, " +
                 COL_5 + " INTEGER, " +
                 COL_6 + " TEXT, " +
-                COL_7 + " TEXT);"
+                COL_7 + " TEXT, " +
+                "FOREIGN KEY ("+COL_1+") REFERENCES "+
+                DatabaseHelperFacility.TABLE_FACILITY_NAME+"("+DatabaseHelperFacility.COL_1+"));"
         );
     }
 
