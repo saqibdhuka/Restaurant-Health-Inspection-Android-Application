@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 
@@ -31,23 +32,54 @@ import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.FollowUp;
 import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.Routine;
 
 public class RestaurantActivity extends AppCompatActivity {
+
+    private final static String EXTRA_REST_ID = "RestaurantActivity_restaurantID";
+
     private List<InspectionReport> inspections = new ArrayList<InspectionReport>();
     private BaseAdapter adapter;
 
     public static Intent makeRestaurantIntent(Context context, int restaurantID){
         Intent intent = new Intent(context, RestaurantActivity.class);
+        intent.putExtra(EXTRA_REST_ID, restaurantID);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_restaurant);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+        ArrayList<Facility> facilities = reader.getAllFacilities();
+        int restaurantIndex = getIntent().getIntExtra(EXTRA_REST_ID, 0);
+
+        Facility currentRestaurant = facilities.get(restaurantIndex);
+        setupTextFields(currentRestaurant);
+
         addTestInspection();
         populateListView();
+    }
+
+    private void setupTextFields(Facility currentFacility) {
+        // Setup all text fields and icon based on currentFacility
+        TextView address, name, latitude, longitude;
+        address = findViewById(R.id.res_restaurant_name);
+        address.setText(currentFacility.getAddress());
+
+        name = findViewById(R.id.res_restaurant_name);
+        name.setText(currentFacility.getName());
+
+        latitude = findViewById(R.id.res_restaurant_lat_text);
+        latitude.setText(Double.valueOf(currentFacility.getLatitude()).toString());
+
+        longitude = findViewById(R.id.res_restaurant_long_text);
+        longitude.setText(Double.valueOf(currentFacility.getLongitude()).toString());
+
+        ImageView icon = findViewById(R.id.res_icon);
+        icon.setImageDrawable(getDrawable(currentFacility.getIconID()));
     }
 
 
