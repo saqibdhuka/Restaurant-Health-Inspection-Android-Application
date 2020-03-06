@@ -76,8 +76,12 @@ public class Facility {
     // method.
 
     public String toString() {
-        // TODO implement unique Facility string generation later
-        return super.toString();
+        String stringRepresentation = this.name + ", "
+                                    + this.address + ", "
+                                    + this.city + ", "
+                                    + this.trackingNumber;
+
+        return stringRepresentation;
     }
 
     public String getTrackingNumber() {
