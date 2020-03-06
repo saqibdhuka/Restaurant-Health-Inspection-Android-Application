@@ -17,7 +17,6 @@ import java.util.List;
 
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
-import static ca.cmpt276.magnesium.restaurantmodel.FacilityType.Restaurant;
 
 public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
@@ -33,7 +32,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_list);
 
-        addTestRest();
+        addRestaurants();
         populateListView();
     }
 
@@ -81,7 +80,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
         });
     }
 
-    private void addTestRest() {
+    private void addRestaurants() {
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         facilities = reader.getAllFacilities();
 
