@@ -66,8 +66,9 @@ public class InspectionActivity extends AppCompatActivity {
                 }
 
                 // Need connect violation number to violation data set
-                convertView.setClickable(false);
-                return convertView;
+
+
+                return  convertView;
             }
         };
 

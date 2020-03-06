@@ -24,7 +24,27 @@ public class Facility {
     private double latitude;
     private double longitude;
 
-    private Facility(String trackingNumber) {
+    public Facility(String tracking, String resName, String addr,
+                     String resCity, String facType, double resLatitude, double resLongitude){
+        trackingNumber = tracking;
+        name = resName;
+        address = addr;
+        city = resCity;
+        latitude = resLatitude;
+        longitude = resLongitude;
+        if (facType.toLowerCase() == "restaurant"){
+            facilityType = FacilityType.Restaurant;
+        }else{
+            /*
+               Since we do not have more options right now, keep it equal to restaurants
+               When we add more, we can change this
+             */
+            facilityType = FacilityType.Restaurant;
+        }
+
+    }
+
+    public Facility(String trackingNumber) {
         // Should only ever be called by DatabaseReader factory
     }
 //--------------------------------------------------

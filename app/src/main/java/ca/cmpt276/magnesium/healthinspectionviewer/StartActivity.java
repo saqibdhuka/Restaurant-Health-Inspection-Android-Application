@@ -5,8 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
+
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperFacility;
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperInspection;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -14,6 +15,16 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        DatabaseHelperFacility dbFacility = new DatabaseHelperFacility(this);
+        dbFacility.getWritableDatabase();
+        dbFacility.insertData();
+        dbFacility.close();
+
+        DatabaseHelperInspection dbInspection = new DatabaseHelperInspection(this);
+        dbInspection.getWritableDatabase();
+        dbInspection.insertData();
+        dbInspection.close();
 
         autoSwitchRestaurantList();
     }
@@ -26,7 +37,7 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },3000);
+        },2000);
     }
 
 }

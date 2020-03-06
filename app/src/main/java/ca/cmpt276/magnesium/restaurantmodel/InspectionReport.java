@@ -24,8 +24,33 @@ public class InspectionReport {
     private int numNonCritical;
     private HazardRating hazardRating;
     private ArrayList<Integer> violations;
+    private String violationStatement;
 
-    private InspectionReport(String trackingNumber) {
+    public InspectionReport(String track, String date, String inspecType, int critical,
+                            int nonCritical, String hazardRate, String statement){
+        trackingNumber = track;
+        inspectionDate = date;
+        numCritical = critical;
+        numNonCritical = nonCritical;
+        violationStatement = statement;
+
+        if(inspecType.toLowerCase() == "followup"){
+            inspectionType = InspectionType.FollowUp;
+        }else{
+            inspectionType = InspectionType.Routine;
+        }
+
+        if (hazardRate.toLowerCase() == "low"){
+            hazardRating = HazardRating.Low;
+        }else if(hazardRate.toLowerCase() == "moderate"){
+            hazardRating = HazardRating.Moderate;
+        }else{
+            hazardRating = HazardRating.High;
+        }
+
+    }
+
+    public InspectionReport(String trackingNumber) {
         // Should only ever be called by InspectionReport factory
         // TODO implement constructor
     }
@@ -62,6 +87,9 @@ public class InspectionReport {
         return super.toString();
     }
 
+    public String getViolationStatement() {
+        return violationStatement;
+    }
     public String getTrackingNumber() {
         return trackingNumber;
     }
