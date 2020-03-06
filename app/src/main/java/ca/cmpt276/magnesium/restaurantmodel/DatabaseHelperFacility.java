@@ -29,7 +29,8 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
     public static final String COL_6 ="Latitude";
     public static final String COL_7 ="Longitude";
 
-    public static Context contextActivity;
+    public Context contextActivity;
+
     public DatabaseHelperFacility(Context context) {
         super(context, DATABASE_FACILITY_NAME, null, 1);
         contextActivity = context;
@@ -47,7 +48,6 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
     }
 
     public void insertData(){
-
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         ReadingCSVFacility facility = new ReadingCSVFacility(contextActivity);
@@ -70,7 +70,7 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
         db.close();
     }
 
-    public static void ensureFacilityDBCreation(SQLiteDatabase sqLiteDatabase) {
+    public void ensureFacilityDBCreation(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_FACILITY_NAME + " (" +
                 COL_1 + " TEXT PRIMARY KEY," +
                 COL_2 + " TEXT, " +
