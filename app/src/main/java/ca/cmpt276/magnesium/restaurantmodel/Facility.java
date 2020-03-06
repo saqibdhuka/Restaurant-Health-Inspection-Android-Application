@@ -58,7 +58,7 @@ public class Facility {
         this.facilityType = facilityType;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.iconID =iconID;
+        this.iconID = iconID;
     }
 
     public int getIconID() {

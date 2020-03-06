@@ -3,8 +3,11 @@ package ca.cmpt276.magnesium.restaurantmodel;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
+
+import ca.cmpt276.magnesium.healthinspectionviewer.R;
 
 /**
  * SFU CMPT 276
@@ -102,6 +105,13 @@ public class DatabaseReader {
         // Cursor to peruse all results:
         Cursor queryResults = facilityDB.rawQuery(allTrackingNumQuery, null);
 
+        // Randomly pick an icon for the listView:
+        ArrayList<Integer> iconsList = new ArrayList<Integer>();
+        iconsList.add(R.drawable.burger);
+        iconsList.add(R.drawable.fish);
+        iconsList.add(R.drawable.pizza);
+        iconsList.add(R.drawable.kitchen);
+
         // Now, go through the Cursor and add all resulting values to the ArrayList:
         // But only do it if the result is not empty.
         if (queryResults.moveToFirst()) {
@@ -122,7 +132,7 @@ public class DatabaseReader {
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_4)
                 );
-                String facilityType = queryResults.getString(
+                String facilityTypeStr = queryResults.getString(
                             queryResults.getColumnIndex(
                                     DatabaseHelperFacility.COL_5));
                 Double latitude = Double.parseDouble(queryResults.getString(
@@ -134,8 +144,21 @@ public class DatabaseReader {
                                 DatabaseHelperFacility.COL_7))
                 );
 
+                // Attempt to convert facilityType string to enum:
+                FacilityType facilityType;
+                try {
+                    facilityType = FacilityType.valueOf(facilityTypeStr);
+                } catch (IllegalArgumentException e) {
+                    // Failed to convert, let it be null.
+                    facilityType = null;
+                }
+
+
+                Integer iconIndex = (int)Math.round((Math.random() * (iconsList.size() - 1)));
+                Integer iconID = iconsList.get(iconIndex);
+
                 Facility currentFacility = new Facility( trackingNum, name, physicalAddr,
-                        city, facilityType, latitude, longitude);
+                        city, facilityType, latitude, longitude, iconID);
 
                 returnArray.add(currentFacility);
                 // Advance the Cursor:

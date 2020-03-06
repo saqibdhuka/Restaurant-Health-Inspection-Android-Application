@@ -15,6 +15,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import static ca.cmpt276.magnesium.restaurantmodel.FacilityType.Restaurant;
 
@@ -81,13 +82,9 @@ public class RestaurantsListActivity extends AppCompatActivity {
     }
 
     private void addTestRest() {
-        facilities.add(new Facility("0001","rest1","123 street","Surrey",Restaurant,47.08,60.32,R.drawable.burger));
-        facilities.add(new Facility("0012","rest2","452 road","Surrey",Restaurant,234.23,83.64,R.drawable.fish));
-        facilities.add(new Facility("3154","rest3","123 str","Surrey",Restaurant,12.58,23.34,R.drawable.kitchen));
-        facilities.add(new Facility("2034","rest4","342 road","Surrey",Restaurant,54.58,70.34,R.drawable.kitchen));
-        facilities.add(new Facility("0123","rest5","1000 ave","Surrey",Restaurant,76.58,74.34,R.drawable.pizza));
-        facilities.add(new Facility("0213","rest6","1 st","Surrey",Restaurant,34.58,28.34,R.drawable.kitchen));
-        facilities.add(new Facility("7823","rest7","west road","Surrey",Restaurant,48.58,53.34,R.drawable.fish));
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+        facilities = reader.getAllFacilities();
+
     }
 
 
