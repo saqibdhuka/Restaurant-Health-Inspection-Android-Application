@@ -17,10 +17,10 @@ import java.sql.Statement;
 
 public class DatabaseHelperFacility extends SQLiteOpenHelper {
 
-    public static final String DATABASE_FACILITY_NAME = "factility.db";
-    public static final String TABLE_FACILITY_NAME = "factility_table";
+    public static final String DATABASE_FACILITY_NAME = "facility.db";
+    public static final String TABLE_FACILITY_NAME = "facility_table";
 
-    //Facility database column names
+    // Facility database column names
     public static final String COL_1 ="TrackingNumber";
     public static final String COL_2 ="Name";
     public static final String COL_3 ="PhysicalAddress";
@@ -37,15 +37,7 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("Create Table " + TABLE_FACILITY_NAME + " (" +
-                COL_1 + " TEXT PRIMARY KEY," +
-                COL_2 + " TEXT, " +
-                COL_3 + " TEXT, " +
-                COL_4 + " TEXT, " +
-                COL_5 + " TEXT, " +
-                COL_6 + " DOUBLE, " +
-                COL_7 + " DOUBLE);"
-        );
+        ensureFacilityDBCreation(sqLiteDatabase);
     }
 
     @Override
@@ -69,11 +61,25 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
             contentValues.put(COL_7, facility.getFacilityAtPos(i).getLongitude());
             long result = db.insert(TABLE_FACILITY_NAME, null, contentValues);
             if(result == -1){
+                // It had an error inserting data
                 Log.e("TABLE INSERTION ERROR","Error inserting data at i = " + i + "\n" +
-                                                    facility.getFacilityAtPos(i).toString()); //It had an error inserting data
+                                                    facility.getFacilityAtPos(i).toString());
+
             }
         }
         db.close();
+    }
+
+    public static void ensureFacilityDBCreation(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("Create Table " + TABLE_FACILITY_NAME + " (" +
+                COL_1 + " TEXT PRIMARY KEY," +
+                COL_2 + " TEXT, " +
+                COL_3 + " TEXT, " +
+                COL_4 + " TEXT, " +
+                COL_5 + " TEXT, " +
+                COL_6 + " DOUBLE, " +
+                COL_7 + " DOUBLE);"
+        );
     }
 
 

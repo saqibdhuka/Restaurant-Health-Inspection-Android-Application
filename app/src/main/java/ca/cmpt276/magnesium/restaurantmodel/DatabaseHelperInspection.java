@@ -20,7 +20,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
     public static final String DATABASE_INSP_NAME = "inspection.db";
     public static final String TABLE_INSP_NAME = "inspection_table";
 
-    //Inspection database column names
+    // Inspection database column names
     public static final String COL_1="TrackingNumber";
     public static final String COL_2 = "InspectionDate";
     public static final String COL_3 = "InspType";
@@ -30,6 +30,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
     public static final String COL_7 = "ViolLump";
 
     public static Context contextActivity;
+    
     public DatabaseHelperInspection(Context context) {
         super(context, DATABASE_INSP_NAME, null, 1);
         contextActivity = context;
@@ -39,17 +40,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("Create Table " + TABLE_INSP_NAME + " (" +
-                COL_1 + " TEXT, " +
-                COL_2 + " TEXT, " +
-                COL_3 + " TEXT, " +
-                COL_4 + " INTEGER, " +
-                COL_5 + " INTEGER, " +
-                COL_6 + " TEXT, " +
-                COL_7 + " TEXT, " +
-                "FOREIGN KEY ("+COL_1+") REFERENCES "+
-                DatabaseHelperFacility.TABLE_FACILITY_NAME+"("+DatabaseHelperFacility.COL_1+"));"
-        );
+        ensureInspectionDBCreation(sqLiteDatabase);
     }
 
     @Override
@@ -77,5 +68,19 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
             }
         }
         db.close();
+    }
+
+    public static void ensureInspectionDBCreation(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL("Create Table " + TABLE_INSP_NAME + " (" +
+                COL_1 + " TEXT, " +
+                COL_2 + " TEXT, " +
+                COL_3 + " TEXT, " +
+                COL_4 + " INTEGER, " +
+                COL_5 + " INTEGER, " +
+                COL_6 + " TEXT, " +
+                COL_7 + " TEXT, " +
+                "FOREIGN KEY ("+COL_1+") REFERENCES "+
+                DatabaseHelperFacility.TABLE_FACILITY_NAME+"("+DatabaseHelperFacility.COL_1+"));"
+        );
     }
 }
