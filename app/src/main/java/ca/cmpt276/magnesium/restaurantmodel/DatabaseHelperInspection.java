@@ -30,7 +30,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
     public static final String COL_7 = "ViolLump";
 
     public static Context contextActivity;
-    
+
     public DatabaseHelperInspection(Context context) {
         super(context, DATABASE_INSP_NAME, null, 1);
         contextActivity = context;
@@ -71,7 +71,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
     }
 
     public static void ensureInspectionDBCreation(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("Create Table " + TABLE_INSP_NAME + " (" +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_INSP_NAME + " (" +
                 COL_1 + " TEXT, " +
                 COL_2 + " TEXT, " +
                 COL_3 + " TEXT, " +

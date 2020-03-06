@@ -71,7 +71,7 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
     }
 
     public static void ensureFacilityDBCreation(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("Create Table " + TABLE_FACILITY_NAME + " (" +
+        sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_FACILITY_NAME + " (" +
                 COL_1 + " TEXT PRIMARY KEY," +
                 COL_2 + " TEXT, " +
                 COL_3 + " TEXT, " +
