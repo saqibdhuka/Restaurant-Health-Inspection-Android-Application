@@ -1,3 +1,62 @@
 <resources>
-    <string name="app_name">HealthInspectionViewer</string>
+    <string name="app_name">Health Inspection Viewer</string>
+
+    <!--  Start Screen  -->
+    <string name="start_welcome_sentence">Welcome To</string>
+
+    <!--  Restaurant List Screen  -->
+    <string name="resList_title">Surrey Restaurants</string>
+
+    <!--  Restaurant Screen  -->
+    <string name="restaurant_title">Restaurant</string>
+    <string name="res_icon">restaurant icon</string>
+    <string name="res_address">Address :</string>
+    <string name="res_GPS_text">GPS coords :</string>
+    <string name="res_latitude">Latitude :</string>
+    <string name="res_Longitude">Longitude :</string>
+    <string name="res_inspection">Inspection :</string>
+
+    <!--  Inspection Screen  -->
+    <string name="inspection_title">Inspection</string>
+    <string name="inspection_date">Date :</string>
+    <string name="inspection_type">Type :</string>
+    <string name="inspection_hazard">Hazard :</string>
+    <string name="inspection_violation">Violation :</string>
+
+
+    <!--  Restaurant List View  -->
+    <string name="resListView_res_icon">restaurant icon</string>
+    <string name="resListView_issue"># of issues :</string>
+    <string name="resListView_hazard">Hazard level :</string>
+    <string name="resListView_inspection">Last Inspection :</string>
+
+
+    <!--  Inspection List View  -->
+    <string name="inspectionListView_hazard">Hazard level :</string>
+    <string name="inspectionListView_crit"># critical issues :</string>
+    <string name="inspectionListView_noncrit"># non-critical issues :</string>
+    <string name="inspectionListView_date">Date :</string>
+
+    <!-- Violation List View  -->
+    <string name="violationArrayList_vio_text">Nature of Violation :</string>
+    <string name="violationArrayList_issue_text">Issue :</string>
+
+
+    <!--  sample string for generate UI  -->
+    <string name="sample_restaurant_name">Sample Restaurant</string>
+    <string name="sample_issue_num">2</string>
+    <string name="sample_hazard_lv">Moderate</string>
+    <string name="sample_inspection_date">Dec 2020</string>
+    <string name="sample_address">12808 King George Blvd</string>
+    <string name="sample_lat">49.20611</string>
+    <string name="sample_long">-122.867</string>
+    <string name="sample_crit_num">3</string>
+    <string name="sample_noncrit_num">2</string>
+    <string name="sample_inspection_date_full">2019-02-27</string>
+    <string name="sample_inspection_type">Follow-Up</string>
+    <string name="sample_violation_nature">Plans/construction/alterations</string>
+    <string name="sample_violation_issue">non-critical</string>
+    <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
+
+
 </resources>
