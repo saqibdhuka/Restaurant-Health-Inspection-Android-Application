@@ -23,7 +23,7 @@ public class InspectionReport {
     private int numCritical;
     private int numNonCritical;
     private HazardRating hazardRating;
-    private ArrayList<Integer> violations;
+    private ArrayList<Violation> violations;
     private String violationStatement;
 
     public InspectionReport(String track, String date, String inspecType, int critical,
@@ -33,15 +33,15 @@ public class InspectionReport {
         numCritical = critical;
         numNonCritical = nonCritical;
         violationStatement = statement;
+        violations = getViolationsFromString(statement);
 
-        if(inspecType.toLowerCase() == "followup"){
+        if (inspecType.toLowerCase().equals("followup")) {
             inspectionType = InspectionType.FollowUp;
-        }else{
+        } else {
             inspectionType = InspectionType.Routine;
         }
 
         String lowercaseRating = hazardRate.toLowerCase();
-
         if (lowercaseRating.equals("low")) {
             hazardRating = HazardRating.Low;
 
@@ -53,31 +53,26 @@ public class InspectionReport {
 
     }
 
-    public InspectionReport(String trackingNumber) {
-        // Should only ever be called by InspectionReport factory
-        // TODO implement constructor
+    private ArrayList<Violation> getViolationsFromString(String violationStatement) {
+        ArrayList<Violation> returnArray = new ArrayList<>();
+        // Do some string processing on violation statements:
+        // We know that in cases of multiple violations, they are seperated by "pipe" or '|'
+        String[] violationArray = violationStatement.split("\\|");
+        // Process each possible "violation" in the report:
+        for (String violation : violationArray) {
+            // Components of a violation are split up by commas
+            String[] violationParams = violation.split(",");
+            // Only try to pull values with a correct number of terms!
+            if (violationParams.length == 4) {
+                Violation tmpViol = new Violation(violationParams[0],
+                                                violationParams[1],
+                                                violationParams[2],
+                                                violationParams[3]);
+                returnArray.add(tmpViol);
+            }
+        }
+        return returnArray;
     }
-
-
-
-//--------------------------------------------------
-    // add for testing UI
-
-    public InspectionReport(String trackingNumber, String inspectionDate, InspectionType inspectionType, int numCritical, int numNonCritical, HazardRating hazardRating, ArrayList<Integer> violations) {
-        this.trackingNumber = trackingNumber;
-        this.inspectionDate = inspectionDate;
-        this.inspectionType = inspectionType;
-        this.numCritical = numCritical;
-        this.numNonCritical = numNonCritical;
-        this.hazardRating = hazardRating;
-        this.violations = violations;
-    }
-
-    public ArrayList<Integer> getViolations() {
-        return violations;
-    }
-
-    //--------------------------------------------------------------------------------------------
 
 
 
@@ -85,13 +80,14 @@ public class InspectionReport {
     // Any string representation of this object should be called via this object's toString()
     // method.
 
+
+    public ArrayList<Violation> getViolations() {
+        return violations;
+    }
+
     public String toString() {
         // TODO implement unique InspectionReport string generation later
         return super.toString();
-    }
-
-    public String getViolationStatement() {
-        return violationStatement;
     }
 
     public String getTrackingNumber() {
@@ -108,6 +104,10 @@ public class InspectionReport {
 
     public int getNumCritical() {
         return numCritical;
+    }
+
+    public String getViolationStatement() {
+        return violationStatement;
     }
 
     public int getNumNonCritical() {

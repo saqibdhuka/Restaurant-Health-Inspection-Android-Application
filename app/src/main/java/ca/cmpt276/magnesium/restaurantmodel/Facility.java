@@ -43,10 +43,6 @@ public class Facility {
         }
 
     }
-
-    public Facility(String trackingNumber) {
-        // Should only ever be called by DatabaseReader factory
-    }
 //--------------------------------------------------
     // add for testing UI
     private int iconID;

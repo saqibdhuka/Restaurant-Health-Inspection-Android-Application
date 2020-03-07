@@ -14,18 +14,26 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
+import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.Violation;
 
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.*;
 import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.*;
 
 public class InspectionActivity extends AppCompatActivity {
 
-    private InspectionReport inspection ;
+    private final static String EXTRA_INSPECT_ID = "InspectionActivity_InspectIDExtra";
+    private final static String EXTRA_FACILITY_ID = "InspectionActivity_FacilityIDExtra";
+
+    private InspectionReport inspection;
     private BaseAdapter adapter;
 
-    public static Intent makeInspectionIntent(Context context, int inspectionID){
+    public static Intent makeInspectionIntent(Context context, int inspectionID, int facilityID) {
         Intent intent = new Intent(context, InspectionActivity.class);
+        intent.putExtra(EXTRA_INSPECT_ID, inspectionID);
+        intent.putExtra(EXTRA_FACILITY_ID, facilityID);
         return intent;
     }
 
@@ -36,13 +44,23 @@ public class InspectionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        addTestViolation();
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+
+        ArrayList<Facility> facilities = reader.getAllFacilities();
+        int facilityIndex = getIntent().getIntExtra(EXTRA_FACILITY_ID, 0);
+        Facility currentFacility = facilities.get(facilityIndex);
+
+        String trackingNo = currentFacility.getTrackingNumber();
+        ArrayList<InspectionReport> reports = reader.getAssociatedInspections(trackingNo);
+        int inspectionIndex = getIntent().getIntExtra(EXTRA_INSPECT_ID, 0);
+        inspection = reports.get(inspectionIndex);
+
         populateListView();
     }
 
     private void populateListView() {
         ListView lv = findViewById(R.id.inspection_violation_listView);
-        ArrayList<Integer> violationList = inspection.getViolations();
+        ArrayList<Violation> violationList = inspection.getViolations();
         adapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -50,7 +68,7 @@ public class InspectionActivity extends AppCompatActivity {
             }
 
             @Override
-            public Integer getItem(int position) {
+            public Violation getItem(int position) {
                 return violationList.get(position);
             }
 
@@ -68,19 +86,11 @@ public class InspectionActivity extends AppCompatActivity {
                 // Need connect violation number to violation data set
 
 
-                return  convertView;
+                return convertView;
             }
         };
 
         lv.setAdapter(adapter);
-    }
-
-    private void addTestViolation() {
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(203);
-        test.add(306);
-        test.add(201);
-        inspection = new InspectionReport("Do","20180123",Routine,1,2,Low,test);
     }
 
 

@@ -91,6 +91,7 @@ public class ReadingCSVInspection {
     public InspectionReport getInspectionReportAtPos(int i){
         return inspection.get(i);
     }
+
     public void setInspectionList(ArrayList<InspectionReport> inspRep) {
         this.inspection = inspRep;
     }

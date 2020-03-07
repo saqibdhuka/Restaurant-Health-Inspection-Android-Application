@@ -39,6 +39,7 @@ public class RestaurantActivity extends AppCompatActivity {
     private List<InspectionReport> inspections = new ArrayList<InspectionReport>();
     private BaseAdapter adapter;
     private Facility currentRestaurant;
+    private int restaurantID;
 
     public static Intent makeRestaurantIntent(Context context, int restaurantID){
         Intent intent = new Intent(context, RestaurantActivity.class);
@@ -56,9 +57,9 @@ public class RestaurantActivity extends AppCompatActivity {
 
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         ArrayList<Facility> facilities = reader.getAllFacilities();
-        int restaurantIndex = getIntent().getIntExtra(EXTRA_REST_ID, 0);
+        restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
 
-        currentRestaurant = facilities.get(restaurantIndex);
+        currentRestaurant = facilities.get(restaurantID);
         setupTextFields();
 
         addTestInspection();
@@ -123,8 +124,10 @@ public class RestaurantActivity extends AppCompatActivity {
 
         lv.setOnItemClickListener(
                 (parent, view, position, id) -> {
-                    // test for display restaurant
-                    Intent intent = InspectionActivity.makeInspectionIntent(RestaurantActivity.this, position);
+                    Intent intent = InspectionActivity.makeInspectionIntent(
+                            RestaurantActivity.this,
+                                    position,
+                                    restaurantID);
                     startActivity(intent);
                 });
     }
