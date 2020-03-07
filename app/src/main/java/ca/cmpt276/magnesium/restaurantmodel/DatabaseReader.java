@@ -170,5 +170,68 @@ public class DatabaseReader {
         return returnArray;
     }
 
+    public ArrayList<InspectionReport> getAssociatedInspections(String trackingNo) {
+        ArrayList<InspectionReport> returnArray = new ArrayList<>();
+
+        // Get the dbHelper instance:
+        DatabaseHelperInspection dbHelper = new DatabaseHelperInspection(activityContext);
+        // Make sure the table has been created properly:
+        dbHelper.ensureInspectionDBCreation(dbHelper.getWritableDatabase());
+        // Get database to read from:
+        SQLiteDatabase inspectionDB = dbHelper.getReadableDatabase();
+
+        String allRelatedInspectionQuery = "SELECT * FROM " + DatabaseHelperInspection.TABLE_INSP_NAME
+                + " WHERE " + DatabaseHelperInspection.COL_1 + " == ?"
+                + " ORDER BY " + DatabaseHelperInspection.COL_2 + " DESC";
+
+        // Cursor to peruse all results:
+        Cursor queryResults = inspectionDB.rawQuery(allRelatedInspectionQuery,
+                                                    new String[] {trackingNo});
+
+        // Now, go through the Cursor and add all resulting values to the ArrayList:
+        // But only do it if the result is not empty.
+        if (queryResults.moveToFirst()) {
+            while (!queryResults.isAfterLast()) {
+                String inspectionTrackingNum = queryResults.getString(
+                                queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_1));
+                String inspectionDate = queryResults.getString(
+                        queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_2));
+                String inspectionType = queryResults.getString(
+                        queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_3));
+                String inspectionNumCritical = queryResults.getString(
+                        queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_4));
+                String inspectionNumNonCritical = queryResults.getString(
+                        queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_5));
+                String inspectionHazardRating = queryResults.getString(
+                        queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_6));
+                String inspectionViolations = queryResults.getString(
+                        queryResults.getColumnIndex(
+                                DatabaseHelperInspection.COL_7));
+
+                InspectionReport report = new InspectionReport(inspectionTrackingNum,
+                                                        inspectionDate,
+                                                        inspectionType,
+                                                        Integer.valueOf(inspectionNumCritical),
+                                                        Integer.valueOf(inspectionNumNonCritical),
+                                                        inspectionHazardRating,
+                                                        inspectionViolations);
+
+                returnArray.add(report);
+
+                // Advance the Cursor:
+                queryResults.moveToNext();
+            }
+        }
+
+        // All reports should have been added.
+        return returnArray;
+    }
+
 
 }
