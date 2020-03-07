@@ -49,6 +49,11 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
 
     public void insertData(){
         SQLiteDatabase db = this.getWritableDatabase();
+        // Ensure DB is starting from scratch with the csv as our base:
+        String dropDB = "DROP TABLE IF EXISTS " + TABLE_FACILITY_NAME;
+        db.execSQL(dropDB);
+        ensureFacilityDBCreation(db);
+        // Now add back values:
         ContentValues contentValues = new ContentValues();
         ReadingCSVFacility facility = new ReadingCSVFacility(contextActivity);
         for(int i =0; i < facility.getFacilityArrayList().size(); i++){

@@ -29,7 +29,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
     public static final String COL_6 = "HazardRating";
     public static final String COL_7 = "ViolLump";
 
-    public static Context contextActivity;
+    public Context contextActivity;
 
     public DatabaseHelperInspection(Context context) {
         super(context, DATABASE_INSP_NAME, null, 1);
@@ -51,6 +51,11 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
     public void insertData(){
         SQLiteDatabase db = this.getWritableDatabase();
+        // Ensure DB is starting from scratch with the csv as our base:
+        String dropDB = "DROP TABLE IF EXISTS " + TABLE_INSP_NAME;
+        db.execSQL(dropDB);
+        ensureInspectionDBCreation(db);
+        // Now add back values:
         ContentValues contentValues = new ContentValues();
         ReadingCSVInspection inspection = new ReadingCSVInspection(contextActivity);
         for(int i = 0; i < inspection.getInspectionArrayList().size(); i++){
@@ -70,7 +75,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
         db.close();
     }
 
-    public static void ensureInspectionDBCreation(SQLiteDatabase sqLiteDatabase) {
+    public void ensureInspectionDBCreation(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + TABLE_INSP_NAME + " (" +
                 COL_1 + " TEXT, " +
                 COL_2 + " TEXT, " +
