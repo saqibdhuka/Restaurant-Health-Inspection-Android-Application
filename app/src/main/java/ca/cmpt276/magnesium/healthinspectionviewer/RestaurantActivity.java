@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperInspection;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
@@ -37,6 +38,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private List<InspectionReport> inspections = new ArrayList<InspectionReport>();
     private BaseAdapter adapter;
+    private Facility currentRestaurant;
 
     public static Intent makeRestaurantIntent(Context context, int restaurantID){
         Intent intent = new Intent(context, RestaurantActivity.class);
@@ -56,30 +58,30 @@ public class RestaurantActivity extends AppCompatActivity {
         ArrayList<Facility> facilities = reader.getAllFacilities();
         int restaurantIndex = getIntent().getIntExtra(EXTRA_REST_ID, 0);
 
-        Facility currentRestaurant = facilities.get(restaurantIndex);
-        setupTextFields(currentRestaurant);
+        currentRestaurant = facilities.get(restaurantIndex);
+        setupTextFields();
 
         addTestInspection();
         populateListView();
     }
 
-    private void setupTextFields(Facility currentFacility) {
+    private void setupTextFields() {
         // Setup all text fields and icon based on currentFacility
         TextView address, name, latitude, longitude;
         address = findViewById(R.id.res_restaurant_name);
-        address.setText(currentFacility.getAddress());
+        address.setText(currentRestaurant.getAddress());
 
         name = findViewById(R.id.res_restaurant_name);
-        name.setText(currentFacility.getName());
+        name.setText(currentRestaurant.getName());
 
         latitude = findViewById(R.id.res_restaurant_lat_text);
-        latitude.setText(Double.valueOf(currentFacility.getLatitude()).toString());
+        latitude.setText(Double.valueOf(currentRestaurant.getLatitude()).toString());
 
         longitude = findViewById(R.id.res_restaurant_long_text);
-        longitude.setText(Double.valueOf(currentFacility.getLongitude()).toString());
+        longitude.setText(Double.valueOf(currentRestaurant.getLongitude()).toString());
 
         ImageView icon = findViewById(R.id.res_icon);
-        icon.setImageDrawable(getDrawable(currentFacility.getIconID()));
+        icon.setImageDrawable(getDrawable(currentRestaurant.getIconID()));
     }
 
 
@@ -128,19 +130,8 @@ public class RestaurantActivity extends AppCompatActivity {
     }
 
     private void addTestInspection() {
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(203);
-        test.add(306);
-        test.add(201);
-        inspections.add(new InspectionReport("Do","20180123",Routine,1,2,Low,test));
-        inspections.add(new InspectionReport("Ra","20191234",Routine,1,2,High,test));
-        inspections.add(new InspectionReport("Me","20170817",FollowUp,1,2,Moderate,test));
-        inspections.add(new InspectionReport("Do","20180123",Routine,1,2,Low,test));
-        inspections.add(new InspectionReport("Ra","20191234",Routine,1,2,High,test));
-        inspections.add(new InspectionReport("Me","20170817",FollowUp,1,2,Moderate,test));
-        inspections.add(new InspectionReport("Do","20180123",Routine,1,2,Low,test));
-        inspections.add(new InspectionReport("Ra","20191234",Routine,1,2,High,test));
-        inspections.add(new InspectionReport("Me","20170817",FollowUp,1,2,Moderate,test));
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+        inspections = reader.getAssociatedInspections(currentRestaurant.getTrackingNumber());
     }
 
 
