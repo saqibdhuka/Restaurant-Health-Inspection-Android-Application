@@ -40,11 +40,14 @@ public class InspectionReport {
             inspectionType = InspectionType.Routine;
         }
 
-        if (hazardRate.toLowerCase() == "low"){
+        String lowercaseRating = hazardRate.toLowerCase();
+
+        if (lowercaseRating.equals("low")) {
             hazardRating = HazardRating.Low;
-        }else if(hazardRate.toLowerCase() == "moderate"){
+
+        } else if (lowercaseRating.equals("moderate")) {
             hazardRating = HazardRating.Moderate;
-        }else{
+        } else {
             hazardRating = HazardRating.High;
         }
 
@@ -90,6 +93,7 @@ public class InspectionReport {
     public String getViolationStatement() {
         return violationStatement;
     }
+
     public String getTrackingNumber() {
         return trackingNumber;
     }
