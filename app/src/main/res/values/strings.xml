@@ -21,7 +21,7 @@
     <string name="inspection_date">Date :</string>
     <string name="inspection_type">Type :</string>
     <string name="inspection_hazard">Hazard :</string>
-    <string name="inspection_violation">Violation :</string>
+    <string name="inspection_violation">All Violations :</string>
 
 
     <!--  Restaurant List View  -->
@@ -38,7 +38,7 @@
     <string name="inspectionListView_date">Date :</string>
 
     <!-- Violation List View  -->
-    <string name="violationArrayList_vio_text">Nature of Violation :</string>
+    <string name="violationArrayList_vio_text">Violation Code :</string>
     <string name="violationArrayList_issue_text">Issue :</string>
 
 
