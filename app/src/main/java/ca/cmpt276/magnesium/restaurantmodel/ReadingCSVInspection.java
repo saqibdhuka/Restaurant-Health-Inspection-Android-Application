@@ -42,9 +42,9 @@ public class ReadingCSVInspection {
 
             while (true){
                 //read line
-                line = bufferedReader.readLine();
+                line = bufferedReader.readLine().replace("\"", "");
 
-                if(line == null){
+                if (line == null){
                     break;
                 }
 
