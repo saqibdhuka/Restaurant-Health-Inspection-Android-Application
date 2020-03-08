@@ -53,6 +53,23 @@ public class InspectionActivity extends AppCompatActivity {
         int inspectionIndex = getIntent().getIntExtra(EXTRA_INSPECT_ID, 0);
         inspection = reports.get(inspectionIndex);
 
+        TextView name = findViewById(R.id.inspection_restaurant_name);
+        name.setText(currentFacility.getName());
+
+        TextView type = findViewById(R.id.inspection_type);
+        type.setText(inspection.getInspectionType().toString());
+
+        TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
+        hazardLevel.setText(inspection.getHazardRating().toString());
+
+        String dateString = inspection.getInspectionDate();
+        String formattedDate = dateString.substring(0, 4)
+                                + "-" + dateString.substring(4,6)
+                                + "-" + dateString.substring(6);
+
+        TextView date = findViewById(R.id.inspection_date);
+        date.setText(formattedDate);
+
         populateListView();
     }
 
