@@ -35,7 +35,8 @@ public class InspectionReport {
         violationStatement = statement;
         violations = getViolationsFromString(statement);
 
-        if (inspecType.toLowerCase().equals("followup")) {
+        if (inspecType.toLowerCase().equals("followup")
+                || inspecType.toLowerCase().equals("follow-up")) {
             inspectionType = InspectionType.FollowUp;
         } else {
             inspectionType = InspectionType.Routine;

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -18,9 +19,6 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 import ca.cmpt276.magnesium.restaurantmodel.Violation;
-
-import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.*;
-import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.*;
 
 public class InspectionActivity extends AppCompatActivity {
 
@@ -82,8 +80,19 @@ public class InspectionActivity extends AppCompatActivity {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.violation_list_view, parent, false);
                 }
+                Violation currentViolation = violationList.get(position);
 
-                // Need connect violation number to violation data set
+                TextView criticality = (TextView) convertView.findViewById(
+                                                R.id.violationArrayList_issue_lv);
+                criticality.setText(currentViolation.getCriticality());
+
+                TextView description = (TextView) convertView.findViewById(
+                                                R.id.violationArrayList_issue_description);
+                description.setText(currentViolation.getViolDescription());
+
+                TextView code = (TextView) convertView.findViewById(
+                                                R.id.violationArrayList_vio_lv);
+                code.setText(String.format("%d", currentViolation.getViolationCode()));
 
 
                 return convertView;
