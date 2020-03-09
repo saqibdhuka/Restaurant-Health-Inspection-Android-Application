@@ -6,8 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import java.util.ArrayList;
+
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperFacility;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperInspection;
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
+import ca.cmpt276.magnesium.restaurantmodel.Facility;
 
 public class StartActivity extends AppCompatActivity {
 

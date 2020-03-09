@@ -40,7 +40,7 @@ public class ReadingCSVFacility {
             bufferedReader.readLine(); // Skip first line since tha is column name
             while (true){
                 //read line
-                line = bufferedReader.readLine();
+                line = bufferedReader.readLine().replace("\"", "");
 
                 //Check if line exists
                 if(line == null){
