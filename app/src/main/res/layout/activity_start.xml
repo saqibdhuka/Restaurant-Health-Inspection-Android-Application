@@ -13,12 +13,13 @@
         app:autoSizeTextType="uniform"
         android:maxLines="1"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="0dp"
         android:textStyle="bold"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/start_hor_guideline"
         app:layout_constraintEnd_toStartOf="@+id/start_ver80_guideline"
-        app:layout_constraintStart_toStartOf="@+id/start_ver20_guideline" />
+        app:layout_constraintStart_toStartOf="@+id/start_ver20_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/start_hor_guideline2"/>
 
     <TextView
         android:id="@+id/start_app_name_text"
@@ -26,14 +27,28 @@
         app:autoSizeTextType="uniform"
         android:maxLines="1"
         android:layout_width="0dp"
-        android:layout_height="75dp"
-        android:layout_margin="20dp"
+        android:layout_height="0dp"
+
         android:textStyle="bold"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/start_hor_guideline3"
+        app:layout_constraintEnd_toStartOf="@id/start_ver95_guideline"
+        app:layout_constraintStart_toEndOf="@id/start_ver05_guideline"
         app:layout_constraintTop_toTopOf="@+id/start_hor_guideline" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_hor_guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.60" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_hor_guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/start_hor_guideline"
@@ -55,5 +70,20 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.8" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_ver95_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/start_ver05_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,13 @@
         app:layout_constraintGuide_percent="0.20" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_hor99_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.99" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/res_hor26_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +35,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.23" />
+        app:layout_constraintGuide_percent="0.22962964" />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_hor10_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_hor03_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.03" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/res_ver30_guideline"
@@ -45,21 +66,43 @@
         app:layout_constraintGuide_percent="0.5" />
 
     <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_ver67_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.67" />
+
+    <androidx.constraintlayout.widget.Guideline
         android:id="@+id/res_ver18_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.18" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_ver02_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_ver98_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.98" />
+
     <ImageView
         android:contentDescription="@string/res_icon"
         android:id="@+id/res_icon"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
+        android:layout_margin="0dp"
         app:layout_constraintBottom_toTopOf="@+id/res_hor20_guideline"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/res_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@id/res_hor03_guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/kitchen" />
@@ -68,47 +111,51 @@
         android:id="@+id/res_restaurant_name"
         android:text="@string/sample_restaurant_name"
         android:layout_width="0dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
         android:maxLines="1"
         android:textAlignment="center"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/res_hor03_guideline"
+        app:layout_constraintBottom_toBottomOf="@id/res_hor10_guideline"/>
 
     <TextView
         android:id="@+id/res_restaurant_address_text"
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_margin="10dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:maxLines="1"
+        android:gravity="center"
         android:text="@string/res_address"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/res_restaurant_address"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline" />
+        app:layout_constraintEnd_toEndOf="@+id/res_ver50_guideline"
+        app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/res_restaurant_name" />
 
     <TextView
         android:id="@+id/res_restaurant_address"
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="5dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="0dp"
         android:text="@string/sample_address"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/res_hor20_guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline" />
+        app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@id/res_restaurant_address_text" />
 
     <TextView
         android:id="@+id/res_restaurant_coords_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
+        android:layout_margin="0dp"
         android:text="@string/res_GPS_text"
         android:maxLines="1"
         android:textAlignment="textEnd"
@@ -121,73 +168,79 @@
     <TextView
         android:id="@+id/res_restaurant_lat_text"
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_margin="5dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:maxLines="1"
         android:text="@string/res_latitude"
         android:textAlignment="center"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/res_hor23_guideline"
-        app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline"
-        app:layout_constraintTop_toTopOf="@+id/res_hor20_guideline" />
+        app:layout_constraintStart_toEndOf="@+id/res_ver30_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/res_hor20_guideline"
+        app:layout_constraintEnd_toStartOf="@id/res_ver50_guideline"/>
 
     <TextView
         android:id="@+id/res_restaurant_long_text"
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_margin="5dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:maxLines="1"
         android:text="@string/res_Longitude"
         android:textAlignment="center"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/res_hor26_guideline"
-        app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline"
-        app:layout_constraintTop_toTopOf="@+id/res_hor23_guideline" />
+        app:layout_constraintStart_toEndOf="@+id/res_ver30_guideline"
+        app:layout_constraintEnd_toStartOf="@id/res_ver50_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/res_restaurant_lat_text" />
 
     <TextView
         android:id="@+id/res_restaurant_lat"
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_margin="5dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:maxLines="1"
         android:text="@string/sample_lat"
         android:textAlignment="center"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/res_hor23_guideline"
         app:layout_constraintStart_toEndOf="@+id/res_ver50_guideline"
-        app:layout_constraintTop_toTopOf="@+id/res_hor20_guideline" />
+        app:layout_constraintEnd_toStartOf="@id/res_ver67_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/res_restaurant_address" />
 
     <TextView
         android:id="@+id/res_restaurant_long"
         android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:layout_margin="5dp"
+        android:layout_height="0dp"
+        android:layout_margin="0dp"
         android:maxLines="1"
         android:text="@string/sample_long"
         android:textAlignment="center"
         app:autoSizeTextType="uniform"
         app:layout_constraintBottom_toTopOf="@+id/res_hor26_guideline"
         app:layout_constraintStart_toEndOf="@+id/res_ver50_guideline"
-        app:layout_constraintTop_toTopOf="@+id/res_hor23_guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/res_restaurant_lat"
+        app:layout_constraintEnd_toStartOf="@id/res_ver67_guideline"/>
 
     <TextView
         android:id="@+id/res_restaurant_inspection"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="0dp"
         android:text="@string/res_inspection"
         android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/res_ver18_guideline"
-        app:layout_constraintTop_toTopOf="@+id/res_hor26_guideline" />
+        app:layout_constraintStart_toEndOf="@+id/res_ver18_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/res_hor26_guideline"
+        app:layout_constraintEnd_toStartOf="@id/res_ver50_guideline"
+        app:layout_constraintBottom_toTopOf="@id/res_inspection_listView"/>
 
     <ListView
         android:id="@+id/res_inspection_listView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="0dp"
+        app:layout_constraintBottom_toTopOf="@id/res_hor99_guideline"
+        app:layout_constraintEnd_toStartOf="@id/res_ver98_guideline"
+        app:layout_constraintStart_toEndOf="@id/res_ver02_guideline"
         app:layout_constraintTop_toBottomOf="@+id/res_restaurant_inspection" />
 
 

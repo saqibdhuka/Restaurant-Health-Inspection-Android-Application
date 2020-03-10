@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/violationArrayList_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="10dp">
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/violationArrayList_ver50_guideline"
@@ -14,25 +13,65 @@
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.5" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_hor02_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_hor09_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.09" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_ver05_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.05" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/res_ver95_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.95" />
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/violationArrayList_ver50_guideline"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintStart_toEndOf="@id/res_ver05_guideline"
+        app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline"
+        app:layout_constraintBottom_toTopOf="@id/res_hor09_guideline">
+
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/violationArrayList_vio_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp">
+            android:layout_margin="0dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/res_hor05_guideline_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
 
             <TextView
                 android:id="@+id/violationArrayList_vio_text"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
+                android:layout_height="0dp"
                 android:maxLines="1"
                 android:text="@string/violationArrayList_vio_text"
                 android:textAlignment="center"
@@ -40,12 +79,13 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/res_hor05_guideline_left"/>
 
             <TextView
                 android:id="@+id/violationArrayList_vio_lv"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
+                android:layout_height="0dp"
                 android:maxLines="1"
                 android:text="@string/sample_violation_nature"
                 android:textAlignment="center"
@@ -62,22 +102,30 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="50dp"
+        android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/violationArrayList_ver50_guideline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toStartOf="@id/res_ver95_guideline"
+        app:layout_constraintBottom_toTopOf="@id/res_hor09_guideline"
+        app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/violationArrayList_issue_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp">
+            android:layout_margin="0dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/res_hor05_guideline_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5" />
 
             <TextView
                 android:id="@+id/violationArrayList_issue_text"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
+                android:layout_height="0dp"
                 android:maxLines="1"
                 android:text="@string/violationArrayList_issue_text"
                 android:textAlignment="center"
@@ -85,12 +133,13 @@
                 app:autoSizeTextType="uniform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/res_hor05_guideline_right"/>
 
             <TextView
                 android:id="@+id/violationArrayList_issue_lv"
                 android:layout_width="0dp"
-                android:layout_height="20dp"
+                android:layout_height="0dp"
                 android:maxLines="1"
                 android:text="@string/sample_violation_issue"
                 android:textAlignment="center"
@@ -109,14 +158,13 @@
         android:id="@+id/violationArrayList_issue_description"
         android:text="@string/sample_violation_description"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_margin="5dp"
+        android:layout_height="wrap_content"
         android:maxLines="3"
         android:textAlignment="center"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/res_ver95_guideline"
+        app:layout_constraintStart_toEndOf="@id/res_ver05_guideline"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
