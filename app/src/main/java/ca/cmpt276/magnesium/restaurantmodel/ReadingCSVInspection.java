@@ -42,9 +42,9 @@ public class ReadingCSVInspection {
 
             while (true){
                 //read line
-                line = bufferedReader.readLine();
+                line = bufferedReader.readLine().replace("\"", "");
 
-                if(line == null){
+                if (line == null){
                     break;
                 }
 
@@ -91,6 +91,7 @@ public class ReadingCSVInspection {
     public InspectionReport getInspectionReportAtPos(int i){
         return inspection.get(i);
     }
+
     public void setInspectionList(ArrayList<InspectionReport> inspRep) {
         this.inspection = inspRep;
     }

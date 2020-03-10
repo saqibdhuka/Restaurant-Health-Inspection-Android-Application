@@ -43,10 +43,6 @@ public class Facility {
         }
 
     }
-
-    public Facility(String trackingNumber) {
-        // Should only ever be called by DatabaseReader factory
-    }
 //--------------------------------------------------
     // add for testing UI
     private int iconID;
@@ -58,7 +54,7 @@ public class Facility {
         this.facilityType = facilityType;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.iconID =iconID;
+        this.iconID = iconID;
     }
 
     public int getIconID() {
@@ -76,8 +72,12 @@ public class Facility {
     // method.
 
     public String toString() {
-        // TODO implement unique Facility string generation later
-        return super.toString();
+        String stringRepresentation = this.name + ", "
+                                    + this.address + ", "
+                                    + this.city + ", "
+                                    + this.trackingNumber;
+
+        return stringRepresentation;
     }
 
     public String getTrackingNumber() {

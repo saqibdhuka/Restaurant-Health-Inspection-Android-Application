@@ -20,6 +20,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperInspection;
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 
@@ -31,23 +33,56 @@ import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.FollowUp;
 import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.Routine;
 
 public class RestaurantActivity extends AppCompatActivity {
+
+    private final static String EXTRA_REST_ID = "RestaurantActivity_restaurantID";
+
     private List<InspectionReport> inspections = new ArrayList<InspectionReport>();
     private BaseAdapter adapter;
+    private Facility currentRestaurant;
+    private int restaurantID;
 
     public static Intent makeRestaurantIntent(Context context, int restaurantID){
         Intent intent = new Intent(context, RestaurantActivity.class);
+        intent.putExtra(EXTRA_REST_ID, restaurantID);
         return intent;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_restaurant);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+        ArrayList<Facility> facilities = reader.getAllFacilities();
+        restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
+
+        currentRestaurant = facilities.get(restaurantID);
+        setupTextFields();
+
         addTestInspection();
         populateListView();
+    }
+
+    private void setupTextFields() {
+        // Setup all text fields and icon based on currentFacility
+        TextView address, name, latitude, longitude;
+        address = findViewById(R.id.res_restaurant_name);
+        address.setText(currentRestaurant.getAddress());
+
+        name = findViewById(R.id.res_restaurant_name);
+        name.setText(currentRestaurant.getName());
+
+        latitude = findViewById(R.id.res_restaurant_lat_text);
+        latitude.setText(Double.valueOf(currentRestaurant.getLatitude()).toString());
+
+        longitude = findViewById(R.id.res_restaurant_long_text);
+        longitude.setText(Double.valueOf(currentRestaurant.getLongitude()).toString());
+
+        ImageView icon = findViewById(R.id.res_icon);
+        icon.setImageDrawable(getDrawable(currentRestaurant.getIconID()));
     }
 
 
@@ -89,26 +124,17 @@ public class RestaurantActivity extends AppCompatActivity {
 
         lv.setOnItemClickListener(
                 (parent, view, position, id) -> {
-                    // test for display restaurant
-                    Intent intent = InspectionActivity.makeInspectionIntent(RestaurantActivity.this, position);
+                    Intent intent = InspectionActivity.makeInspectionIntent(
+                            RestaurantActivity.this,
+                                    position,
+                                    restaurantID);
                     startActivity(intent);
                 });
     }
 
     private void addTestInspection() {
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(203);
-        test.add(306);
-        test.add(201);
-        inspections.add(new InspectionReport("Do","20180123",Routine,1,2,Low,test));
-        inspections.add(new InspectionReport("Ra","20191234",Routine,1,2,High,test));
-        inspections.add(new InspectionReport("Me","20170817",FollowUp,1,2,Moderate,test));
-        inspections.add(new InspectionReport("Do","20180123",Routine,1,2,Low,test));
-        inspections.add(new InspectionReport("Ra","20191234",Routine,1,2,High,test));
-        inspections.add(new InspectionReport("Me","20170817",FollowUp,1,2,Moderate,test));
-        inspections.add(new InspectionReport("Do","20180123",Routine,1,2,Low,test));
-        inspections.add(new InspectionReport("Ra","20191234",Routine,1,2,High,test));
-        inspections.add(new InspectionReport("Me","20170817",FollowUp,1,2,Moderate,test));
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+        inspections = reader.getAssociatedInspections(currentRestaurant.getTrackingNumber());
     }
 
 

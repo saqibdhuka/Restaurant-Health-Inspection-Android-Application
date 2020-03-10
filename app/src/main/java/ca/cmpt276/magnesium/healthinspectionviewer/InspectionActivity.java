@@ -11,21 +11,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
+import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
-
-import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.*;
-import static ca.cmpt276.magnesium.restaurantmodel.InspectionType.*;
+import ca.cmpt276.magnesium.restaurantmodel.Violation;
 
 public class InspectionActivity extends AppCompatActivity {
 
-    private InspectionReport inspection ;
+    private final static String EXTRA_INSPECT_ID = "InspectionActivity_InspectIDExtra";
+    private final static String EXTRA_FACILITY_ID = "InspectionActivity_FacilityIDExtra";
+
+    private InspectionReport inspection;
     private BaseAdapter adapter;
 
-    public static Intent makeInspectionIntent(Context context, int inspectionID){
+    public static Intent makeInspectionIntent(Context context, int inspectionID, int facilityID) {
         Intent intent = new Intent(context, InspectionActivity.class);
+        intent.putExtra(EXTRA_INSPECT_ID, inspectionID);
+        intent.putExtra(EXTRA_FACILITY_ID, facilityID);
         return intent;
     }
 
@@ -36,13 +42,40 @@ public class InspectionActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        addTestViolation();
+        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+
+        ArrayList<Facility> facilities = reader.getAllFacilities();
+        int facilityIndex = getIntent().getIntExtra(EXTRA_FACILITY_ID, 0);
+        Facility currentFacility = facilities.get(facilityIndex);
+
+        String trackingNo = currentFacility.getTrackingNumber();
+        ArrayList<InspectionReport> reports = reader.getAssociatedInspections(trackingNo);
+        int inspectionIndex = getIntent().getIntExtra(EXTRA_INSPECT_ID, 0);
+        inspection = reports.get(inspectionIndex);
+
+        TextView name = findViewById(R.id.inspection_restaurant_name);
+        name.setText(currentFacility.getName());
+
+        TextView type = findViewById(R.id.inspection_type);
+        type.setText(inspection.getInspectionType().toString());
+
+        TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
+        hazardLevel.setText(inspection.getHazardRating().toString());
+
+        String dateString = inspection.getInspectionDate();
+        String formattedDate = dateString.substring(0, 4)
+                                + "-" + dateString.substring(4,6)
+                                + "-" + dateString.substring(6);
+
+        TextView date = findViewById(R.id.inspection_date);
+        date.setText(formattedDate);
+
         populateListView();
     }
 
     private void populateListView() {
         ListView lv = findViewById(R.id.inspection_violation_listView);
-        ArrayList<Integer> violationList = inspection.getViolations();
+        ArrayList<Violation> violationList = inspection.getViolations();
         adapter = new BaseAdapter() {
             @Override
             public int getCount() {
@@ -50,7 +83,7 @@ public class InspectionActivity extends AppCompatActivity {
             }
 
             @Override
-            public Integer getItem(int position) {
+            public Violation getItem(int position) {
                 return violationList.get(position);
             }
 
@@ -64,23 +97,26 @@ public class InspectionActivity extends AppCompatActivity {
                 if (convertView == null) {
                     convertView = getLayoutInflater().inflate(R.layout.violation_list_view, parent, false);
                 }
+                Violation currentViolation = violationList.get(position);
 
-                // Need connect violation number to violation data set
+                TextView criticality = (TextView) convertView.findViewById(
+                                                R.id.violationArrayList_issue_lv);
+                criticality.setText(currentViolation.getCriticality());
+
+                TextView description = (TextView) convertView.findViewById(
+                                                R.id.violationArrayList_issue_description);
+                description.setText(currentViolation.getViolDescription());
+
+                TextView code = (TextView) convertView.findViewById(
+                                                R.id.violationArrayList_vio_lv);
+                code.setText(String.format("%d", currentViolation.getViolationCode()));
 
 
-                return  convertView;
+                return convertView;
             }
         };
 
         lv.setAdapter(adapter);
-    }
-
-    private void addTestViolation() {
-        ArrayList<Integer> test = new ArrayList<Integer>();
-        test.add(203);
-        test.add(306);
-        test.add(201);
-        inspection = new InspectionReport("Do","20180123",Routine,1,2,Low,test);
     }
 
 
