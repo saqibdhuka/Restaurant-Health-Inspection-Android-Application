@@ -16,8 +16,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.02" />
 
-
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/res_hor06_guideline"
         android:layout_width="wrap_content"
@@ -31,8 +29,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.04" />
-
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/res_ver96_guideline"
@@ -116,40 +112,70 @@
         app:layout_constraintStart_toEndOf="@id/resArrayList_ver65_guideline"
         app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection" />
 
-    <TextView
-        android:id="@+id/resArrayList_res_hazard"
-        android:text="@string/resListView_hazard"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:maxLines="1"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintStart_toStartOf="@+id/resArrayList_ver30_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_issue_num" />
-
-
-    <TextView
-        android:id="@+id/resArrayList_res_hazard_lv"
-        android:text="@string/sample_hazard_lv"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:maxLines="1"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintStart_toEndOf="@+id/resArrayList_res_hazard"
-        app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection_date" />
-
-    <View
-        android:id="@+id/resArrayList_res_hazard_color"
-        android:layout_width="0dp"
-        android:layout_height="15dp"
-        android:background="@color/colorGreen"
-        android:maxLines="1"
-        android:visibility="visible"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/res_ver96_guideline"
-        app:layout_constraintStart_toEndOf="@+id/resArrayList_res_hazard_lv"
+        app:layout_constraintEnd_toStartOf="@+id/res_ver96_guideline"
+        app:layout_constraintStart_toEndOf="@id/resArrayList_ver30_guideline"
         app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection_date">
 
-    </View>
+        <TextView
+            android:id="@+id/resArrayList_res_hazard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="@string/resListView_hazard"
+            app:autoSizeTextType="uniform"
+            android:textAlignment="viewEnd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/resArrayList_hazard_ver45_guideline"/>
+
+        <TextView
+            android:id="@+id/resArrayList_res_hazard_lv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:layout_marginEnd="10dp"
+            android:text="@string/sample_hazard_lv"
+            android:textAlignment="viewEnd"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toEndOf="@+id/resArrayList_hazard_ver45_guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/resArrayList_hazard_ver85_guideline" />
+
+        <View
+            android:id="@+id/resArrayList_res_hazard_color"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/colorGreen"
+            android:foregroundGravity="left"
+            android:maxLines="1"
+            android:visibility="visible"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/resArrayList_hazard_ver85_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/resArrayList_hazard_ver45_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.45" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/resArrayList_hazard_ver85_guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.85" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/resArrayList_ver30_guideline"
