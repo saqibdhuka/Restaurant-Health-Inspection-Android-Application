@@ -30,7 +30,8 @@
     <string name="resListView_res_icon">restaurant icon</string>
     <string name="resListView_issue"># of issues :</string>
     <string name="resListView_hazard">Hazard level :</string>
-    <string name="resListView_inspection">Last Inspection :</string>
+    <string name="resListView_inspection">Recent Inspection :</string>
+    <string name="resListView_date">Date :</string>
 
 
     <!--  Inspection List View  -->
