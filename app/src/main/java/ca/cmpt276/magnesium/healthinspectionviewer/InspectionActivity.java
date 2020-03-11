@@ -2,6 +2,7 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
+import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 import ca.cmpt276.magnesium.restaurantmodel.Violation;
 
@@ -60,6 +62,23 @@ public class InspectionActivity extends AppCompatActivity {
 
         TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
         hazardLevel.setText(inspection.getHazardRating().toString());
+
+        View hazardColor = findViewById(R.id.inspection_hazard_color);
+        HazardRating hazardRating = inspection.getHazardRating();
+        switch (hazardRating) {
+            case High: {
+                hazardColor.setBackgroundColor(Color.RED);
+                break;
+            }
+            case Moderate: {
+                hazardColor.setBackgroundColor(Color.YELLOW);
+                break;
+            }
+            case Low: {
+                hazardColor.setBackgroundColor(Color.GREEN);
+                break;
+            }
+        }
 
         String dateString = inspection.getInspectionDate();
         String formattedDate = dateString.substring(0, 4)

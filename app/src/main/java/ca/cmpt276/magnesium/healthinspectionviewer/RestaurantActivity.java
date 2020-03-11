@@ -2,6 +2,7 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,6 +24,7 @@ import java.util.List;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperInspection;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
+import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 
 import static ca.cmpt276.magnesium.restaurantmodel.FacilityType.Restaurant;
@@ -97,10 +99,10 @@ public class RestaurantActivity extends AppCompatActivity {
         name = findViewById(R.id.res_restaurant_name);
         name.setText(currentRestaurant.getName());
 
-        latitude = findViewById(R.id.res_restaurant_lat_text);
+        latitude = findViewById(R.id.res_restaurant_lat);
         latitude.setText(Double.valueOf(currentRestaurant.getLatitude()).toString());
 
-        longitude = findViewById(R.id.res_restaurant_long_text);
+        longitude = findViewById(R.id.res_restaurant_long);
         longitude.setText(Double.valueOf(currentRestaurant.getLongitude()).toString());
 
         ImageView icon = findViewById(R.id.res_icon);
@@ -133,6 +135,22 @@ public class RestaurantActivity extends AppCompatActivity {
                 }
 
                 InspectionReport inspection = getItem(position);
+                View hazardColor = convertView.findViewById(R.id.inspectionArrayList_inspection_hazard_color);
+                HazardRating hazardRating = inspection.getHazardRating();
+                switch (hazardRating) {
+                    case High: {
+                        hazardColor.setBackgroundColor(Color.RED);
+                        break;
+                    }
+                    case Moderate: {
+                        hazardColor.setBackgroundColor(Color.YELLOW);
+                        break;
+                    }
+                    case Low: {
+                        hazardColor.setBackgroundColor(Color.GREEN);
+                        break;
+                    }
+                }
 
                 ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_hazard_lv)).setText(inspection.getHazardRating().toString());
                 ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_noncrit)).setText(inspection.getNumNonCritical() + "");
