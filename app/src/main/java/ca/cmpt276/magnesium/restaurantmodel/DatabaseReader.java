@@ -100,7 +100,8 @@ public class DatabaseReader {
         SQLiteDatabase facilityDB = dbHelper.getReadableDatabase();
 
         String allTrackingNumQuery = "SELECT * FROM " +
-                DatabaseHelperFacility.TABLE_FACILITY_NAME;
+                DatabaseHelperFacility.TABLE_FACILITY_NAME
+                + " ORDER BY " + DatabaseHelperFacility.COL_2 + " ASC";
 
         // Cursor to peruse all results:
         Cursor queryResults = facilityDB.rawQuery(allTrackingNumQuery, null);
