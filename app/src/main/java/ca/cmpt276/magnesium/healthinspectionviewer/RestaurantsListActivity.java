@@ -97,6 +97,12 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 }
                 hazardText.setText(restaurantRating.toString());
 
+                // Set the number of issues as of the last inspection:
+                TextView numIssues = convertView.findViewById(R.id.resArrayList_res_issue_num);
+                Integer issueCount = inspections.get(0).getNumCritical()
+                        + inspections.get(0).getNumNonCritical();
+                numIssues.setText(issueCount.toString());
+
                 TextView resName = (TextView) convertView.findViewById(R.id.resArrayList_res_name);
                 resName.setText(restaurant.getName());
                 ImageView icon = (ImageView) convertView.findViewById(R.id.resArrayList_res_icon);
