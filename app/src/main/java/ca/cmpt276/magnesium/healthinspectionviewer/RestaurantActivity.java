@@ -99,10 +99,10 @@ public class RestaurantActivity extends AppCompatActivity {
         name = findViewById(R.id.res_restaurant_name);
         name.setText(currentRestaurant.getName());
 
-        latitude = findViewById(R.id.res_restaurant_lat_text);
+        latitude = findViewById(R.id.res_restaurant_lat);
         latitude.setText(Double.valueOf(currentRestaurant.getLatitude()).toString());
 
-        longitude = findViewById(R.id.res_restaurant_long_text);
+        longitude = findViewById(R.id.res_restaurant_long);
         longitude.setText(Double.valueOf(currentRestaurant.getLongitude()).toString());
 
         ImageView icon = findViewById(R.id.res_icon);
