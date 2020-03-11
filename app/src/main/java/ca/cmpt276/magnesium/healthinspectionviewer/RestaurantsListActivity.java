@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import java.util.List;
 
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
+import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
+import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 
 public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
@@ -61,6 +64,38 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 }
 
                 Facility restaurant = getItem(position);
+
+                // Get maximum hazard and set the text:
+                DatabaseReader reader = new DatabaseReader(getApplicationContext());
+                ArrayList<InspectionReport> inspections = reader.getAssociatedInspections(restaurant.getTrackingNumber());
+                // Loop through all inspections and pull the worst one:
+                HazardRating restaurantRating = HazardRating.Low;
+                for (InspectionReport inspection : inspections) {
+                    if (inspection.getHazardRating() == HazardRating.High) {
+                        restaurantRating = HazardRating.High;
+                    }
+
+                    if ((inspection.getHazardRating() == HazardRating.Moderate)
+                            && (restaurantRating == HazardRating.Low)) {
+                        restaurantRating = HazardRating.Moderate;
+                    }
+                }
+
+                // Now we should have the worst rating:
+                View hazardColor = convertView.findViewById(R.id.resArrayList_res_hazard_color);
+                TextView hazardText = convertView.findViewById(R.id.resArrayList_res_hazard_lv);
+                switch(restaurantRating) {
+                    case Low:
+                        hazardColor.setBackgroundColor(Color.GREEN);
+                        break;
+                    case Moderate:
+                        hazardColor.setBackgroundColor(Color.YELLOW);
+                        break;
+                    case High:
+                        hazardColor.setBackgroundColor(Color.RED);
+                        break;
+                }
+                hazardText.setText(restaurantRating.toString());
 
                 TextView resName = (TextView) convertView.findViewById(R.id.resArrayList_res_name);
                 resName.setText(restaurant.getName());
