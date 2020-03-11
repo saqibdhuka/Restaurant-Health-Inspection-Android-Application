@@ -178,6 +178,7 @@ public class DatabaseReader {
         }
 
         // All values should have been added.
+        dbHelper.close();
         return returnArray;
     }
 
@@ -257,6 +258,7 @@ public class DatabaseReader {
         }
 
         // All reports should have been added.
+        dbHelper.close();
         return returnArray;
     }
 
