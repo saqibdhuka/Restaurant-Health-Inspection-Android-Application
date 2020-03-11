@@ -14,6 +14,8 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.joda.time.LocalDate;
+
 import java.util.ArrayList;
 
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
@@ -80,13 +82,10 @@ public class InspectionActivity extends AppCompatActivity {
             }
         }
 
-        String dateString = inspection.getInspectionDate();
-        String formattedDate = dateString.substring(0, 4)
-                                + "-" + dateString.substring(4,6)
-                                + "-" + dateString.substring(6);
-
+        LocalDate inspectionDate = inspection.getInspectionDate();
+        String dateString = inspectionDate.toString("MMMM d, yyyy");
         TextView date = findViewById(R.id.inspection_date);
-        date.setText(formattedDate);
+        date.setText(dateString);
 
 
 

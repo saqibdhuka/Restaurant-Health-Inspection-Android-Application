@@ -107,6 +107,10 @@ public class RestaurantsListActivity extends AppCompatActivity {
                     numIssues.setText("0");
                 }
 
+                // Make the "last inspection" field more useful:
+                TextView lastInspection =
+                        convertView.findViewById(R.id.resArrayList_res_inspection_date);
+                lastInspection.setText(restaurant.getDateString());
 
 
                 TextView resName = (TextView) convertView.findViewById(R.id.resArrayList_res_name);
@@ -130,7 +134,6 @@ public class RestaurantsListActivity extends AppCompatActivity {
     private void addRestaurants() {
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         facilities = reader.getAllFacilities();
-
     }
 
 

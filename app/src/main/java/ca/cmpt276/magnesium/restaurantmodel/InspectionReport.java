@@ -1,5 +1,10 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 
 /**
@@ -18,7 +23,8 @@ import java.util.ArrayList;
 public class InspectionReport {
 
     private String trackingNumber;
-    private String inspectionDate;
+    private String inspectionDateString;
+    private LocalDate inspectionDate;
     private InspectionType inspectionType;
     private int numCritical;
     private int numNonCritical;
@@ -26,7 +32,7 @@ public class InspectionReport {
     private ArrayList<Violation> violations;
     private String violationStatement;
 
-    public InspectionReport(String track, String date, String inspecType, int critical,
+    public InspectionReport(String track, LocalDate date, String inspecType, int critical,
                             int nonCritical, String hazardRate, String statement){
         trackingNumber = track;
         inspectionDate = date;
@@ -75,6 +81,22 @@ public class InspectionReport {
         return returnArray;
     }
 
+    public String getInspectionDateString() {
+        String returnString;
+
+        Days daysBetween = Days.daysBetween(inspectionDate, LocalDate.now());
+        // Pretty printing for the user:
+        if (daysBetween.getDays() <= 30) {
+            returnString = daysBetween.getDays() + " days ago";
+        } else if (daysBetween.getDays() <= 365) {
+            returnString = inspectionDate.toString("MMMM d");
+        } else {
+            returnString = inspectionDate.toString("MMMM yyyy");
+        }
+
+        return returnString;
+    }
+
 
 
     // Getters and setters provided for use by other classes.
@@ -95,7 +117,7 @@ public class InspectionReport {
         return trackingNumber;
     }
 
-    public String getInspectionDate() {
+    public LocalDate getInspectionDate() {
         return inspectionDate;
     }
 
