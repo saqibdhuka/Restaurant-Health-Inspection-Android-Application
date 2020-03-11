@@ -39,8 +39,7 @@ public class InspectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupToolbar();
 
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
 
@@ -70,7 +69,32 @@ public class InspectionActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.inspection_date);
         date.setText(formattedDate);
 
-        populateListView();
+
+
+        TextView empty = findViewById(R.id.inspection_violation_empty);
+        ListView list = findViewById(R.id.inspection_violation_listView);
+        if(inspection.getViolations().isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+            list.setVisibility(View.INVISIBLE);
+        }else {
+            populateListView();
+            empty.setVisibility(View.INVISIBLE);
+            list.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.inspection_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void populateListView() {

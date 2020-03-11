@@ -15,6 +15,7 @@
     <string name="res_latitude">Latitude :</string>
     <string name="res_Longitude">Longitude :</string>
     <string name="res_inspection">Inspection :</string>
+    <string name="res_inspection_empty">This restaurant has no associated inspection.</string>
 
     <!--  Inspection Screen  -->
     <string name="inspection_title">Inspection</string>
@@ -22,6 +23,7 @@
     <string name="inspection_type">Type :</string>
     <string name="inspection_hazard">Hazard :</string>
     <string name="inspection_violation">All Violations :</string>
+    <string name="inspection_violation_empty">This inspection has no associated violation.</string>
 
 
     <!--  Restaurant List View  -->

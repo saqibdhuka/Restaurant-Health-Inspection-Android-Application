@@ -13,7 +13,7 @@
         <activity
             android:name=".RestaurantActivity"
             android:label="@string/restaurant_title"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".InspectionActivity"
             android:label="@string/inspection_title"

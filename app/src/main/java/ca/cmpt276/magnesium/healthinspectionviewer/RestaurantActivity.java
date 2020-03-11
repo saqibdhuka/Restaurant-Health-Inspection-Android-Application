@@ -52,8 +52,7 @@ public class RestaurantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_restaurant);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setupToolbar();
 
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         ArrayList<Facility> facilities = reader.getAllFacilities();
@@ -63,7 +62,30 @@ public class RestaurantActivity extends AppCompatActivity {
         setupTextFields();
 
         addTestInspection();
-        populateListView();
+
+        TextView empty = findViewById(R.id.res_inspection_empty);
+        ListView list = findViewById(R.id.res_inspection_listView);
+        if(inspections.isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+            list.setVisibility(View.INVISIBLE);
+        }else {
+            populateListView();
+            empty.setVisibility(View.INVISIBLE);
+            list.setVisibility(View.VISIBLE);
+        }
+
+    }
+
+    private void setupToolbar() {
+        Toolbar toolbar = findViewById(R.id.res_toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void setupTextFields() {
