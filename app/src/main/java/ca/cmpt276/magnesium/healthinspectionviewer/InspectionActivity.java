@@ -69,7 +69,19 @@ public class InspectionActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.inspection_date);
         date.setText(formattedDate);
 
-        populateListView();
+
+
+        TextView empty = findViewById(R.id.inspection_violation_empty);
+        ListView list = findViewById(R.id.inspection_violation_listView);
+        if(inspection.getViolations().isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+            list.setVisibility(View.INVISIBLE);
+        }else {
+            populateListView();
+            empty.setVisibility(View.INVISIBLE);
+            list.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setupToolbar() {

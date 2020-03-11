@@ -62,7 +62,18 @@ public class RestaurantActivity extends AppCompatActivity {
         setupTextFields();
 
         addTestInspection();
-        populateListView();
+
+        TextView empty = findViewById(R.id.res_inspection_empty);
+        ListView list = findViewById(R.id.res_inspection_listView);
+        if(inspections.isEmpty()){
+            empty.setVisibility(View.VISIBLE);
+            list.setVisibility(View.INVISIBLE);
+        }else {
+            populateListView();
+            empty.setVisibility(View.INVISIBLE);
+            list.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void setupToolbar() {
