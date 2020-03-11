@@ -29,19 +29,8 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.09" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/res_ver05_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.05" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/res_ver95_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.95" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -49,7 +38,7 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/violationArrayList_ver50_guideline"
-        app:layout_constraintStart_toEndOf="@id/res_ver05_guideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline"
         app:layout_constraintBottom_toTopOf="@id/res_hor09_guideline">
 
@@ -105,7 +94,7 @@
         android:layout_height="0dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/violationArrayList_ver50_guideline"
-        app:layout_constraintEnd_toStartOf="@id/res_ver95_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/res_hor09_guideline"
         app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline">
 
@@ -163,8 +152,8 @@
         android:textAlignment="center"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/res_ver95_guideline"
-        app:layout_constraintStart_toEndOf="@id/res_ver05_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 

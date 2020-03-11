@@ -5,30 +5,18 @@
     android:id="@+id/inspectionArrayList_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintStart_toEndOf="@id/inspectionArrayList_ver02_guideline"
+    app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@id/inspectionArrayList_hor02_guideline"
-    app:layout_constraintEnd_toStartOf="@id/inspectionArrayList_ver98_guideline">
+    app:layout_constraintEnd_toEndOf="parent">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/inspectionArrayList_ver02_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.02" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/inspectionArrayList_ver63_guideline"
+        android:id="@+id/inspectionArrayList_ver73_guideline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.73" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/inspectionArrayList_ver98_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.98" />
+
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/inspectionArrayList_hor02_guideline"
@@ -69,7 +57,7 @@
         android:text="@string/inspectionListView_hazard"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toStartOf="@+id/inspectionArrayList_ver30_guideline"
-        app:layout_constraintStart_toEndOf="@id/inspectionArrayList_ver02_guideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/inspectionArrayList_hor02_guideline" />
 
     <TextView
@@ -82,7 +70,7 @@
         android:text="@string/sample_hazard_lv"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toStartOf="@+id/inspectionArrayList_ver30_guideline"
-        app:layout_constraintStart_toStartOf="@id/inspectionArrayList_ver02_guideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inspectionArrayList_inspection_hazard" />
 
     <View
@@ -94,7 +82,7 @@
         android:visibility="visible"
         app:layout_constraintEnd_toStartOf="@+id/inspectionArrayList_ver30_guideline"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/inspectionArrayList_ver02_guideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inspectionArrayList_inspection_hazard_lv" />
 
     <TextView
@@ -119,7 +107,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/sample_crit_num"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/inspectionArrayList_ver98_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/inspectionArrayList_ver80_guideline"
         app:layout_constraintTop_toBottomOf="@id/inspectionArrayList_hor02_guideline" />
 
@@ -145,7 +133,7 @@
         android:layout_marginTop="5dp"
         android:text="@string/sample_noncrit_num"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/inspectionArrayList_ver98_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/inspectionArrayList_ver80_guideline"
         app:layout_constraintTop_toBottomOf="@+id/inspectionArrayList_inspection_crit" />
 
@@ -171,7 +159,7 @@
         android:text="@string/sample_inspection_date_full"
         android:textAlignment="textEnd"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/inspectionArrayList_ver63_guideline"
+        app:layout_constraintEnd_toStartOf="@id/inspectionArrayList_ver73_guideline"
         app:layout_constraintStart_toEndOf="@+id/inspectionArrayList_ver44_guideline"
         app:layout_constraintTop_toBottomOf="@+id/inspectionArrayList_inspection_noncrit_text" />
 

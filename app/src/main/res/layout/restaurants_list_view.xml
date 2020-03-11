@@ -5,9 +5,9 @@
     android:id="@+id/resArrayList_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_constraintEnd_toStartOf="@id/res_ver96_guideline"
+    app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline"
-    app:layout_constraintStart_toEndOf="@id/res_ver04_guideline">
+    app:layout_constraintStart_toStartOf="parent">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/res_hor02_guideline"
@@ -16,26 +16,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.02" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/res_hor06_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.06" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/res_ver04_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.04" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/res_ver96_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.96" />
 
     <ImageView
         android:contentDescription="@string/resListView_res_icon"
@@ -43,26 +24,26 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="10dp"
-
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver30_guideline"
-        app:layout_constraintStart_toEndOf="@id/res_ver04_guideline"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline"
         app:srcCompat="@drawable/kitchen" />
 
     <TextView
         android:id="@+id/resArrayList_res_name"
-        android:text="@string/sample_restaurant_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:maxLines="1"
+        android:text="@string/sample_restaurant_name"
         android:textAlignment="center"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/res_ver96_guideline"
+        app:layout_constraintBottom_toTopOf="@id/resArrayList_res_issue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/resArrayList_ver30_guideline"
-        app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline"
-        app:layout_constraintBottom_toTopOf="@id/resArrayList_res_issue"/>
+        app:layout_constraintTop_toBottomOf="@id/res_hor02_guideline" />
 
     <TextView
         android:id="@+id/resArrayList_res_issue"
@@ -96,7 +77,7 @@
         android:gravity="center"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/res_ver96_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/resArrayList_ver65_guideline"
         app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_name" />
 
@@ -108,14 +89,16 @@
         android:gravity="center"
         android:maxLines="1"
         app:autoSizeTextType="uniform"
-        app:layout_constraintEnd_toStartOf="@id/res_ver96_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/resArrayList_ver65_guideline"
         app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection" />
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/res_ver96_guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/resArrayList_ver30_guideline"
         app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection_date">
 
@@ -125,26 +108,26 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:text="@string/resListView_hazard"
-            app:autoSizeTextType="uniform"
             android:textAlignment="viewEnd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/resArrayList_hazard_ver45_guideline"/>
+            app:layout_constraintEnd_toStartOf="@id/resArrayList_hazard_ver45_guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/resArrayList_res_hazard_lv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="1"
             android:layout_marginEnd="10dp"
+            android:maxLines="1"
             android:text="@string/sample_hazard_lv"
             android:textAlignment="viewEnd"
             app:autoSizeTextType="uniform"
-            app:layout_constraintStart_toEndOf="@+id/resArrayList_hazard_ver45_guideline"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/resArrayList_hazard_ver85_guideline" />
+            app:layout_constraintEnd_toStartOf="@+id/resArrayList_hazard_ver85_guideline"
+            app:layout_constraintStart_toEndOf="@+id/resArrayList_hazard_ver45_guideline"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/resArrayList_res_hazard_color"
@@ -175,7 +158,6 @@
             app:layout_constraintGuide_percent="0.85" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/resArrayList_ver30_guideline"
