@@ -3,7 +3,11 @@ package ca.cmpt276.magnesium.restaurantmodel;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.drawable.Drawable;
+
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 
@@ -158,8 +162,14 @@ public class DatabaseReader {
                 Integer iconIndex = (int)Math.round((Math.random() * (iconsList.size() - 1)));
                 Integer iconID = iconsList.get(iconIndex);
 
+
+                String inspectionString =
+                        getInspectionString(
+                                getAssociatedInspections(trackingNum)
+                        );
+
                 Facility currentFacility = new Facility( trackingNum, name, physicalAddr,
-                        city, facilityType, latitude, longitude, iconID);
+                        city, facilityType, latitude, longitude, iconID, inspectionString);
 
                 returnArray.add(currentFacility);
                 // Advance the Cursor:
@@ -169,6 +179,18 @@ public class DatabaseReader {
 
         // All values should have been added.
         return returnArray;
+    }
+
+    private String getInspectionString(ArrayList<InspectionReport> inspections) {
+        String returnString;
+
+        if (inspections.size() > 0) {
+            returnString = inspections.get(0).getInspectionDateString();
+        } else {
+            returnString = "N/A"; // Case where there are no associated inspections
+        }
+
+        return returnString;
     }
 
     public ArrayList<InspectionReport> getAssociatedInspections(String trackingNo) {
@@ -215,8 +237,12 @@ public class DatabaseReader {
                         queryResults.getColumnIndex(
                                 DatabaseHelperInspection.COL_7));
 
+                DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyyMMdd");
+                inspectionDate = inspectionDate.replace("-", "");
+                LocalDate inspectionLocalDate = formatter.parseLocalDate(inspectionDate);
+
                 InspectionReport report = new InspectionReport(inspectionTrackingNum,
-                                                        inspectionDate,
+                                                        inspectionLocalDate,
                                                         inspectionType,
                                                         Integer.valueOf(inspectionNumCritical),
                                                         Integer.valueOf(inspectionNumNonCritical),

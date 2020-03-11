@@ -3,17 +3,8 @@ package ca.cmpt276.magnesium.restaurantmodel;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
@@ -60,7 +51,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
         ReadingCSVInspection inspection = new ReadingCSVInspection(contextActivity);
         for(int i = 0; i < inspection.getInspectionArrayList().size(); i++){
             contentValues.put(COL_1, inspection.getInspectionReportAtPos(i).getTrackingNumber());
-            contentValues.put(COL_2, inspection.getInspectionReportAtPos(i).getInspectionDate());
+            contentValues.put(COL_2, inspection.getInspectionReportAtPos(i).getInspectionDate().toString("yyyyMMdd"));
             contentValues.put(COL_3, inspection.getInspectionReportAtPos(i).getInspectionType().toString());
             contentValues.put(COL_4, inspection.getInspectionReportAtPos(i).getNumCritical());
             contentValues.put(COL_5, inspection.getInspectionReportAtPos(i).getNumNonCritical());

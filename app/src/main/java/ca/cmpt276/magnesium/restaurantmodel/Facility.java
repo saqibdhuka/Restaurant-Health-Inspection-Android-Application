@@ -20,6 +20,7 @@ public class Facility {
     private String name;
     private String address;
     private String city;
+    private String dateString;
     private FacilityType facilityType;
     private double latitude;
     private double longitude;
@@ -34,7 +35,7 @@ public class Facility {
         longitude = resLongitude;
         if (facType.toLowerCase() == "restaurant"){
             facilityType = FacilityType.Restaurant;
-        }else{
+        } else {
             /*
                Since we do not have more options right now, keep it equal to restaurants
                When we add more, we can change this
@@ -46,7 +47,10 @@ public class Facility {
 //--------------------------------------------------
     // add for testing UI
     private int iconID;
-    public Facility(String trackingNumber, String name, String address, String city, FacilityType facilityType, double latitude, double longitude, int iconID) {
+
+    public Facility(String trackingNumber, String name, String address, String city,
+                    FacilityType facilityType, double latitude, double longitude, int iconID,
+                    String dateString) {
         this.trackingNumber = trackingNumber;
         this.name = name;
         this.address = address;
@@ -55,6 +59,7 @@ public class Facility {
         this.latitude = latitude;
         this.longitude = longitude;
         this.iconID = iconID;
+        this.dateString = dateString;
     }
 
     public int getIconID() {
@@ -78,6 +83,14 @@ public class Facility {
                                     + this.trackingNumber;
 
         return stringRepresentation;
+    }
+
+    public String getDateString() {
+        if (dateString != null) {
+            return dateString;
+        } else {
+            return "N/A";
+        }
     }
 
     public String getTrackingNumber() {

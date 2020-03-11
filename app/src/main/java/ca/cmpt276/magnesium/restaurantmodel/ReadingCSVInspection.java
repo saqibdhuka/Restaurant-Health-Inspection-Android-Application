@@ -3,6 +3,10 @@ package ca.cmpt276.magnesium.restaurantmodel;
 import android.content.Context;
 import android.util.Log;
 
+import org.joda.time.LocalDate;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -54,16 +58,20 @@ public class ReadingCSVInspection {
                 //InspectionReport(String track, String date, String inspecType, int critical,
                 //                            int nonCritical, String hazardRate, String statement)
                 String violation;
-                if(strInspection.length == 6){
+                if (strInspection.length == 6){
                     violation = " ";
-                }else {
+                } else {
                     violation = strInspection[6];
                     for (int i = 7; i < strInspection.length; i++) {
                         violation += "," + strInspection[i];
                     }
                 }
 
-                inspectionArrayList.add(new InspectionReport(strInspection[0],strInspection[1], strInspection[2],
+                DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyyMMdd");
+                String inspectionDate = strInspection[1].replace("-", "");
+                LocalDate inspectionLocalDate = formatter.parseLocalDate(inspectionDate);
+
+                inspectionArrayList.add(new InspectionReport(strInspection[0], inspectionLocalDate, strInspection[2],
                         Integer.parseInt(strInspection[3]), Integer.parseInt(strInspection[4]),
                         strInspection[5], violation));
 

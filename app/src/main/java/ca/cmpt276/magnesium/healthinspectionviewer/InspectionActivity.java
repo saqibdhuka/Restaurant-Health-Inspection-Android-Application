@@ -80,13 +80,9 @@ public class InspectionActivity extends AppCompatActivity {
             }
         }
 
-        String dateString = inspection.getInspectionDate();
-        String formattedDate = dateString.substring(0, 4)
-                                + "-" + dateString.substring(4,6)
-                                + "-" + dateString.substring(6);
-
+        String dateString = inspection.getInspectionDateString();
         TextView date = findViewById(R.id.inspection_date);
-        date.setText(formattedDate);
+        date.setText(dateString);
 
 
 
