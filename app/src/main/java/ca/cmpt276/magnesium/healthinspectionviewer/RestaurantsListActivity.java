@@ -99,9 +99,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
                 // Set the number of issues as of the last inspection:
                 TextView numIssues = convertView.findViewById(R.id.resArrayList_res_issue_num);
-                Integer issueCount = inspections.get(0).getNumCritical()
-                        + inspections.get(0).getNumNonCritical();
-                numIssues.setText(issueCount.toString());
+                if (inspections.size() > 0) {
+                    Integer issueCount = inspections.get(0).getNumCritical()
+                            + inspections.get(0).getNumNonCritical();
+                    numIssues.setText(issueCount.toString());
+                } else {
+                    numIssues.setText("0");
+                }
+
+
 
                 TextView resName = (TextView) convertView.findViewById(R.id.resArrayList_res_name);
                 resName.setText(restaurant.getName());
