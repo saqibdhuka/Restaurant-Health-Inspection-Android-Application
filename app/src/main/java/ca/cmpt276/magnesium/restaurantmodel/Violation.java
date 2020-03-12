@@ -48,6 +48,38 @@ public class Violation {
     @NonNull
     @Override
     public String toString() {
-        return violationCode + criticality + violDescription + repeated;
+        int endIndex = 15;
+        if (violDescription.length() < 16) {
+            endIndex = violDescription.length();
+        }
+        String returnString = String.format("%s: Violation %d, %s...",
+                criticality, violationCode, violDescription.substring(0, endIndex));
+
+        return returnString;
+    }
+
+
+    public String getViolationNature() {
+        String returnString = "N/A";
+        if ((violationCode > 100) && (violationCode < 105)) {
+            returnString = "Regulatory";
+        } else if ((violationCode > 200) && (violationCode < 212)) {
+            returnString = "Food";
+        } else if ((violationCode > 300) && (violationCode < 304)) {
+            returnString = "Sanitization";
+        } else if ((violationCode > 303) && (violationCode < 306)) {
+            returnString = "Pests";
+        } else if ((violationCode > 305) && (violationCode < 311)) {
+            returnString = "Sanitization";
+        } else if ((violationCode > 310) && (violationCode < 316)) {
+            returnString = "Facility";
+        } else if ((violationCode > 400) && (violationCode < 405)) {
+            returnString = "Employee";
+        } else if ((violationCode > 500) && (violationCode < 503)) {
+            returnString = "Operator";
+        }
+
+        return returnString;
     }
 }
+
