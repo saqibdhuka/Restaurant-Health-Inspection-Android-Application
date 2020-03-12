@@ -23,7 +23,7 @@
     <string name="inspection_type">Type :</string>
     <string name="inspection_hazard">Hazard :</string>
     <string name="inspection_violation">All Violations :</string>
-    <string name="inspection_violation_empty">This inspection has no associated violation.</string>
+    <string name="inspection_violation_empty"></string>
 
 
     <!--  Restaurant List View  -->
@@ -32,6 +32,8 @@
     <string name="resListView_hazard">Hazard level :</string>
     <string name="resListView_inspection">Recent Inspection :</string>
     <string name="resListView_date">Date :</string>
+    <string name="resListView_no_inspection">This restaurant has no inspection report.</string>
+
 
 
     <!--  Inspection List View  -->

@@ -1,6 +1,7 @@
 package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -68,6 +69,19 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 // Get maximum hazard and set the text:
                 DatabaseReader reader = new DatabaseReader(getApplicationContext());
                 ArrayList<InspectionReport> inspections = reader.getAssociatedInspections(restaurant.getTrackingNumber());
+
+
+                TextView empty = convertView.findViewById(R.id.resArrayList_res_no_inspection);
+                ConstraintLayout layout = convertView.findViewById(R.id.resArrayList_res_inspection_layout);
+                if(inspections.isEmpty()){
+                    empty.setVisibility(View.VISIBLE);
+                    layout.setVisibility(View.INVISIBLE);
+                }else {
+                    empty.setVisibility(View.INVISIBLE);
+                    layout.setVisibility(View.VISIBLE);
+                }
+
+
                 // Loop through all inspections and pull the worst one:
                 HazardRating restaurantRating = HazardRating.Low;
                 for (InspectionReport inspection : inspections) {
