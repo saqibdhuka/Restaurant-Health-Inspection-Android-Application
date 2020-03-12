@@ -45,7 +45,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/resArrayList_res_inspection_layout"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/resArrayList_ver30_guideline"
@@ -126,6 +126,8 @@
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:minHeight="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -161,30 +163,31 @@
 
             <ImageView
                 android:id="@+id/resArrayList_res_hazard_icon"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_marginTop="1dp"
                 android:foregroundGravity="left"
-                android:maxLines="1"
                 android:visibility="visible"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintStart_toEndOf="@+id/resArrayList_hazard_ver85_guideline"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/moderate_hazard_level" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/resArrayList_hazard_ver45_guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.45" />
+                app:layout_constraintGuide_percent="0.35" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/resArrayList_hazard_ver85_guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.85" />
+                app:layout_constraintGuide_percent="0.7" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
