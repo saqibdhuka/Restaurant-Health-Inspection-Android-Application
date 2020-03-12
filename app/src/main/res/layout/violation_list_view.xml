@@ -67,8 +67,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline4"
                 app:layout_constraintTop_toBottomOf="@+id/violationArrayList_vio_text"
-                app:srcCompat="@drawable/non_critical_violation"
-                android:visibility="invisible"/>
+                app:srcCompat="@drawable/non_critical_violation" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline4"
