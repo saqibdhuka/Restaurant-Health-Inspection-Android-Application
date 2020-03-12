@@ -254,7 +254,7 @@
             android:layout_height="0dp"
             android:layout_margin="0dp"
             android:text="@string/inspection_issue"
-            android:textAlignment="viewEnd"
+            android:gravity="center"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline_issue1"
