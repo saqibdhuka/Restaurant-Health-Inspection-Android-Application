@@ -159,12 +159,11 @@
                 app:layout_constraintStart_toEndOf="@+id/resArrayList_hazard_ver45_guideline"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/resArrayList_res_hazard_color"
+            <ImageView
+                android:id="@+id/resArrayList_res_hazard_icon"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_marginTop="1dp"
-                android:background="@color/colorGreen"
                 android:foregroundGravity="left"
                 android:maxLines="1"
                 android:visibility="visible"
