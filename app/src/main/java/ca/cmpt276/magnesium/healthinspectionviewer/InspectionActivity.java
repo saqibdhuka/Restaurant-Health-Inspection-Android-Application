@@ -14,6 +14,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.joda.time.LocalDate;
 
@@ -88,8 +89,6 @@ public class InspectionActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.inspection_date);
         date.setText(dateString);
 
-
-
         TextView empty = findViewById(R.id.inspection_violation_empty);
         ListView list = findViewById(R.id.inspection_violation_listView);
         if(inspection.getViolations().isEmpty()){
@@ -146,13 +145,32 @@ public class InspectionActivity extends AppCompatActivity {
                                                 R.id.violationArrayList_issue_lv);
                 criticality.setText(currentViolation.getCriticality());
 
-                TextView description = (TextView) convertView.findViewById(
-                                                R.id.violationArrayList_issue_description);
-                description.setText(currentViolation.getViolDescription());
+                ImageView criticalityIcon = convertView.findViewById(R.id.violationArrayList_vio_type);
+                if (currentViolation.getCriticality().toLowerCase().equals("critical")) {
+                    criticalityIcon.setImageDrawable(getDrawable(R.drawable.critical_violation));
+                } else if (currentViolation.getCriticality().toLowerCase().equals("non-critical")) {
+                    criticalityIcon.setImageDrawable(getDrawable(R.drawable.non_critical_violation));
+                }
 
-                TextView code = (TextView) convertView.findViewById(
+                TextView description = (TextView) convertView.findViewById(R.id.violationArrayList_issue_description);
+                description.setText(currentViolation.toString());
+
+                TextView nature = (TextView) convertView.findViewById(
                                                 R.id.violationArrayList_vio_lv);
-                code.setText(String.format("%d", currentViolation.getViolationCode()));
+                nature.setText(currentViolation.getViolationNature());
+
+                // Set this view's onClick activity:
+                convertView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // Show the full violation text via toast.
+                        Toast toast = Toast.makeText(
+                                getApplicationContext(),
+                                currentViolation.getViolDescription(),
+                                Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                });
 
 
                 return convertView;

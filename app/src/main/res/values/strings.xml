@@ -43,7 +43,7 @@
     <string name="inspectionListView_date">Date :</string>
 
     <!-- Violation List View  -->
-    <string name="violationArrayList_vio_text">Violation Code :</string>
+    <string name="violationArrayList_vio_text">Nature of Violation :</string>
     <string name="violationArrayList_issue_text">Issue :</string>
 
 
