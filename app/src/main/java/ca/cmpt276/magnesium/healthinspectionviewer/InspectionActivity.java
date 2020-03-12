@@ -11,6 +11,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -65,19 +66,19 @@ public class InspectionActivity extends AppCompatActivity {
         TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
         hazardLevel.setText(inspection.getHazardRating().toString());
 
-        View hazardColor = findViewById(R.id.inspection_hazard_color);
+        ImageView hazardIcon = findViewById(R.id.inspection_hazard_color);
         HazardRating hazardRating = inspection.getHazardRating();
         switch (hazardRating) {
             case High: {
-                hazardColor.setBackgroundColor(Color.RED);
+                hazardIcon.setImageResource(R.drawable.high_hazard_level);
                 break;
             }
             case Moderate: {
-                hazardColor.setBackgroundColor(Color.YELLOW);
+                hazardIcon.setImageResource(R.drawable.moderate_hazard_level);
                 break;
             }
             case Low: {
-                hazardColor.setBackgroundColor(Color.GREEN);
+                hazardIcon.setImageResource(R.drawable.low_hazard_level);
                 break;
             }
         }
