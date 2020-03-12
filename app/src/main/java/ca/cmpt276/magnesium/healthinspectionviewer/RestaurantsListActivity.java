@@ -82,18 +82,13 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 }
 
 
-                // Loop through all inspections and pull the worst one:
+                // Get HazardRating from last inspection:
                 HazardRating restaurantRating = HazardRating.Low;
-                for (InspectionReport inspection : inspections) {
-                    if (inspection.getHazardRating() == HazardRating.High) {
-                        restaurantRating = HazardRating.High;
-                    }
-
-                    if ((inspection.getHazardRating() == HazardRating.Moderate)
-                            && (restaurantRating == HazardRating.Low)) {
-                        restaurantRating = HazardRating.Moderate;
-                    }
+                // Only give a different rating if we have more than zero inspections:
+                if (inspections.size() > 0) {
+                    restaurantRating = inspections.get(0).getHazardRating();
                 }
+
 
                 // Now we should have the worst rating:
                 View hazardColor = convertView.findViewById(R.id.resArrayList_res_hazard_color);
