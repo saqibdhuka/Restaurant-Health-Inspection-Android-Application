@@ -18,6 +18,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minHeight="50dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toStartOf="@+id/violationArrayList_ver50_guideline"
         app:layout_constraintStart_toStartOf="parent"
@@ -46,14 +47,35 @@
                 android:id="@+id/violationArrayList_vio_lv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:maxLines="1"
+                android:paddingEnd="10dp"
                 android:text="@string/sample_violation_nature"
-                android:textAlignment="center"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/guideline4"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/violationArrayList_vio_text" />
+
+            <ImageView
+                android:id="@+id/violationArrayList_nature_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="5dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/guideline4"
+                app:layout_constraintTop_toBottomOf="@+id/violationArrayList_vio_text"
+                app:srcCompat="@drawable/non_critical_violation"
+                android:visibility="invisible"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.670" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,6 +85,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:minHeight="50dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toEndOf="@+id/violationArrayList_ver50_guideline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,10 +128,10 @@
                 android:id="@+id/violationArrayList_issue_lv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:gravity="right"
                 android:maxLines="1"
+                android:paddingEnd="10dp"
                 android:text="@string/sample_violation_issue"
-                android:gravity="end"
-                android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/violationArrayList_ver6_guideline"
@@ -123,8 +146,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/violationArrayList_issue_text"
                 app:layout_constraintStart_toEndOf="@id/violationArrayList_ver6_guideline"
-                app:srcCompat="@drawable/non_critical_violation"
-                />
+                app:srcCompat="@drawable/non_critical_violation"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
