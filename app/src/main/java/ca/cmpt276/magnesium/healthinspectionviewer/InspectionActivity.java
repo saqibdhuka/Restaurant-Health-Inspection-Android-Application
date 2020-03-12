@@ -84,6 +84,12 @@ public class InspectionActivity extends AppCompatActivity {
             }
         }
 
+        TextView numCrit = findViewById(R.id.inspection_crit);
+        numCrit.setText(Integer.valueOf(inspection.getNumCritical()).toString());
+
+        TextView numNonCrit = findViewById(R.id.inspection_noncrit);
+        numNonCrit.setText(Integer.valueOf(inspection.getNumNonCritical()).toString());
+
         LocalDate inspectionDate = inspection.getInspectionDate();
         String dateString = inspectionDate.toString("MMMM d, yyyy");
         TextView date = findViewById(R.id.inspection_date);
