@@ -152,18 +152,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@id/guideline2"/>
 
-        <View
+        <ImageView
             android:id="@+id/inspection_hazard_color"
-            android:layout_width="20dp"
-            android:layout_height="15dp"
-            android:layout_margin="5dp"
-            android:background="@color/colorGreen"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:maxLines="1"
             android:visibility="visible"
             app:autoSizeTextType="uniform"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline3"/>
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
@@ -178,6 +177,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintGuide_percent="0.67" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.76" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

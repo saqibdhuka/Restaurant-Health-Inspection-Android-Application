@@ -91,17 +91,17 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
 
                 // Now we should have the worst rating:
-                View hazardColor = convertView.findViewById(R.id.resArrayList_res_hazard_color);
+                ImageView hazardIcon = convertView.findViewById(R.id.resArrayList_res_hazard_icon);
                 TextView hazardText = convertView.findViewById(R.id.resArrayList_res_hazard_lv);
                 switch(restaurantRating) {
                     case Low:
-                        hazardColor.setBackgroundColor(Color.GREEN);
+                        hazardIcon.setImageResource(R.drawable.low_hazard_level);
                         break;
                     case Moderate:
-                        hazardColor.setBackgroundColor(Color.YELLOW);
+                        hazardIcon.setImageResource(R.drawable.moderate_hazard_level);
                         break;
                     case High:
-                        hazardColor.setBackgroundColor(Color.RED);
+                        hazardIcon.setImageResource(R.drawable.high_hazard_level);
                         break;
                 }
                 hazardText.setText(restaurantRating.toString());
