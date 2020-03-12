@@ -124,19 +124,19 @@ public class RestaurantActivity extends AppCompatActivity {
                 }
 
                 InspectionReport inspection = getItem(position);
-                View hazardColor = convertView.findViewById(R.id.inspectionArrayList_inspection_hazard_color);
+                ImageView hazardIcon = convertView.findViewById(R.id.inspectionArrayList_inspection_hazard_color);
                 HazardRating hazardRating = inspection.getHazardRating();
                 switch (hazardRating) {
                     case High: {
-                        hazardColor.setBackgroundColor(Color.RED);
+                        hazardIcon.setImageResource(R.drawable.high_hazard_level);
                         break;
                     }
                     case Moderate: {
-                        hazardColor.setBackgroundColor(Color.YELLOW);
+                        hazardIcon.setImageResource(R.drawable.moderate_hazard_level);
                         break;
                     }
                     case Low: {
-                        hazardColor.setBackgroundColor(Color.GREEN);
+                        hazardIcon.setImageResource(R.drawable.low_hazard_level);
                         break;
                     }
                 }
