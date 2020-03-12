@@ -1,0 +1,7 @@
+For icons used in the application, they were taken from these web resources:
+
+Low Hazard Icon: https://www.kindpng.com/imgv/hhxJwwm_danger-exclamation-warning-sign-attention-alert-danger-sign/
+Moderate Hazard Icon: https://www.nicepng.com/ourpic/u2e6t4t4r5y3e6t4_exclamation-mark-png-prop-65-warning-symbol/
+Hgh Hazard Icon: https://www.pngfuel.com/free-png/gmocm
+Green Check (non -critical) icon: https://www.pngfuel.com/free-png/aklpz
+Red cross icon: https://www.pngguru.com/free-transparent-background-png-clipart-nrtcd
