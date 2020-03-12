@@ -75,18 +75,18 @@
             android:layout_margin="0dp">
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/violationArrayList_ver75_guideline"
+                android:id="@+id/violationArrayList_ver6_guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.75" />
+                app:layout_constraintGuide_percent="0.6" />
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/violationArrayList_ver87_guideline"
+                android:id="@+id/violationArrayList_ver73_guideline"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.87" />
+                app:layout_constraintGuide_percent="0.73" />
 
             <TextView
                 android:id="@+id/violationArrayList_issue_text"
@@ -107,11 +107,11 @@
                 android:layout_height="wrap_content"
                 android:maxLines="1"
                 android:text="@string/sample_violation_issue"
-                android:textAlignment="center"
+                android:gravity="end"
                 android:textStyle="bold"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/violationArrayList_ver75_guideline"
+                app:layout_constraintEnd_toStartOf="@id/violationArrayList_ver6_guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/violationArrayList_issue_text" />
 
@@ -119,10 +119,10 @@
                 android:id="@+id/violationArrayList_vio_type"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:layout_constraintEnd_toStartOf="@id/violationArrayList_ver87_guideline"
+                app:layout_constraintEnd_toStartOf="@id/violationArrayList_ver73_guideline"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/violationArrayList_issue_text"
-                app:layout_constraintStart_toEndOf="@id/violationArrayList_ver75_guideline"
+                app:layout_constraintStart_toEndOf="@id/violationArrayList_ver6_guideline"
                 app:srcCompat="@drawable/non_critical_violation"
                 />
 
