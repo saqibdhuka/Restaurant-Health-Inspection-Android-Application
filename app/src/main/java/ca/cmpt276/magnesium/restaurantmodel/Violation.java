@@ -52,7 +52,7 @@ public class Violation {
         if (violDescription.length() < 16) {
             endIndex = violDescription.length();
         }
-        String returnString = String.format("%s: Violation %d, %s...",
+        String returnString = String.format("%s: Violation #%d, %s...",
                 criticality, violationCode, violDescription.substring(0, endIndex));
 
         return returnString;
