@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -83,6 +84,12 @@ public class InspectionActivity extends AppCompatActivity {
                 break;
             }
         }
+
+        TextView numCrit = findViewById(R.id.inspection_crit);
+        numCrit.setText(Integer.valueOf(inspection.getNumCritical()).toString());
+
+        TextView numNonCrit = findViewById(R.id.inspection_noncrit);
+        numNonCrit.setText(Integer.valueOf(inspection.getNumNonCritical()).toString());
 
         LocalDate inspectionDate = inspection.getInspectionDate();
         String dateString = inspectionDate.toString("MMMM d, yyyy");
@@ -157,7 +164,10 @@ public class InspectionActivity extends AppCompatActivity {
 
                 TextView nature = (TextView) convertView.findViewById(
                                                 R.id.violationArrayList_vio_lv);
-                nature.setText(currentViolation.getViolationNature());
+                String vioNature = currentViolation.getViolationNature();
+                ImageView natureIcon = convertView.findViewById(R.id.violationArrayList_nature_icon);
+                natureIcon.setImageDrawable(getDrawable(getNatureIcon(vioNature)));
+                nature.setText(vioNature);
 
                 // Set this view's onClick activity:
                 convertView.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +188,25 @@ public class InspectionActivity extends AppCompatActivity {
         };
 
         lv.setAdapter(adapter);
+    }
+
+    private int getNatureIcon(String vioNature) {
+        if (vioNature == "Regulatory") {
+            return R.drawable.regulatory;
+        } else if (vioNature == "Food") {
+            return R.drawable.food;
+        } else if (vioNature == "Sanitization") {
+            return R.drawable.sanitization;
+        } else if (vioNature == "Pests") {
+            return R.drawable.pests;
+        } else if (vioNature == "Facility") {
+            return R.drawable.facility;
+        } else if (vioNature == "Employee") {
+            return R.drawable.employee;
+        } else if (vioNature == "Operator") {
+            return R.drawable.operator;
+        }
+        return R.drawable.regulatory;
     }
 
 

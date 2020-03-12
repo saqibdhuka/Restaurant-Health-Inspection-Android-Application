@@ -233,6 +233,98 @@
 
     </LinearLayout>
 
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/inspection_issue_layout"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inspection_hor20_guideline">
+
+
+        <TextView
+            android:id="@+id/inspection_issue"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="0dp"
+            android:text="@string/inspection_issue"
+            android:gravity="center"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_issue1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/inspection_crit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:maxLines="1"
+            android:text="@string/inspection_crit"
+            android:textAlignment="textEnd"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="@+id/guideline_issue1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/inspection_crit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/sample_crit_num"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toEndOf="@+id/inspection_crit_text"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/inspection_noncrit_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:maxLines="1"
+            android:text="@string/inspection_noncrit"
+            android:textAlignment="textEnd"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline_issue1"
+            app:layout_constraintTop_toBottomOf="@+id/inspection_crit_text" />
+
+        <TextView
+            android:id="@+id/inspection_noncrit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="@string/sample_noncrit_num"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/inspection_noncrit_text"
+            app:layout_constraintTop_toBottomOf="@+id/inspection_crit" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_issue1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.19" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/inspection_violation_text"
         android:layout_width="wrap_content"
@@ -242,7 +334,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/inspection_ver18_guideline"
-        app:layout_constraintTop_toTopOf="@+id/inspection_hor20_guideline" />
+        app:layout_constraintTop_toBottomOf="@+id/inspection_issue_layout" />
 
     <ListView
         android:id="@+id/inspection_violation_listView"
