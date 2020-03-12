@@ -110,13 +110,6 @@ public class DatabaseReader {
         // Cursor to peruse all results:
         Cursor queryResults = facilityDB.rawQuery(allTrackingNumQuery, null);
 
-        // Randomly pick an icon for the listView:
-        ArrayList<Integer> iconsList = new ArrayList<Integer>();
-        iconsList.add(R.drawable.burger);
-        iconsList.add(R.drawable.fish);
-        iconsList.add(R.drawable.pizza);
-        iconsList.add(R.drawable.kitchen);
-
         // Now, go through the Cursor and add all resulting values to the ArrayList:
         // But only do it if the result is not empty.
         if (queryResults.moveToFirst()) {
@@ -158,9 +151,20 @@ public class DatabaseReader {
                     facilityType = null;
                 }
 
+                // Set the restaurant ID based on a few context clues:
+                Integer iconID;
+                if (name.toLowerCase().contains("pizza")) {
+                    iconID = R.drawable.pizza;
+                } else if (name.toLowerCase().contains("seafood")
+                        || name.toLowerCase().contains("sushi")) {
+                    iconID = R.drawable.fish;
+                } else if (name.toLowerCase().contains("burger")) {
+                    iconID = R.drawable.burger;
+                } else {
+                    // Default "generic" icon: kitchen
+                    iconID = R.drawable.kitchen;
+                }
 
-                Integer iconIndex = (int)Math.round((Math.random() * (iconsList.size() - 1)));
-                Integer iconID = iconsList.get(iconIndex);
 
 
                 String inspectionString =
