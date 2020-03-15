@@ -37,7 +37,6 @@
     <string name="resListView_no_inspection">This restaurant has no inspection report.</string>
 
 
-
     <!--  Inspection List View  -->
     <string name="inspectionListView_hazard">Hazard level :</string>
     <string name="inspectionListView_crit"># critical issues :</string>
@@ -64,6 +63,15 @@
     <string name="sample_violation_nature">Sanitization</string>
     <string name="sample_violation_issue">non-critical</string>
     <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
+    <string name="title_activity_map_screen">MapScreen</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
 
 </resources>

@@ -11,6 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".MapScreen"
+            android:label="@string/title_activity_map_screen"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".RestaurantActivity"
             android:label="@string/restaurant_title"
             android:theme="@style/AppTheme.NoActionBar" />
