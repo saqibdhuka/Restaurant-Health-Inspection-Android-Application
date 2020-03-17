@@ -160,6 +160,8 @@ public class DatabaseReader {
                     iconID = R.drawable.fish;
                 } else if (name.toLowerCase().contains("burger")) {
                     iconID = R.drawable.burger;
+                } else if(name.toLowerCase().contains("a&w")){
+                    iconID = R.drawable.aandw;
                 } else {
                     // Default "generic" icon: kitchen
                     iconID = R.drawable.kitchen;
