@@ -5,15 +5,15 @@
 As a team, we are expected to implement the features requested in the 'user stories' page.
 The end result should be a useful Android app to view health inspection report data, and one that works well on various screen sizes.
 
-## Iteration 1 Roles
+## Iteration 2 Roles
 
-### [Product Owner](https://www.mountaingoatsoftware.com/agile/scrum/roles/product-owner) - Minh
+### [Product Owner](https://www.mountaingoatsoftware.com/agile/scrum/roles/product-owner) - Saqib
 
-### [Scrum Master](https://www.mountaingoatsoftware.com/agile/scrum/roles/scrummaster) - Justin
+### [Scrum Master](https://www.mountaingoatsoftware.com/agile/scrum/roles/scrummaster) - Devon
 
-### Repo Manager - Devon
+### Repo Manager - Justin
 
-### Team Member - Saqib
+### Team Member - Minh
 
 ## Git Rules
 
