@@ -42,6 +42,13 @@ public class RestaurantsListActivity extends AppCompatActivity {
         populateListView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check if we need to prompt for updates:
+        DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
+    }
+
     private void populateListView() {
         ListView lv = findViewById(R.id.resList_restaurants_listView);
         adapter = new BaseAdapter() {
