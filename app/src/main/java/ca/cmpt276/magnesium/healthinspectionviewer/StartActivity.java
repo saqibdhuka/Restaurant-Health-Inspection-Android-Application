@@ -6,12 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import java.util.ArrayList;
-
+import ca.cmpt276.magnesium.restaurantmodel.DataUpdater;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperFacility;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperInspection;
-import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
-import ca.cmpt276.magnesium.restaurantmodel.Facility;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -19,6 +16,11 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        // Begin async task to check for updates from the City of Surrey API:
+        // Will not download any data, but check the "last modified" dates
+        // and store a boolean in SharedPrefs if something has changed.
+        DataUpdater.checkForAvailableUpdates(getApplicationContext());
 
         DatabaseHelperFacility dbFacility = new DatabaseHelperFacility(this);
         dbFacility.getWritableDatabase();
