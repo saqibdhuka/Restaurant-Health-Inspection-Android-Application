@@ -36,7 +36,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_list);
-        DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
+        //DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
 
         addRestaurants();
         populateListView();

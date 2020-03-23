@@ -8,7 +8,6 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,7 +32,7 @@ public class ReadingCSVInspection {
         ArrayList<InspectionReport> inspectionArrayList = new ArrayList<InspectionReport>();
 
         try{
-            is =  context.getResources().openRawResource(R.raw.inspectionreports_itr1);
+            is =  context.getResources().openRawResource(R.raw.inspectionreports_current);
             bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
             //Save line we get from csv file
