@@ -88,6 +88,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
             public void onClick(View view) {
                 Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(MapScreen.this);
                 startActivity(intent);
+                finish();
             }
         });
     }
