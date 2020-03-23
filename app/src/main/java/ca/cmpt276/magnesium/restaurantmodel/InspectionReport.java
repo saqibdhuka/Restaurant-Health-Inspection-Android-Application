@@ -44,8 +44,10 @@ public class InspectionReport {
         if (inspecType.toLowerCase().equals("followup")
                 || inspecType.toLowerCase().equals("follow-up")) {
             inspectionType = InspectionType.FollowUp;
-        } else {
+        } else if(inspecType.toLowerCase().equals("routine")){
             inspectionType = InspectionType.Routine;
+        } else{
+            inspectionType = InspectionType.None;
         }
 
         String lowercaseRating = hazardRate.toLowerCase();
