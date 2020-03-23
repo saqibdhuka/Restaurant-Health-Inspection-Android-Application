@@ -29,7 +29,6 @@ public class ReadingCSVFacility {
         BufferedReader bufferedReader = null;
         ArrayList<Facility> facilityArrayList = new ArrayList<Facility>();
         SharedPreferences prefs = context.getSharedPreferences(DataUpdater.prefsFile, 0);
-
         try{
             // Try to use the new file, but fallback to the default if necessary.
             String fileLocation = prefs.getString(DataUpdater.downloadedRestaurantFilenameKey, null);
@@ -46,7 +45,7 @@ public class ReadingCSVFacility {
 
             bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
-            //Save line we get from csv file
+            // Save line we get from csv file
             String line = null;
 
             //Save Facility
@@ -55,24 +54,44 @@ public class ReadingCSVFacility {
             bufferedReader.readLine(); // Skip first line since tha is column name
             while (true){
                 //read line
-                line = bufferedReader.readLine().replace("\"", "");
+                line = bufferedReader.readLine();
 
-                //Check if line exists
-                if(line == null){
+                // Check if line exists
+                if (line != null){
+                    strFacility = line.replace("\"", "").split(",");
+                    int index = 0;
+                    String trackingNumber = strFacility[index];
+                    index++;
+                    String name;
+                    if (strFacility.length == 7) {
+                        name = strFacility[index];
+                        index++;
+                    } else {
+                        name = strFacility[index] + ", " + strFacility[index + 1];
+                        index += 2;
+                    }
+                    String address = strFacility[index];
+                    index++;
+                    String city = strFacility[index];
+                    index++;
+                    String facilityType = strFacility[index];
+                    index++;
+                    Double latitude = Double.parseDouble(strFacility[index]);;
+                    index++;
+                    Double longitude = Double.parseDouble(strFacility[index]);
+                    facilityArrayList.add(new Facility(trackingNumber, name,
+                            address, city,
+                            facilityType,
+                            latitude,
+                            longitude));
+                } else {
                     break;
-                }else{
-                    strFacility = line.split(",");
-                    facilityArrayList.add(new Facility(strFacility[0], strFacility[1],
-                                                        strFacility[2], strFacility[3],
-                                                        strFacility[4],
-                                                        Double.parseDouble(strFacility[5]),
-                                                        Double.parseDouble((strFacility[6]))));
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e){
             Log.d("DEBUG FILE ERROR", "Error Reading File");
             e.printStackTrace();
-        }finally {
+        } finally {
             try {
                 bufferedReader.close();
                 is.close();
