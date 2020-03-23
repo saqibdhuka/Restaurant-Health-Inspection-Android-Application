@@ -68,18 +68,41 @@ public class ReadingCSVInspection {
                 }
 
                 strInspection = line.trim().split(",");
-                Log.d("STRING_INPECTION_LENGTH", "" + strInspection.length);
+                // Disable logging for performance benefits
+                // Log.d("STRING_INPECTION_LENGTH", "" + strInspection.length);
 
                 //InspectionReport(String track, String date, String inspecType, int critical,
                 //                            int nonCritical, String hazardRate, String statement)
+
+                String hazardRating;
+                int violStartIndex = 5;
+                int numCritical = Integer.parseInt(strInspection[3]);
+                int numNonCritical = Integer.parseInt(strInspection[4]);
+                if ((strInspection[5].equalsIgnoreCase("Low")) ||
+                        (strInspection[5].equalsIgnoreCase("Moderate")) ||
+                        (strInspection[5].equalsIgnoreCase("High"))) {
+                    violStartIndex = 6;
+                    hazardRating = strInspection[5];
+                } else {
+                    if ((numCritical + numNonCritical) == 0) {
+                        hazardRating = "Low";
+                    } else if ((numCritical < 3) && ((numCritical + numNonCritical) < 6)) {
+                        hazardRating = "Moderate";
+                    } else {
+                        hazardRating = "High";
+                    }
+                }
+
                 String violation;
-                if (strInspection.length == 6){
+                if (strInspection.length <= 6){
                     violation = " ";
                 } else {
-                    violation = strInspection[6];
-                    for (int i = 7; i < strInspection.length; i++) {
-                        violation += "," + strInspection[i];
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = violStartIndex; i < strInspection.length; i++) {
+                        builder.append(strInspection[i]);
+                        builder.append(",");
                     }
+                    violation = builder.toString();
                 }
 
                 DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyyMMdd");
@@ -87,8 +110,8 @@ public class ReadingCSVInspection {
                 LocalDate inspectionLocalDate = formatter.parseLocalDate(inspectionDate);
 
                 inspectionArrayList.add(new InspectionReport(strInspection[0], inspectionLocalDate, strInspection[2],
-                        Integer.parseInt(strInspection[3]), Integer.parseInt(strInspection[4]),
-                        strInspection[5], violation));
+                        numCritical, numNonCritical,
+                       hazardRating, violation));
 
 
 
