@@ -16,21 +16,13 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        DataUpdater.updateDatabase(this);
 
         // Begin async task to check for updates from the City of Surrey API:
         // Will not download any data, but check the "last modified" dates
         // and store a boolean in SharedPrefs if something has changed.
         DataUpdater.checkForAvailableUpdates(getApplicationContext());
 
-        DatabaseHelperFacility dbFacility = new DatabaseHelperFacility(this);
-        dbFacility.getWritableDatabase();
-        dbFacility.insertData();
-        dbFacility.close();
-
-        DatabaseHelperInspection dbInspection = new DatabaseHelperInspection(this);
-        dbInspection.getWritableDatabase();
-        dbInspection.insertData();
-        dbInspection.close();
 
         autoSwitchRestaurantList();
     }

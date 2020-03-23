@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -15,11 +17,13 @@ import com.android.volley.toolbox.Volley;
 import com.downloader.Error;
 import com.downloader.OnDownloadListener;
 import com.downloader.PRDownloader;
+import com.downloader.Progress;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jakewharton.processphoenix.ProcessPhoenix;
 
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
@@ -61,10 +65,20 @@ public class DataUpdater {
     private static final String updateIgnoredString = "update_dismissed";
     private static final String lastCheckDateString = "dataUpdater_last_checked";
 
+    private static final String inProgressDownloadRestaurantIDKey = "dataUpdater_restaurant_download_id";
+    private static final String inProgressDownloadInspectionIDKey = "dataUpdater_inspection_download_id";
+
     public static final String downloadedRestaurantFilenameKey = "dataUpdater_restaurant_filename";
     public static final String downloadedInspectionFilenameKey = "dataUpdater_inspection_filename";
 
+    private static final String dbUpdateRequiredKey = "dataUpdater_dbRequiredUpdate_key";
+    private static final String dbUpdateFirstRun = "dataUpdater_dbUninit";
+
     private static final String TAG = "DataUpdater";
+
+    private static AlertDialog.Builder progressBarBuilder;
+    private static AlertDialog progressDialog;
+    private static ProgressBar progress;
 
 
     // Use GET request to query City of Surrey website
@@ -216,7 +230,7 @@ public class DataUpdater {
                 alertBuilder.setPositiveButton("Update Now", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        downloadFiles(callerContext); // TODO add progress bar to download!
+                        downloadFiles(callerContext);
                     }
                 });
 
@@ -242,6 +256,7 @@ public class DataUpdater {
     // Saves to local, internal (read: private to this application) directory.
     // Updates sharedPreferences with the filenames of these new files.
     private static void downloadFiles(Context callerContext) {
+
         PRDownloader.initialize(callerContext);
         SharedPreferences prefs = callerContext.getSharedPreferences(prefsFile, 0);
         boolean restaurantsNeedUpdate = prefs.getBoolean(updateAvailableRestaurantBool, false);
@@ -249,6 +264,12 @@ public class DataUpdater {
 
         Integer restaurantDownloadID = null;
         Integer inspectionDownloadID = null;
+
+        if (restaurantsNeedUpdate || inspectionsNeedUpdate) {
+            progressDialog = getProgressDialog(callerContext).create();
+            progressDialog.show();
+        }
+        SharedPreferences.Editor edit = prefs.edit();
 
         if (restaurantsNeedUpdate) {
             String restaurantURL = prefs.getString(restaurantCsvUrlKey, null);
@@ -263,11 +284,13 @@ public class DataUpdater {
                         .download(restaurantURL, callerContext.getExternalFilesDirs(null)[0].getAbsolutePath(), downloadFilename).build().start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
-                                Log.i(TAG, "onDownloadComplete: successfully downloaded new restaurant CSV.");
+                                Log.d(TAG, "onDownloadComplete: successfully downloaded new restaurant CSV.");
                                 SharedPreferences.Editor edit = prefs.edit();
                                 edit.putString(downloadedRestaurantFilenameKey, downloadedRestaurant.getAbsolutePath());
                                 edit.putBoolean(updateAvailableRestaurantBool, false);
+                                edit.putBoolean(dbUpdateRequiredKey, true);
                                 edit.apply();
+                                dismissDialog(callerContext);
                             }
 
                             @Override
@@ -275,8 +298,10 @@ public class DataUpdater {
                                 Log.e(TAG, error.toString());
                             }
                         });
+                edit.putInt(inProgressDownloadRestaurantIDKey, restaurantDownloadID);
             }
         }
+        edit.apply();
         if (inspectionsNeedUpdate) {
             String inspectionURL = prefs.getString(inspectionCsvUrlKey, null);
             if (inspectionURL != null) {
@@ -291,11 +316,13 @@ public class DataUpdater {
                         .start(new OnDownloadListener() {
                             @Override
                             public void onDownloadComplete() {
-                                Log.i(TAG, "onDownloadComplete: successfully downloaded new inspection CSV.");
+                                Log.d(TAG, "onDownloadComplete: successfully downloaded new inspection CSV.");
                                 SharedPreferences.Editor edit = prefs.edit();
                                 edit.putString(downloadedInspectionFilenameKey, downloadedInspections.getAbsolutePath());
                                 edit.putBoolean(updateAvailableInspectionBool, false);
+                                edit.putBoolean(dbUpdateRequiredKey, true);
                                 edit.apply();
+                                dismissDialog(callerContext);
                             }
 
                             @Override
@@ -303,7 +330,119 @@ public class DataUpdater {
                                 Log.e(TAG, error.toString());
                             }
                         });
+                edit.putInt(inProgressDownloadInspectionIDKey, inspectionDownloadID);
             }
+        }
+        edit.apply();
+    }
+
+    // Helper function: getProgressDialog().
+    // Much of this was inspired by
+    // https://stackoverflow.com/questions/10977150/showing-progress-bar-in-alert-dialog
+    private static AlertDialog.Builder getProgressDialog(Context callerContext) {
+        if (progressBarBuilder == null) {
+            progressBarBuilder = new AlertDialog.Builder(callerContext);
+            progressBarBuilder.setTitle("Downloading new data...");
+            progress = new ProgressBar(callerContext);
+            // Create an inline LinearLayout and add this progressBar to it:
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            progress.setLayoutParams(params);
+            progressBarBuilder.setView(progress);
+            progressBarBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    cancelDownloads(callerContext);
+                    progressDialog.dismiss();
+                }
+            });
+        }
+        return progressBarBuilder;
+    }
+
+    // Helper function: dismissDialog()
+    // Ensures that we only close the dialog when
+    // both are finished.
+    private static void dismissDialog(Context callerContext) {
+        SharedPreferences prefs = callerContext.getSharedPreferences(prefsFile, 0);
+        boolean restaurantsNeedUpdate = prefs.getBoolean(updateAvailableRestaurantBool, false);
+        boolean inspectionsNeedUpdate = prefs.getBoolean(updateAvailableInspectionBool, false);
+        if (!restaurantsNeedUpdate && !inspectionsNeedUpdate) {
+            if (progressDialog != null) {
+                // Set the download ID to invalid int so we don't double-cancel:
+                SharedPreferences.Editor edit = prefs.edit();
+                edit.putInt(inProgressDownloadInspectionIDKey, -1);
+                edit.putInt(inProgressDownloadRestaurantIDKey, -1);
+                edit.apply();
+                progressDialog.dismiss();
+                // Create a dialog telling the user to restart the app for new data.
+                AlertDialog.Builder builder = new AlertDialog.Builder(callerContext);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setMessage("Data successfully updated. Please restart this application to use new data.");
+                builder.create().show();
+            }
+        } else {
+            if (!restaurantsNeedUpdate || !inspectionsNeedUpdate) {
+                // Set progress to 50%
+                if (progress != null) {
+                    progress.setProgress(progress.getMax() / 2);
+                }
+            }
+        }
+    }
+
+    // Helper function: cancelDownloads();
+    // Cancels downloads in progress with given IDs.
+    private static void cancelDownloads(Context callerContext) {
+        SharedPreferences prefs = callerContext.getSharedPreferences(prefsFile, 0);
+        SharedPreferences.Editor edit = prefs.edit();
+        int restaurantDownloadID = prefs.getInt(inProgressDownloadRestaurantIDKey, -1);
+        int inspectionDownloadID = prefs.getInt(inProgressDownloadInspectionIDKey, -1);
+        if (restaurantDownloadID != -1) {
+            PRDownloader.cancel(restaurantDownloadID);
+        }
+        if (inspectionDownloadID != -1) {
+            PRDownloader.cancel(inspectionDownloadID);
+        }
+
+        // Set these to -1:
+        edit.putInt(inProgressDownloadInspectionIDKey, -1);
+        edit.putInt(inProgressDownloadRestaurantIDKey, -1);
+        edit.apply();
+    }
+
+    // Helper method: updateDatabase()
+    // Only does work when new data is available for the db.
+    public static void updateDatabase(Context callerContext) {
+        SharedPreferences prefs = callerContext.getSharedPreferences(prefsFile, 0); // 0 means private mode
+        boolean dbUpdateRequired = prefs.getBoolean(dbUpdateRequiredKey, false);
+        boolean firstRun = prefs.getBoolean(dbUpdateFirstRun, true);
+        if (firstRun) {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(dbUpdateFirstRun, false);
+            edit.apply();
+            dbUpdateRequired = true;
+        }
+        if (dbUpdateRequired) {
+            DatabaseHelperFacility dbFacility = new DatabaseHelperFacility(callerContext);
+            dbFacility.getWritableDatabase();
+            dbFacility.insertData();
+            dbFacility.close();
+
+            DatabaseHelperInspection dbInspection = new DatabaseHelperInspection(callerContext);
+            dbInspection.getWritableDatabase();
+            dbInspection.insertData();
+            dbInspection.close();
+
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(dbUpdateRequiredKey, false);
+            edit.apply();
         }
     }
 }
