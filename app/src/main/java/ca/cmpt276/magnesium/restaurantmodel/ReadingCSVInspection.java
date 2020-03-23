@@ -1,6 +1,7 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import org.joda.time.LocalDate;
@@ -8,6 +9,8 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -27,15 +30,28 @@ public class ReadingCSVInspection {
     }
 
     public static ArrayList<InspectionReport> getInspectionFromTextFile(){
+
         InputStream is = null;
         BufferedReader bufferedReader = null;
         ArrayList<InspectionReport> inspectionArrayList = new ArrayList<InspectionReport>();
+        SharedPreferences prefs = context.getSharedPreferences(DataUpdater.prefsFile, 0);
 
         try{
-            is =  context.getResources().openRawResource(R.raw.inspectionreports_current);
+            // Try to use the new file, but fallback to the default if necessary.
+            String fileLocation = prefs.getString(DataUpdater.downloadedInspectionFilenameKey, null);
+            if (fileLocation != null) {
+                File downloadedInspections = new File(fileLocation);
+                if (downloadedInspections.exists()) {
+                    is = new FileInputStream(downloadedInspections);
+                } else {
+                    is =  context.getResources().openRawResource(R.raw.inspectionreports_current);
+                }
+            } else {
+                is =  context.getResources().openRawResource(R.raw.inspectionreports_current);
+            }
             bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
-            //Save line we get from csv file
+            // Save line we get from csv file
             String line = null;
 
             //Save InspectionReport

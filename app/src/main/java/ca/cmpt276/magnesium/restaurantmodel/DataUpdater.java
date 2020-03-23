@@ -1,12 +1,10 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
 import android.app.AlertDialog;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Environment;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -14,6 +12,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.downloader.Error;
+import com.downloader.OnDownloadListener;
+import com.downloader.PRDownloader;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,14 +24,7 @@ import com.google.gson.JsonObject;
 import org.joda.time.DateTime;
 import org.joda.time.Hours;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-
-import static android.content.Context.DOWNLOAD_SERVICE;
 
 /**
  *  DataUpdater class
@@ -67,8 +61,10 @@ public class DataUpdater {
     private static final String updateIgnoredString = "update_dismissed";
     private static final String lastCheckDateString = "dataUpdater_last_checked";
 
-    private static final String downloadedRestaurantFilenameKey = "dataUpdater_restaurant_filename";
-    private static final String downloadedInspectionFilenameKey = "dataUpdater_inspection_filename";
+    public static final String downloadedRestaurantFilenameKey = "dataUpdater_restaurant_filename";
+    public static final String downloadedInspectionFilenameKey = "dataUpdater_inspection_filename";
+
+    private static final String TAG = "DataUpdater";
 
 
     // Use GET request to query City of Surrey website
@@ -77,8 +73,7 @@ public class DataUpdater {
     public static void checkForAvailableUpdates(Context callerContext) {
         resetIgnoreBoolean(callerContext);
         Hours timeSinceLastUpdated = numHoursSinceUpdate(callerContext);
-        // TODO change -1 to 20, this is for debug only
-        if (timeSinceLastUpdated.isGreaterThan(Hours.hours(-1))) {
+        if (timeSinceLastUpdated.isGreaterThan(Hours.hours(20))) {
             // Do this in an async way, so Android lets us continue!
             RequestQueue queue = Volley.newRequestQueue(callerContext);
             // Check the restaurant json file for updates (i.e. new restaurants):
@@ -221,7 +216,7 @@ public class DataUpdater {
                 alertBuilder.setPositiveButton("Update Now", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        downloadFiles(callerContext);
+                        downloadFiles(callerContext); // TODO add progress bar to download!
                     }
                 });
 
@@ -245,11 +240,15 @@ public class DataUpdater {
     // Helper function: downloadFiles()
     // Uses DownloadManager to download the newly-updated files.
     // Saves to local, internal (read: private to this application) directory.
+    // Updates sharedPreferences with the filenames of these new files.
     private static void downloadFiles(Context callerContext) {
+        PRDownloader.initialize(callerContext);
         SharedPreferences prefs = callerContext.getSharedPreferences(prefsFile, 0);
         boolean restaurantsNeedUpdate = prefs.getBoolean(updateAvailableRestaurantBool, false);
         boolean inspectionsNeedUpdate = prefs.getBoolean(updateAvailableInspectionBool, false);
-        DownloadManager manager = (DownloadManager)callerContext.getSystemService(DOWNLOAD_SERVICE);
+
+        Integer restaurantDownloadID = null;
+        Integer inspectionDownloadID = null;
 
         if (restaurantsNeedUpdate) {
             String restaurantURL = prefs.getString(restaurantCsvUrlKey, null);
@@ -260,20 +259,24 @@ public class DataUpdater {
                         .replace("-", "_")
                         + ".csv";
                 File downloadedRestaurant = new File(callerContext.getExternalFilesDirs(null)[0], downloadFilename);
-                DownloadManager.Request restaurantRequest =
-                        new DownloadManager.Request(Uri.parse(restaurantURL))
-                                .setTitle("Restaurant Data")
-                                .setDescription("Downloading")
-                                .setDestinationUri(Uri.fromFile(downloadedRestaurant));
-                if (manager != null) {
-                    SharedPreferences.Editor edit = prefs.edit();
-                    edit.putString(downloadedRestaurantFilenameKey, downloadedRestaurant.getAbsolutePath());
-                    edit.apply();
-                    manager.enqueue(restaurantRequest);
-                }
+                restaurantDownloadID = PRDownloader
+                        .download(restaurantURL, callerContext.getExternalFilesDirs(null)[0].getAbsolutePath(), downloadFilename).build().start(new OnDownloadListener() {
+                            @Override
+                            public void onDownloadComplete() {
+                                Log.i(TAG, "onDownloadComplete: successfully downloaded new restaurant CSV.");
+                                SharedPreferences.Editor edit = prefs.edit();
+                                edit.putString(downloadedRestaurantFilenameKey, downloadedRestaurant.getAbsolutePath());
+                                edit.putBoolean(updateAvailableRestaurantBool, false);
+                                edit.apply();
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                Log.e(TAG, error.toString());
+                            }
+                        });
             }
         }
-
         if (inspectionsNeedUpdate) {
             String inspectionURL = prefs.getString(inspectionCsvUrlKey, null);
             if (inspectionURL != null) {
@@ -283,21 +286,24 @@ public class DataUpdater {
                         .replace("-", "_")
                         + ".csv";
                 File downloadedInspections = new File(callerContext.getExternalFilesDirs(null)[0], downloadFilename);
-                DownloadManager.Request inspectionRequest =
-                        new DownloadManager.Request(Uri.parse(inspectionURL))
-                                .setTitle("Inspection Data")
-                                .setDescription("Downloading")
-                                .setDestinationUri(Uri.fromFile(downloadedInspections));
-                if (manager != null) {
-                    SharedPreferences.Editor edit = prefs.edit();
-                    edit.putString(downloadedInspectionFilenameKey, downloadedInspections.getAbsolutePath());
-                    edit.apply();
-                    manager.enqueue(inspectionRequest);
-                }
+                inspectionDownloadID = PRDownloader.download(inspectionURL, callerContext.getExternalFilesDirs(null)[0].getAbsolutePath(), downloadFilename)
+                        .build()
+                        .start(new OnDownloadListener() {
+                            @Override
+                            public void onDownloadComplete() {
+                                Log.i(TAG, "onDownloadComplete: successfully downloaded new inspection CSV.");
+                                SharedPreferences.Editor edit = prefs.edit();
+                                edit.putString(downloadedInspectionFilenameKey, downloadedInspections.getAbsolutePath());
+                                edit.putBoolean(updateAvailableInspectionBool, false);
+                                edit.apply();
+                            }
+
+                            @Override
+                            public void onError(Error error) {
+                                Log.e(TAG, error.toString());
+                            }
+                        });
             }
         }
-        // Debug files. TODO remove these.
-//        File downloadedInspection = new File(prefs.getString(downloadedInspectionFilenameKey, ""));
-//        File downloadedRestaurants = new File(prefs.getString(downloadedRestaurantFilenameKey, ""));
     }
 }

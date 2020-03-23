@@ -1,9 +1,12 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,9 +28,22 @@ public class ReadingCSVFacility {
         InputStream is = null;
         BufferedReader bufferedReader = null;
         ArrayList<Facility> facilityArrayList = new ArrayList<Facility>();
+        SharedPreferences prefs = context.getSharedPreferences(DataUpdater.prefsFile, 0);
 
         try{
-            is = context.getResources().openRawResource(R.raw.restaurants_current);
+            // Try to use the new file, but fallback to the default if necessary.
+            String fileLocation = prefs.getString(DataUpdater.downloadedRestaurantFilenameKey, null);
+            if (fileLocation != null) {
+                File downloadedRestaurants = new File(fileLocation);
+                if (downloadedRestaurants.exists()) {
+                    is = new FileInputStream(downloadedRestaurants);
+                } else {
+                    is = context.getResources().openRawResource(R.raw.restaurants_current);
+                }
+            } else {
+                is = context.getResources().openRawResource(R.raw.restaurants_current);
+            }
+
             bufferedReader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
             //Save line we get from csv file
