@@ -378,10 +378,11 @@ public class DataUpdater {
                 progressDialog.dismiss();
                 // Create a dialog telling the user to restart the app for new data.
                 AlertDialog.Builder builder = new AlertDialog.Builder(callerContext);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        ProcessPhoenix.triggerRebirth(callerContext);
                     }
                 });
                 builder.setMessage("Data successfully updated. Please restart this application to use new data.");

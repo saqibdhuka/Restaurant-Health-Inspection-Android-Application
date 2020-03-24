@@ -23,7 +23,6 @@ public class StartActivity extends AppCompatActivity {
         // and store a boolean in SharedPrefs if something has changed.
         DataUpdater.checkForAvailableUpdates(getApplicationContext());
 
-
         autoSwitchRestaurantList();
     }
 
