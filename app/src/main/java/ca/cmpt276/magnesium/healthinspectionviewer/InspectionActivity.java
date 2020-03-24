@@ -2,7 +2,6 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,7 +53,7 @@ public class InspectionActivity extends AppCompatActivity {
         Facility currentFacility = facilities.get(facilityIndex);
 
         String trackingNo = currentFacility.getTrackingNumber();
-        ArrayList<InspectionReport> reports = reader.getAssociatedInspections(trackingNo);
+        ArrayList<InspectionReport> reports = reader.getAllAssociatedInspections(trackingNo);
         int inspectionIndex = getIntent().getIntExtra(EXTRA_INSPECT_ID, 0);
         inspection = reports.get(inspectionIndex);
 
