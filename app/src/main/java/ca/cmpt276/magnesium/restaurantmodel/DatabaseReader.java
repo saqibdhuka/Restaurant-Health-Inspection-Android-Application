@@ -177,7 +177,7 @@ public class DatabaseReader {
                     iconID = R.drawable.subway;
                 } else if(name.toLowerCase().contains("starbucks")){
                     iconID = R.drawable.starbucks;
-                } else if(name.toLowerCase().contains("burger")
+                } if(name.toLowerCase().contains("burger")
                         && name.toLowerCase().contains("king")){
                     iconID = R.drawable.burgerking;
                 } else if(name.toLowerCase().contains("wendy's")){
