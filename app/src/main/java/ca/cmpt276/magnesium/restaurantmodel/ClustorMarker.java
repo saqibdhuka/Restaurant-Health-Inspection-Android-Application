@@ -17,11 +17,10 @@ public class ClustorMarker implements ClusterItem {
         this.hazardLevel = hazardLevel;
         this.address = address;
         this.iconPicture = iconPicture;
-        snippet = "Adress: " + address + "\nHazard Level: " + hazardLevel;
+        snippet = "Address: " + address + "\n" + "Hazard Level: " + hazardLevel.toString();
     }
 
     public ClustorMarker(){
-
     }
 
     public LatLng getPostiion() {

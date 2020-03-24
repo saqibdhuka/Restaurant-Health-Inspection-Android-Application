@@ -40,10 +40,10 @@ public class ClusterRenderer extends DefaultClusterRenderer<ClustorMarker> {
 
     @Override
     protected void onBeforeClusterItemRendered(ClustorMarker item, MarkerOptions markerOptions) {
-
         imageView.setImageResource(item.getIconPicture());
         Bitmap icon = iconGenerator.makeIcon();
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getTitle());
+        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(icon)).title(item.getTitle()).snippet(item.getSnippet());
+
     }
 
     @Override
