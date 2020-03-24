@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -26,6 +28,7 @@ import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 public class RestaurantActivity extends AppCompatActivity {
 
     private final static String EXTRA_REST_ID = "RestaurantActivity_restaurantID";
+    private static final int ACTIVITY_REST_WINDOW = 200;
 
     private List<InspectionReport> inspections = new ArrayList<InspectionReport>();
     private BaseAdapter adapter;
@@ -65,6 +68,20 @@ public class RestaurantActivity extends AppCompatActivity {
             list.setVisibility(View.VISIBLE);
         }
 
+        setupGPSToMap();
+
+    }
+
+    private void setupGPSToMap() {
+        View gps = findViewById(R.id.res_coords_layout);
+        gps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().putExtra("restTrackNum", currentRestaurant.getTrackingNumber());
+                setResult(ACTIVITY_REST_WINDOW,intent);
+                finish();
+            }
+        });
     }
 
     private void setupToolbar() {
@@ -165,6 +182,5 @@ public class RestaurantActivity extends AppCompatActivity {
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         inspections = reader.getAssociatedInspections(currentRestaurant.getTrackingNumber());
     }
-
 
 }

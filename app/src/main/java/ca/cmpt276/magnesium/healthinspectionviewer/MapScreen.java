@@ -52,7 +52,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
     GoogleMap map;
     Button restListBtn;
 
-    private static final int ACIVITY_RESTLIST_BUTTON = 100;
+    private static final int ACTIVITY_REST_LIST_BUTTON = 100;
+    private static final int ACTIVITY_REST_WINDOW = 200;
 
     private static final String TAG = "MapScreen";
     private static final float DEFAULT_ZOOM = 12f;
@@ -96,7 +97,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
             @Override
             public void onClick(View view) {
                 Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(MapScreen.this);
-                startActivityForResult(intent, ACIVITY_RESTLIST_BUTTON);
+                startActivityForResult(intent, ACTIVITY_REST_LIST_BUTTON);
             }
         });
     }
@@ -124,7 +125,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
                 Facility markerFacility = (Facility) marker.getTag();
                 int pos = listFacility.indexOf(markerFacility);
                 Intent i = RestaurantActivity.makeRestaurantIntent(MapScreen.this, pos);
-                startActivity(i);
+                startActivityForResult(i, ACTIVITY_REST_WINDOW);
             }
         });
 
@@ -308,9 +309,26 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case ACIVITY_RESTLIST_BUTTON:
-                if(data==null)
+            case ACTIVITY_REST_LIST_BUTTON:
+                if(data==null){
                     finish();
+                    break;
+                }
+            case ACTIVITY_REST_WINDOW:
+                if (data.hasExtra("restTrackNum")) {
+                    String trackNum = data.getStringExtra("restTrackNum");
+                    for(Facility f : listFacility) {
+                        if(trackNum.equals(f.getTrackingNumber())) {
+                            for(ClustorMarker marker : mClusterMarkers) {
+                                if( marker.getTitle() == f.getName() ){
+                                    moveCamera(marker.getPosition(), DEFAULT_ZOOM);
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+                break;
         }
     }
 }

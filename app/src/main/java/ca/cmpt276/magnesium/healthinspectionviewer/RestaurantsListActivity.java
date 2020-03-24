@@ -28,7 +28,8 @@ public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
 
-    private static final int ACIVITY_MAP_BUTTON = 100;
+    private static final int ACTIVITY_MAP_BUTTON = 100;
+    private static final int ACTIVITY_REST_WINDOW = 200;
 
     public static Intent makeRestaurantsListIntent(Context context){
         return new Intent(context, RestaurantsListActivity.class);
@@ -50,7 +51,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent().putExtra("button","back");
-                setResult(ACIVITY_MAP_BUTTON,intent);
+                setResult(ACTIVITY_MAP_BUTTON,intent);
                 finish();
             }
         });
@@ -152,12 +153,23 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 (parent, view, position, id) -> {
                     // test for display restaurant
                     Intent intent = RestaurantActivity.makeRestaurantIntent(RestaurantsListActivity.this, position);
-                    startActivity(intent);
+                    startActivityForResult(intent, ACTIVITY_REST_WINDOW);
         });
     }
 
     private void addRestaurants() {
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         facilities = reader.getAllFacilities();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ACTIVITY_REST_WINDOW:
+                setResult(ACTIVITY_MAP_BUTTON, data);
+                finish();
+                break;
+        }
     }
 }
