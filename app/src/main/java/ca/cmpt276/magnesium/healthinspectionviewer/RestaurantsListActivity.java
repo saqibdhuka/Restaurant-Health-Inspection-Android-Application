@@ -6,8 +6,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -28,7 +28,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
 
-    private static final int ACTIVITY_MAP_BUTTON = 100;
+    private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
     private static final int ACTIVITY_REST_WINDOW = 200;
 
     public static Intent makeRestaurantsListIntent(Context context){
@@ -51,7 +51,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent().putExtra("button","back");
-                setResult(ACTIVITY_MAP_BUTTON,intent);
+                setResult(ACTIVITY_REST_LIST_MAP_BUTTON,intent);
                 finish();
             }
         });
@@ -167,9 +167,10 @@ public class RestaurantsListActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case ACTIVITY_REST_WINDOW:
-                setResult(ACTIVITY_MAP_BUTTON, data);
-                finish();
-                break;
+                if (data!=null){
+                    setResult(ACTIVITY_REST_LIST_MAP_BUTTON, data);
+                    finish();
+                }
         }
     }
 }

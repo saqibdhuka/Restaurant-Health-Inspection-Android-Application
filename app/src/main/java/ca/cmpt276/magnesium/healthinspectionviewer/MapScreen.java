@@ -52,7 +52,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
     GoogleMap map;
     Button restListBtn;
 
-    private static final int ACTIVITY_REST_LIST_BUTTON = 100;
+    private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
     private static final int ACTIVITY_REST_WINDOW = 200;
 
     private static final String TAG = "MapScreen";
@@ -97,7 +97,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
             @Override
             public void onClick(View view) {
                 Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(MapScreen.this);
-                startActivityForResult(intent, ACTIVITY_REST_LIST_BUTTON);
+                startActivityForResult(intent, ACTIVITY_REST_LIST_MAP_BUTTON);
             }
         });
     }
@@ -305,29 +305,39 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         }
     }
 
+    private void showRestInfo(String trackNum){
+        for (Facility f : listFacility) {
+            if (trackNum.equals(f.getTrackingNumber())) {
+                for (ClustorMarker marker : mClusterMarkers) {
+                    if (marker.getTitle() == f.getName()) {
+                        moveCamera(marker.getPosition(), DEFAULT_ZOOM);
+                    }
+                }
+                for (Marker marker : mMarkers){
+                    if (marker.getTitle() == f.getName()) {
+                        marker.showInfoWindow();
+                    }
+                }
+                break;
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case ACTIVITY_REST_LIST_BUTTON:
-                if(data==null){
+            case ACTIVITY_REST_LIST_MAP_BUTTON:
+                if (data==null)
                     finish();
-                    break;
-                }
+                else
+                    if (data.hasExtra("restTrackNum"))
+                        showRestInfo(data.getStringExtra("restTrackNum"));
+                break;
             case ACTIVITY_REST_WINDOW:
-                if (data.hasExtra("restTrackNum")) {
-                    String trackNum = data.getStringExtra("restTrackNum");
-                    for(Facility f : listFacility) {
-                        if(trackNum.equals(f.getTrackingNumber())) {
-                            for(ClustorMarker marker : mClusterMarkers) {
-                                if( marker.getTitle() == f.getName() ){
-                                    moveCamera(marker.getPosition(), DEFAULT_ZOOM);
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
+                if (data != null)
+                    if (data.hasExtra("restTrackNum"))
+                        showRestInfo(data.getStringExtra("restTrackNum"));
                 break;
         }
     }

@@ -28,7 +28,7 @@ import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 public class RestaurantActivity extends AppCompatActivity {
 
     private final static String EXTRA_REST_ID = "RestaurantActivity_restaurantID";
-    private static final int ACTIVITY_REST_WINDOW = 200;
+    private static final int ACTIVITY_REST_MAP_WINDOW = 200;
 
     private List<InspectionReport> inspections = new ArrayList<InspectionReport>();
     private BaseAdapter adapter;
@@ -78,7 +78,7 @@ public class RestaurantActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent().putExtra("restTrackNum", currentRestaurant.getTrackingNumber());
-                setResult(ACTIVITY_REST_WINDOW,intent);
+                setResult(ACTIVITY_REST_MAP_WINDOW, intent);
                 finish();
             }
         });
@@ -114,7 +114,6 @@ public class RestaurantActivity extends AppCompatActivity {
         ImageView icon = findViewById(R.id.res_icon);
         icon.setImageDrawable(getDrawable(currentRestaurant.getIconID()));
     }
-
 
     private void populateListView() {
         ListView lv = findViewById(R.id.res_inspection_listView);
