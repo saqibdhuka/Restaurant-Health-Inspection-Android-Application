@@ -4,7 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 
 public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
@@ -46,23 +50,51 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
         String dropDB = "DROP TABLE IF EXISTS " + TABLE_INSP_NAME;
         db.execSQL(dropDB);
         ensureInspectionDBCreation(db);
+
         // Now add back values:
-        ContentValues contentValues = new ContentValues();
         ReadingCSVInspection inspection = new ReadingCSVInspection(contextActivity);
-        for(int i = 0; i < inspection.getInspectionArrayList().size(); i++){
-            contentValues.put(COL_1, inspection.getInspectionReportAtPos(i).getTrackingNumber());
-            contentValues.put(COL_2, inspection.getInspectionReportAtPos(i).getInspectionDate().toString("yyyyMMdd"));
-            contentValues.put(COL_3, inspection.getInspectionReportAtPos(i).getInspectionType().toString());
-            contentValues.put(COL_4, inspection.getInspectionReportAtPos(i).getNumCritical());
-            contentValues.put(COL_5, inspection.getInspectionReportAtPos(i).getNumNonCritical());
-            contentValues.put(COL_6, inspection.getInspectionReportAtPos(i).getHazardRating().toString());
-            contentValues.put(COL_7, inspection.getInspectionReportAtPos(i).getViolationStatement());
-            long result = db.insertWithOnConflict(TABLE_INSP_NAME, null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
-            if(result == -1){
+        Log.d("DatabaseHelperInspsection", "beginning insert");
+        DateTime startTime = DateTime.now();
+
+        // Create statement string and compile it:
+        String insertString = String.format(
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                TABLE_INSP_NAME, COL_1,  COL_2, COL_3, COL_4, COL_5, COL_6, COL_7);
+        SQLiteStatement insertStatement = db.compileStatement(insertString);
+        // Break the transaction into chunks:
+        db.beginTransaction();
+        int innerCount = 0;
+        for (int i = 0; i < inspection.getInspectionArrayList().size(); i++){
+            // Bind values to our statement:
+            insertStatement.bindString(1, inspection.getInspectionReportAtPos(i).getTrackingNumber());
+            insertStatement.bindString(2, inspection.getInspectionReportAtPos(i).getInspectionDate().toString("yyyyMMdd"));
+            insertStatement.bindString(3, inspection.getInspectionReportAtPos(i).getInspectionType().toString());
+            insertStatement.bindLong(4, inspection.getInspectionReportAtPos(i).getNumCritical());
+            insertStatement.bindLong(5, inspection.getInspectionReportAtPos(i).getNumNonCritical());
+            insertStatement.bindString(6, inspection.getInspectionReportAtPos(i).getHazardRating().toString());
+            insertStatement.bindString(7, inspection.getInspectionReportAtPos(i).getViolationStatement());
+            long entryID = insertStatement.executeInsert();
+
+            if(entryID == -1){
                 Log.e("TABLE INSERTION ERROR","Error inserting data at i = " + i + "\n" +
                         inspection.getInspectionReportAtPos(i).toString()); //It had an error inserting data
             }
+            if (innerCount >= 1000) {
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                db.beginTransaction();
+                innerCount = 0;
+            }
+            insertStatement.clearBindings();
+            innerCount++;
         }
+        // End final transaction:
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        DateTime endTime = DateTime.now();
+        Log.d("DatabaseHelperInspsection", "Insert complete");
+        Seconds difference = Seconds.secondsBetween(startTime, endTime);
         db.close();
     }
 

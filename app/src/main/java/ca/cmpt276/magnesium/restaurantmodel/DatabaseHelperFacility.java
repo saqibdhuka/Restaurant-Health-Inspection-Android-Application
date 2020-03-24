@@ -5,7 +5,11 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
+
+import org.joda.time.DateTime;
+import org.joda.time.Seconds;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,25 +57,51 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
         String dropDB = "DROP TABLE IF EXISTS " + TABLE_FACILITY_NAME;
         db.execSQL(dropDB);
         ensureFacilityDBCreation(db);
+        Log.d("DatabaseHelperFacility", "beginning insert");
+        DateTime startTime = DateTime.now();
+
         // Now add back values:
         ContentValues contentValues = new ContentValues();
         ReadingCSVFacility facility = new ReadingCSVFacility(contextActivity);
-        for(int i =0; i < facility.getFacilityArrayList().size(); i++){
-            contentValues.put(COL_1, facility.getFacilityAtPos(i).getTrackingNumber());
-            contentValues.put(COL_2, facility.getFacilityAtPos(i).getName());
-            contentValues.put(COL_3, facility.getFacilityAtPos(i).getAddress());
-            contentValues.put(COL_4, facility.getFacilityAtPos(i).getCity());
-            contentValues.put(COL_5, facility.getFacilityAtPos(i).getFacilityType().toString());
-            contentValues.put(COL_6, facility.getFacilityAtPos(i).getLatitude());
-            contentValues.put(COL_7, facility.getFacilityAtPos(i).getLongitude());
-            long result = db.insert(TABLE_FACILITY_NAME, null, contentValues);
-            if(result == -1){
+
+        String insertString = String.format(
+                "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                TABLE_FACILITY_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6, COL_7);
+        SQLiteStatement insertStatement = db.compileStatement(insertString);
+
+        // Break into chunks:
+        int innerCount = 0;
+        db.beginTransaction();
+        for (int i =0; i < facility.getFacilityArrayList().size(); i++){
+            insertStatement.bindString(1, facility.getFacilityAtPos(i).getTrackingNumber());
+            insertStatement.bindString(2, facility.getFacilityAtPos(i).getName());
+            insertStatement.bindString(3, facility.getFacilityAtPos(i).getAddress());
+            insertStatement.bindString(4, facility.getFacilityAtPos(i).getCity());
+            insertStatement.bindString(5, facility.getFacilityAtPos(i).getFacilityType().toString());
+            insertStatement.bindDouble(6, facility.getFacilityAtPos(i).getLatitude());
+            insertStatement.bindDouble(7, facility.getFacilityAtPos(i).getLongitude());
+            long entryID = insertStatement.executeInsert();
+            if(entryID == -1){
                 // It had an error inserting data
                 Log.e("TABLE INSERTION ERROR","Error inserting data at i = " + i + "\n" +
                                                     facility.getFacilityAtPos(i).toString());
-
             }
+            if (innerCount >= 1000) {
+                db.setTransactionSuccessful();
+                db.endTransaction();
+                db.beginTransaction();
+                innerCount = 0;
+            }
+            insertStatement.clearBindings();
+            innerCount++;
         }
+        // Final chunk:
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        DateTime endTime = DateTime.now();
+        Log.d("DatabaseHelperFacility", "Insert complete");
+        Seconds difference = Seconds.secondsBetween(startTime, endTime);
         db.close();
     }
 
