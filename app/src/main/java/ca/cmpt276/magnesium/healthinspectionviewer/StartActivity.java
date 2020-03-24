@@ -30,7 +30,7 @@ public class StartActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(StartActivity.this);
+                Intent intent = MapScreen.makeMapScreenIntent(StartActivity.this);
                 startActivity(intent);
                 finish();
             }

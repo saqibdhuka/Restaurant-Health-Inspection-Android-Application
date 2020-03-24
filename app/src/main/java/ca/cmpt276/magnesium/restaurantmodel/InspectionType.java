@@ -13,5 +13,6 @@ package ca.cmpt276.magnesium.restaurantmodel;
  */
 public enum InspectionType {
     Routine,
-    FollowUp
+    FollowUp,
+    None
 }
