@@ -33,7 +33,7 @@ public class Facility {
         city = resCity;
         latitude = resLatitude;
         longitude = resLongitude;
-        if (facType.toLowerCase() == "restaurant"){
+        if (facType.equalsIgnoreCase("restaurant")){
             facilityType = FacilityType.Restaurant;
         } else {
             /*

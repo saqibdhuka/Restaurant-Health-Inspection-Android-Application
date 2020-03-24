@@ -2,7 +2,6 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -179,7 +178,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
     private void addTestInspection() {
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
-        inspections = reader.getAssociatedInspections(currentRestaurant.getTrackingNumber());
+        inspections = reader.getAllAssociatedInspections(currentRestaurant.getTrackingNumber());
     }
 
 }

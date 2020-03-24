@@ -19,6 +19,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.cmpt276.magnesium.restaurantmodel.DataUpdater;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
@@ -39,6 +40,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_list);
+        //DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
 
         addRestaurants();
         populateListView();
@@ -55,6 +57,13 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Check if we need to prompt for updates:
+        DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
     }
 
     private void populateListView() {
@@ -85,15 +94,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
                 // Get maximum hazard and set the text:
                 DatabaseReader reader = new DatabaseReader(getApplicationContext());
-                ArrayList<InspectionReport> inspections = reader.getAssociatedInspections(restaurant.getTrackingNumber());
+                InspectionReport firstInspection = reader.getFirstAssociatedInspection(restaurant.getTrackingNumber());
 
 
                 TextView empty = convertView.findViewById(R.id.resArrayList_res_no_inspection);
                 ConstraintLayout layout = convertView.findViewById(R.id.resArrayList_res_inspection_layout);
-                if(inspections.isEmpty()){
+                if (firstInspection == null){
                     empty.setVisibility(View.VISIBLE);
                     layout.setVisibility(View.INVISIBLE);
-                }else {
+                } else {
                     empty.setVisibility(View.INVISIBLE);
                     layout.setVisibility(View.VISIBLE);
                 }
@@ -102,8 +111,8 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 // Get HazardRating from last inspection:
                 HazardRating restaurantRating = HazardRating.Low;
                 // Only give a different rating if we have more than zero inspections:
-                if (inspections.size() > 0) {
-                    restaurantRating = inspections.get(0).getHazardRating();
+                if (firstInspection != null) {
+                    restaurantRating = firstInspection.getHazardRating();
                 }
 
 
@@ -125,9 +134,9 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
                 // Set the number of issues as of the last inspection:
                 TextView numIssues = convertView.findViewById(R.id.resArrayList_res_issue_num);
-                if (inspections.size() > 0) {
-                    Integer issueCount = inspections.get(0).getNumCritical()
-                            + inspections.get(0).getNumNonCritical();
+                if (firstInspection != null) {
+                    Integer issueCount = firstInspection.getNumCritical()
+                            + firstInspection.getNumNonCritical();
                     numIssues.setText(issueCount.toString());
                 } else {
                     numIssues.setText("0");
