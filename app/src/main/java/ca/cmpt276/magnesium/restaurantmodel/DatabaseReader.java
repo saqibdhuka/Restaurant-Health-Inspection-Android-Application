@@ -162,7 +162,16 @@ public class DatabaseReader {
                     iconID = R.drawable.burger;
                 } else if(name.toLowerCase().contains("a&w")){
                     iconID = R.drawable.aandw;
-                } else {
+                } else if(name.toLowerCase().contains("freshslice")){
+                    iconID = R.drawable.freshslice;
+                } else if(name.toLowerCase().contains("donalds")){
+                    iconID = R.drawable.mcdonald;
+                } else if(name.toLowerCase().contains("hortons")){
+                    iconID = R.drawable.timhortons;
+                } else if(name.toLowerCase().contains("eleven")){
+                    iconID = R.drawable.seveneleven;
+                }
+                else {
                     // Default "generic" icon: kitchen
                     iconID = R.drawable.kitchen;
                 }
