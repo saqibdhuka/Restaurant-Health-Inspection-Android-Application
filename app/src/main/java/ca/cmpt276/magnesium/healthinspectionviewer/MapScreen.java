@@ -309,12 +309,12 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         for (Facility f : listFacility) {
             if (trackNum.equals(f.getTrackingNumber())) {
                 for (ClustorMarker marker : mClusterMarkers) {
-                    if (marker.getTitle() == f.getName()) {
+                    if (marker.getTitle().equals(f.getName())) {
                         moveCamera(marker.getPosition(), DEFAULT_ZOOM);
                     }
                 }
                 for (Marker marker : mMarkers){
-                    if (marker.getTitle() == f.getName()) {
+                    if (marker.getTitle().equals(f.getName())) {
                         marker.showInfoWindow();
                     }
                 }
