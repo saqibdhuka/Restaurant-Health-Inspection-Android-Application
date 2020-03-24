@@ -1,19 +1,16 @@
 package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import android.Manifest;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.hardware.camera2.TotalCaptureResult;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,10 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -51,13 +45,14 @@ import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
-import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Low;
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
 
 public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
 
     GoogleMap map;
     Button restListBtn;
+
+    private static final int ACIVITY_RESTLIST_BUTTON = 100;
 
     private static final String TAG = "MapScreen";
     private static final float DEFAULT_ZOOM = 12f;
@@ -92,18 +87,16 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         mClusterMarkers = new ArrayList<>();
         mMarkers = new ArrayList<>();
         restListBtn = (Button) findViewById(R.id.restaurantList);
-        buttonClick();
-
-
+        setupRestListButton();
     }
 
-    private void buttonClick() {
+
+    private void setupRestListButton() {
         restListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(MapScreen.this);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, ACIVITY_RESTLIST_BUTTON);
             }
         });
     }
@@ -235,7 +228,6 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         checkInfoWindowClicked();
     }
 
-
     private void getInspection(){
         addRestaurants();
         DatabaseReader dr = new DatabaseReader(getApplicationContext());
@@ -262,6 +254,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         listFacility = reader.getAllFacilities();
     }
+
     private void initializeMap(){
         Log.d(TAG, "initializeMap: Initializing Map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
@@ -308,6 +301,16 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
 
                 }
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ACIVITY_RESTLIST_BUTTON:
+                if(data==null)
+                    finish();
         }
     }
 }

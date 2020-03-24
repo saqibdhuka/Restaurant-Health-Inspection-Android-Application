@@ -1,5 +1,6 @@
 package ca.cmpt276.magnesium.healthinspectionviewer;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -27,6 +28,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
 
+    private static final int ACIVITY_MAP_BUTTON = 100;
 
     public static Intent makeRestaurantsListIntent(Context context){
         return new Intent(context, RestaurantsListActivity.class);
@@ -47,8 +49,8 @@ public class RestaurantsListActivity extends AppCompatActivity {
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = MapScreen.makeMapScreenIntent(RestaurantsListActivity.this);
-                startActivity(intent);
+                Intent intent = new Intent().putExtra("button","back");
+                setResult(ACIVITY_MAP_BUTTON,intent);
                 finish();
             }
         });
@@ -158,10 +160,4 @@ public class RestaurantsListActivity extends AppCompatActivity {
         DatabaseReader reader = new DatabaseReader(getApplicationContext());
         facilities = reader.getAllFacilities();
     }
-
-
-
-
-
-
 }
