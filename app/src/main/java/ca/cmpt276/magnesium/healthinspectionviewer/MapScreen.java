@@ -177,8 +177,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
             for(int i =0; i < listFacility.size(); i++){
                 Log.d(TAG, "Inside For loop to add icons" );
 
-                int height = 100;
-                int width = 100;
+                int height = 50;
+                int width = 50;
 
                 int iconToDisplay = R.drawable.green_circle;
                 HazardRating currentHazardLevel = inspectionList.get(i).getHazardRating();
