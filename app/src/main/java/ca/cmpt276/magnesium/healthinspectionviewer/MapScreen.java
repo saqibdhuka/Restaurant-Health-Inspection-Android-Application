@@ -239,7 +239,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         addRestaurants();
         DatabaseReader dr = new DatabaseReader(getApplicationContext());
         for(int i =0; i < listFacility.size(); i++){
-            List<InspectionReport> facilityInspectionList = dr.getAssociatedInspections(listFacility.get(i).getTrackingNumber());
+            List<InspectionReport> facilityInspectionList = dr.getAllAssociatedInspections(listFacility.get(i).getTrackingNumber());
             if(facilityInspectionList.size() == 0){
                 inspectionList.add(new InspectionReport(listFacility.get(i).getTrackingNumber(), null,"None",-1,-1,"low", "No Inspection yet"));
                 continue;
