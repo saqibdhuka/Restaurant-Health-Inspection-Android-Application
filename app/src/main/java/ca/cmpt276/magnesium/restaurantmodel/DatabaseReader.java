@@ -153,7 +153,13 @@ public class DatabaseReader {
 
                 // Set the restaurant ID based on a few context clues:
                 Integer iconID;
-                if (name.toLowerCase().contains("pizza")) {
+                if(name.toLowerCase().contains("freshslice")
+                        && name.toLowerCase().contains("pizza")) {
+                    iconID = R.drawable.freshslice;
+                } else if(name.toLowerCase().contains("burger")
+                        && name.toLowerCase().contains("king")){
+                    iconID = R.drawable.burgerking;
+                } else if (name.toLowerCase().contains("pizza")) {
                     iconID = R.drawable.pizza;
                 } else if (name.toLowerCase().contains("seafood")
                         || name.toLowerCase().contains("sushi")) {
@@ -162,10 +168,7 @@ public class DatabaseReader {
                     iconID = R.drawable.burger;
                 } else if(name.toLowerCase().contains("a&w")){
                     iconID = R.drawable.aandw;
-                } if(name.toLowerCase().contains("freshslice")
-                        && name.toLowerCase().contains("pizza")){
-                    iconID = R.drawable.freshslice;
-                } else if(name.toLowerCase().contains("donalds")){
+                }  else if(name.toLowerCase().contains("donalds")){
                     iconID = R.drawable.mcdonald;
                 } else if(name.toLowerCase().contains("hortons")){
                     iconID = R.drawable.timhortons;
@@ -177,9 +180,6 @@ public class DatabaseReader {
                     iconID = R.drawable.subway;
                 } else if(name.toLowerCase().contains("starbucks")){
                     iconID = R.drawable.starbucks;
-                } if(name.toLowerCase().contains("burger")
-                        && name.toLowerCase().contains("king")){
-                    iconID = R.drawable.burgerking;
                 } else if(name.toLowerCase().contains("wendy's")){
                     iconID = R.drawable.wendys;
                 }
