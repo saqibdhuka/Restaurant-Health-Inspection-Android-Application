@@ -160,7 +160,29 @@ public class DatabaseReader {
                     iconID = R.drawable.fish;
                 } else if (name.toLowerCase().contains("burger")) {
                     iconID = R.drawable.burger;
-                } else {
+                } else if(name.toLowerCase().contains("a&w")){
+                    iconID = R.drawable.aandw;
+                } else if(name.toLowerCase().contains("freshslice")){
+                    iconID = R.drawable.freshslice;
+                } else if(name.toLowerCase().contains("donalds")){
+                    iconID = R.drawable.mcdonald;
+                } else if(name.toLowerCase().contains("hortons")){
+                    iconID = R.drawable.timhortons;
+                } else if(name.toLowerCase().contains("eleven")){
+                    iconID = R.drawable.seveneleven;
+                } else if(name.toLowerCase().contains("kfc")){
+                    iconID = R.drawable.kfc;
+                } else if(name.toLowerCase().contains("subway")){
+                    iconID = R.drawable.subway;
+                } else if(name.toLowerCase().contains("starbucks")){
+                    iconID = R.drawable.starbucks;
+                } else if(name.toLowerCase().contains("burger")
+                        && name.toLowerCase().contains("king")){
+                    iconID = R.drawable.burgerking;
+                } else if(name.toLowerCase().contains("wendy's")){
+                    iconID = R.drawable.wendys;
+                }
+                else {
                     // Default "generic" icon: kitchen
                     iconID = R.drawable.kitchen;
                 }
