@@ -170,6 +170,17 @@ public class DatabaseReader {
                     iconID = R.drawable.timhortons;
                 } else if(name.toLowerCase().contains("eleven")){
                     iconID = R.drawable.seveneleven;
+                } else if(name.toLowerCase().contains("kfc")){
+                    iconID = R.drawable.kfc;
+                } else if(name.toLowerCase().contains("subway")){
+                    iconID = R.drawable.subway;
+                } else if(name.toLowerCase().contains("starbucks")){
+                    iconID = R.drawable.starbucks;
+                } else if(name.toLowerCase().contains("burger")
+                        && name.toLowerCase().contains("king")){
+                    iconID = R.drawable.burgerking;
+                } else if(name.toLowerCase().contains("wendy's")){
+                    iconID = R.drawable.wendys;
                 }
                 else {
                     // Default "generic" icon: kitchen
