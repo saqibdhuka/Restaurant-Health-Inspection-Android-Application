@@ -4,15 +4,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
 
 public class ClustorMarker implements ClusterItem {
-    private LatLng postiion;
+    private LatLng position;
     private String title;
     private String hazardLevel;
     private String address;
     private String snippet;
     private int iconPicture;
 
-    public ClustorMarker(LatLng postiion, String title, String hazardLevel, String address, int iconPicture) {
-        this.postiion = postiion;
+    public ClustorMarker(LatLng position, String title, String hazardLevel, String address, int iconPicture) {
+        this.position = position;
         this.title = title;
         this.hazardLevel = hazardLevel;
         this.address = address;
@@ -23,17 +23,13 @@ public class ClustorMarker implements ClusterItem {
     public ClustorMarker(){
     }
 
-    public LatLng getPostiion() {
-        return postiion;
-    }
-
-    public void setPostiion(LatLng postiion) {
-        this.postiion = postiion;
+    public void setPosition(LatLng position) {
+        this.position = position;
     }
 
     @Override
     public LatLng getPosition() {
-        return postiion;
+        return position;
     }
 
     @Override

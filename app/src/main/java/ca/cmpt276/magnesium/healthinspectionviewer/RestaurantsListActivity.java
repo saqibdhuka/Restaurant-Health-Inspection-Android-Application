@@ -1,14 +1,17 @@
 package ca.cmpt276.magnesium.healthinspectionviewer;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +29,8 @@ public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
 
+    private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
+    private static final int ACTIVITY_REST_WINDOW = 200;
 
     public static Intent makeRestaurantsListIntent(Context context){
         return new Intent(context, RestaurantsListActivity.class);
@@ -39,6 +44,19 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
         addRestaurants();
         populateListView();
+        setupMapButton();
+    }
+
+    private void setupMapButton() {
+        Button mapButton = findViewById(R.id.restaurantMap);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent().putExtra("button","back");
+                setResult(ACTIVITY_REST_LIST_MAP_BUTTON,intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -144,7 +162,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 (parent, view, position, id) -> {
                     // test for display restaurant
                     Intent intent = RestaurantActivity.makeRestaurantIntent(RestaurantsListActivity.this, position);
-                    startActivity(intent);
+                    startActivityForResult(intent, ACTIVITY_REST_WINDOW);
         });
     }
 
@@ -153,9 +171,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
         facilities = reader.getAllFacilities();
     }
 
-
-
-
-
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case ACTIVITY_REST_WINDOW:
+                if (data!=null){
+                    setResult(ACTIVITY_REST_LIST_MAP_BUTTON, data);
+                    finish();
+                }
+        }
+    }
 }
