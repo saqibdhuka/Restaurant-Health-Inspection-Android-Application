@@ -48,6 +48,8 @@ public class ClusterRenderer extends DefaultClusterRenderer<ClustorMarker> {
 
     @Override
     protected boolean shouldRenderAsCluster(Cluster<ClustorMarker> cluster) {
-        return false;
+        return true;
     }
+
+
 }

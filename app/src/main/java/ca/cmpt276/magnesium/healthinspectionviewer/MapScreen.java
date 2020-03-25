@@ -213,14 +213,14 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
 
                 Marker newMarker = map.addMarker(markerOptions);
                 newMarker.setTag(currentFacility);
-                mMarkers.add(newMarker);
+                newMarker.setAlpha(0f);
 
                 Log.d(TAG, "Adding cluster markers to manager and list of markers" );
                 mClusterManager.addItem(newClustorMarker);
                 mClusterMarkers.add(newClustorMarker);
 
             }
-//            mClusterManager.cluster();
+            mClusterManager.cluster();
             Log.d(TAG, "ClusterManager.cluster called!!" );
 
         }
