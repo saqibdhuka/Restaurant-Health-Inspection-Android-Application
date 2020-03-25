@@ -45,6 +45,7 @@ import java.util.List;
 
 import ca.cmpt276.magnesium.restaurantmodel.ClusterRenderer;
 import ca.cmpt276.magnesium.restaurantmodel.ClustorMarker;
+import ca.cmpt276.magnesium.restaurantmodel.DataUpdater;
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
@@ -94,7 +95,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         restListBtn = (Button) findViewById(R.id.restaurantList);
         buttonClick();
 
-
+        // Check if we need to prompt for updates:
+        DataUpdater.notifyIfUpdateAvailable(MapScreen.this);
     }
 
     private void buttonClick() {
