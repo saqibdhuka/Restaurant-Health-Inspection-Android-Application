@@ -32,6 +32,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
@@ -123,16 +125,25 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
     }
 
     private void checkInfoWindowClicked() {
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                Facility markerFacility = (Facility) marker.getTag();
-                int pos = listFacility.indexOf(markerFacility);
-                Intent i = RestaurantActivity.makeRestaurantIntent(MapScreen.this, pos);
+            public void onClusterItemInfoWindowClick(ClusterItem item) {
+                LatLng pos = item.getPosition();
+                int index = getFacilityIndex(pos);
+                Intent i = RestaurantActivity.makeRestaurantIntent(MapScreen.this, index);
                 startActivityForResult(i, ACTIVITY_REST_WINDOW);
             }
         });
+    }
 
+    private int getFacilityIndex(LatLng position) {
+        for(int i =0; i < listFacility.size(); i++){
+            Facility currFacility = listFacility.get(i);
+            if(currFacility.getLatitude() == position.latitude && currFacility.getLongitude() == position.longitude){
+                return i;
+            }
+        }
+        return -1;
     }
 
     private void getDeviceLocation(){
@@ -167,6 +178,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
 
     private void addResMarkers(){
         if(map != null){
+
+            map.setInfoWindowAdapter(new CustomInfoAdapter(MapScreen.this));
             //Setting up needed objects
             if(mClusterManager == null){
                 mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
@@ -174,9 +187,18 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
             if(mClusterRenderer == null){
                 mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
             }
-            mClusterManager.setRenderer(mClusterRenderer);
 
-            map.setInfoWindowAdapter(new CustomInfoAdapter(MapScreen.this));
+            mClusterManager.setRenderer(mClusterRenderer);
+            map.setOnCameraIdleListener(mClusterManager);
+            map.setOnMarkerClickListener(mClusterManager);
+            mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener() {
+                @Override
+                public boolean onClusterClick(Cluster cluster) {
+                    return true;
+                }
+            });
+
+            checkInfoWindowClicked();
 
             for(int i =0; i < listFacility.size(); i++){
                 Log.d(TAG, "Inside For loop to add icons" );
@@ -193,27 +215,32 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
                     iconToDisplay = R.drawable.yellow_diamond;
                 }
 
+
+//                BitmapDrawable bitmapdraw = (BitmapDrawable)getDrawable(iconToDisplay);
+//                Bitmap b = bitmapdraw.getBitmap();
+//                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+
+//                MarkerOptions markerOptions = new MarkerOptions()
+//                        .position(new LatLng(currentFacility.getLatitude(), currentFacility.getLongitude()))
+//                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
+//                        .title(currentFacility.getName())
+//                        .snippet("Address: " + currentFacility.getAddress() + "\nHazard Level: " + currentHazardLevel);
+//
+//
+//                Marker newMarker = map.addMarker(markerOptions);
+//                newMarker.setTag(currentFacility);
+
                 ClustorMarker newClustorMarker = new ClustorMarker(
                         new LatLng(currentFacility.getLatitude(), currentFacility.getLongitude()),
                         currentFacility.getName(),
                         currentHazardLevel.toString(),
                         currentFacility.getAddress(),
-                        iconToDisplay
+                        iconToDisplay,
+                        currentFacility
                 );
 
-                BitmapDrawable bitmapdraw = (BitmapDrawable)getDrawable(iconToDisplay);
-                Bitmap b = bitmapdraw.getBitmap();
-                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
+//                newMarker.remove();
 
-                MarkerOptions markerOptions = new MarkerOptions()
-                        .position(new LatLng(currentFacility.getLatitude(), currentFacility.getLongitude()))
-                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
-                        .title(currentFacility.getName())
-                        .snippet("Address: " + currentFacility.getAddress() + "\nHazard Level: " + currentHazardLevel);
-
-                Marker newMarker = map.addMarker(markerOptions);
-                newMarker.setTag(currentFacility);
-                newMarker.setAlpha(0f);
 
                 Log.d(TAG, "Adding cluster markers to manager and list of markers" );
                 mClusterManager.addItem(newClustorMarker);
