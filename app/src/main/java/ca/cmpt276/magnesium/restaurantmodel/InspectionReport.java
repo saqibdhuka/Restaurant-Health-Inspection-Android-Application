@@ -65,6 +65,11 @@ public class InspectionReport {
     private ArrayList<Violation> getViolationsFromString(String violationStatement) {
         ArrayList<Violation> returnArray = new ArrayList<>();
         // Do some string processing on violation statements:
+        // Firstly, remove the hazard rating from the front of the statement:
+        int positionOfFirstComma = violationStatement.indexOf(',');
+        if (positionOfFirstComma >= 0) {
+            violationStatement = violationStatement.substring(positionOfFirstComma + 1);
+        }
         // We know that in cases of multiple violations, they are seperated by "pipe" or '|'
         String[] violationArray = violationStatement.split("\\|");
         // Process each possible "violation" in the report:
