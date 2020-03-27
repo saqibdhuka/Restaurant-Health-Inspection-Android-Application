@@ -346,7 +346,6 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
 
     private void showRestInfo(String trackNum){
         for (Facility f : listFacility) {
-//            LatLng restPos = new LatLng(f.getLatitude(), f.getLongitude());
             if (trackNum.equals(f.getTrackingNumber())) {
                 for (ClustorMarker marker : mClusterMarkers) {
                     if (marker.getTitle().equals(f.getName())) {
@@ -385,20 +384,12 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                     finish();
                 else
                     if (data.hasExtra("restTrackNum")) {
-                        LatLng temp_location = new LatLng(currentLocation.getLatitude()+0.001, currentLocation.getLongitude());
-                        LatLng locationLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        moveCamera(temp_location, 20);
-                        moveCamera(locationLatLng,30);
                         showRestInfo(data.getStringExtra("restTrackNum"));
                     }
                 break;
             case ACTIVITY_REST_WINDOW:
                 if (data != null)
                     if (data.hasExtra("restTrackNum")) {
-                        LatLng temp_location = new LatLng(currentLocation.getLatitude()+0.001, currentLocation.getLongitude());
-                        LatLng locationLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
-                        moveCamera(temp_location, 20);
-                        moveCamera(locationLatLng,30);
                         showRestInfo(data.getStringExtra("restTrackNum"));
                     }
                 break;
