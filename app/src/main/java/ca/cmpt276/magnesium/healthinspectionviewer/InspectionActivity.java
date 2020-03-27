@@ -7,8 +7,10 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -45,68 +47,78 @@ public class InspectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         setupToolbar();
 
-        DatabaseReader reader = new DatabaseReader(getApplicationContext());
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseReader reader = new DatabaseReader(getApplicationContext());
 
-        // TODO refactor this - seems very wasteful to get ALL facilities here!
-        ReadingCSVFacility CSVreader = ReadingCSVFacility.getCSVReader(this);
-        ArrayList<Facility> facilities = CSVreader.getFacilityArrayList();
-        int facilityIndex = getIntent().getIntExtra(EXTRA_FACILITY_ID, 0);
-        Facility currentFacility = facilities.get(facilityIndex);
+                // TODO refactor this - seems very wasteful to get ALL facilities here!
+                ReadingCSVFacility CSVreader = ReadingCSVFacility.getCSVReader(InspectionActivity.this);
+                ArrayList<Facility> facilities = CSVreader.getFacilityArrayList();
+                int facilityIndex = getIntent().getIntExtra(EXTRA_FACILITY_ID, 0);
+                Facility currentFacility = facilities.get(facilityIndex);
 
-        String trackingNo = currentFacility.getTrackingNumber();
-        ArrayList<InspectionReport> reports = reader.getAllAssociatedInspections(trackingNo);
-        int inspectionIndex = getIntent().getIntExtra(EXTRA_INSPECT_ID, 0);
-        inspection = reports.get(inspectionIndex);
+                String trackingNo = currentFacility.getTrackingNumber();
+                ArrayList<InspectionReport> reports = reader.getAllAssociatedInspections(trackingNo);
+                int inspectionIndex = getIntent().getIntExtra(EXTRA_INSPECT_ID, 0);
+                inspection = reports.get(inspectionIndex);
 
-        TextView name = findViewById(R.id.inspection_restaurant_name);
-        name.setText(currentFacility.getName());
+                TextView name = findViewById(R.id.inspection_restaurant_name);
+                name.setText(currentFacility.getName());
 
-        TextView type = findViewById(R.id.inspection_type);
-        type.setText(inspection.getInspectionType().toString());
+                TextView type = findViewById(R.id.inspection_type);
+                type.setText(inspection.getInspectionType().toString());
 
-        TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
-        hazardLevel.setText(inspection.getHazardRating().toString());
+                TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
+                hazardLevel.setText(inspection.getHazardRating().toString());
 
-        ImageView hazardIcon = findViewById(R.id.inspection_hazard_color);
-        HazardRating hazardRating = inspection.getHazardRating();
-        switch (hazardRating) {
-            case High: {
-                hazardIcon.setImageResource(R.drawable.high_hazard_level);
-                break;
+                ImageView hazardIcon = findViewById(R.id.inspection_hazard_color);
+                HazardRating hazardRating = inspection.getHazardRating();
+                switch (hazardRating) {
+                    case High: {
+                        hazardIcon.setImageResource(R.drawable.high_hazard_level);
+                        break;
+                    }
+                    case Moderate: {
+                        hazardIcon.setImageResource(R.drawable.moderate_hazard_level);
+                        break;
+                    }
+                    case Low: {
+                        hazardIcon.setImageResource(R.drawable.low_hazard_level);
+                        break;
+                    }
+                }
+
+                TextView numCrit = findViewById(R.id.inspection_crit);
+                numCrit.setText(Integer.valueOf(inspection.getNumCritical()).toString());
+
+                TextView numNonCrit = findViewById(R.id.inspection_noncrit);
+                numNonCrit.setText(Integer.valueOf(inspection.getNumNonCritical()).toString());
+
+                LocalDate inspectionDate = inspection.getInspectionDate();
+                String dateString = inspectionDate.toString("MMMM d, yyyy");
+                TextView date = findViewById(R.id.inspection_date);
+                date.setText(dateString);
+
+                TextView empty = findViewById(R.id.inspection_violation_empty);
+                ListView list = findViewById(R.id.inspection_violation_listView);
+                if(inspection.getViolations().isEmpty()){
+                    empty.setVisibility(View.VISIBLE);
+                    list.setVisibility(View.INVISIBLE);
+                }else {
+                    populateListView();
+                    empty.setVisibility(View.INVISIBLE);
+                    list.setVisibility(View.VISIBLE);
+                }
+                findViewById(R.id.inspection_loading_layout).setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
-            case Moderate: {
-                hazardIcon.setImageResource(R.drawable.moderate_hazard_level);
-                break;
-            }
-            case Low: {
-                hazardIcon.setImageResource(R.drawable.low_hazard_level);
-                break;
-            }
-        }
-
-        TextView numCrit = findViewById(R.id.inspection_crit);
-        numCrit.setText(Integer.valueOf(inspection.getNumCritical()).toString());
-
-        TextView numNonCrit = findViewById(R.id.inspection_noncrit);
-        numNonCrit.setText(Integer.valueOf(inspection.getNumNonCritical()).toString());
-
-        LocalDate inspectionDate = inspection.getInspectionDate();
-        String dateString = inspectionDate.toString("MMMM d, yyyy");
-        TextView date = findViewById(R.id.inspection_date);
-        date.setText(dateString);
-
-        TextView empty = findViewById(R.id.inspection_violation_empty);
-        ListView list = findViewById(R.id.inspection_violation_listView);
-        if(inspection.getViolations().isEmpty()){
-            empty.setVisibility(View.VISIBLE);
-            list.setVisibility(View.INVISIBLE);
-        }else {
-            populateListView();
-            empty.setVisibility(View.INVISIBLE);
-            list.setVisibility(View.VISIBLE);
-        }
+        }, 50);
 
     }
 

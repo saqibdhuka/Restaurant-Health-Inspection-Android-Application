@@ -76,4 +76,10 @@
     <string name="restaurant_map">Restaurant Map</string>
 
 
+    <string name="loading_res_list_text">Loading Restaurant List</string>
+    <string name="loading_map_text">Updating The Map</string>
+    <string name="loading_res_text">Loading Restaurant Details</string>
+    <string name="loading_inspection_text">Loading Inspection</string>
+
+
 </resources>
