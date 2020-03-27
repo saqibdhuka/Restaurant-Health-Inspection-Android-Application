@@ -9,8 +9,10 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -91,20 +93,33 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_screen);
 
-        getLocationPermission();
-        listFacility = new ArrayList<>();
-        inspectionList = new ArrayList<>();
-        mClusterMarkers = new ArrayList<>();
-        mMarkers = new ArrayList<>();
-        restListBtn = (Button) findViewById(R.id.restaurantList);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
-        // Check if we need to prompt for updates:
-        DataUpdater.notifyIfUpdateAvailable(MapScreen.this);
-        setupRestListButton();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getLocationPermission();
+                listFacility = new ArrayList<>();
+                inspectionList = new ArrayList<>();
+                mClusterMarkers = new ArrayList<>();
+                mMarkers = new ArrayList<>();
+
+                // Check if we need to prompt for updates:
+                DataUpdater.notifyIfUpdateAvailable(MapScreen.this);
+                setupRestListButton();
+                findViewById(R.id.mapView).setVisibility(View.VISIBLE);
+                findViewById(R.id.map_loading_layout).setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            }
+        }, 500);
+
     }
 
 
     private void setupRestListButton() {
+        restListBtn = (Button) findViewById(R.id.restaurantList);
+        restListBtn.setVisibility(View.VISIBLE);
         restListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

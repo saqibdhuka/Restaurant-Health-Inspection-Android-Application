@@ -8,9 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.os.Handler;
 import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,30 +48,41 @@ public class RestaurantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_restaurant);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
         setupToolbar();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
 
-        ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
+                // TODO: refactor this? Seems like a waste to ask for ALL FACILITIES
+                // just to pick one out.
+                ArrayList<Facility> facilities = reader.getFacilityArrayList();
+                restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
 
-        // TODO: refactor this? Seems like a waste to ask for ALL FACILITIES
-        // just to pick one out.
-        ArrayList<Facility> facilities = reader.getFacilityArrayList();
-        restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
+                currentRestaurant = facilities.get(restaurantID);
+                setupTextFields();
 
-        currentRestaurant = facilities.get(restaurantID);
-        setupTextFields();
+                addTestInspection();
 
-        addTestInspection();
+                TextView empty = findViewById(R.id.res_inspection_empty);
+                ListView list = findViewById(R.id.res_inspection_listView);
+                if(inspections.isEmpty()){
+                    empty.setVisibility(View.VISIBLE);
+                    list.setVisibility(View.INVISIBLE);
+                }else {
+                    populateListView();
+                    empty.setVisibility(View.INVISIBLE);
+                    list.setVisibility(View.VISIBLE);
+                }
+                findViewById(R.id.res_loading_layout).setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            }
+        }, 50);
 
-        TextView empty = findViewById(R.id.res_inspection_empty);
-        ListView list = findViewById(R.id.res_inspection_listView);
-        if(inspections.isEmpty()){
-            empty.setVisibility(View.VISIBLE);
-            list.setVisibility(View.INVISIBLE);
-        }else {
-            populateListView();
-            empty.setVisibility(View.INVISIBLE);
-            list.setVisibility(View.VISIBLE);
-        }
 
         setupGPSToMap();
 
