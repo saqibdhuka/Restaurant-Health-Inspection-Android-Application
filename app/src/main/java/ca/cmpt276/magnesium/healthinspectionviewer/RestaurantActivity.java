@@ -23,6 +23,7 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -47,8 +48,11 @@ public class RestaurantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant);
         setupToolbar();
 
-        DatabaseReader reader = new DatabaseReader(getApplicationContext());
-        ArrayList<Facility> facilities = reader.getAllFacilities();
+        ReadingCSVFacility reader = new ReadingCSVFacility(this);
+
+        // TODO: refactor this? Seems like a waste to ask for ALL FACILITIES
+        // just to pick one out.
+        ArrayList<Facility> facilities = reader.getFacilityArrayList();
         restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
 
         currentRestaurant = facilities.get(restaurantID);
