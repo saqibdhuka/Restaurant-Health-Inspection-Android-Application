@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -32,6 +34,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.util.ArrayList;
@@ -49,13 +53,15 @@ import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
 
-public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
+public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
 
     GoogleMap map;
     Button restListBtn;
 
     private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
     private static final int ACTIVITY_REST_WINDOW = 200;
+    private static final long MIN_TIME = 3000;
+    private static final float MIN_DISTANCE = 1000;
 
     private static final String TAG = "MapScreen";
     private static final float DEFAULT_ZOOM = 12f;
@@ -74,8 +80,9 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
     private LocationRequest locationRequest;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Location currentLocation;
+    private LocationManager locationManager;
 
-    public static Intent makeMapScreenIntent(Context context){
+    public static Intent makeMapScreenIntent(Context context) {
         return new Intent(context, MapScreen.class);
     }
 
@@ -109,78 +116,97 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Map is ready", Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onMapReady: Map is ready");
         map = googleMap;
 
-        if(locationPermissionGranted){
+        if (locationPermissionGranted) {
             getDeviceLocation();
             map.setMyLocationEnabled(true);
         }
 
         getInspection();
         addResMarkers();
-//        checkInfoWindowClicked();
+
     }
 
     private void checkInfoWindowClicked() {
-        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                Facility markerFacility = (Facility) marker.getTag();
-                int pos = listFacility.indexOf(markerFacility);
-                Intent i = RestaurantActivity.makeRestaurantIntent(MapScreen.this, pos);
+            public void onClusterItemInfoWindowClick(ClusterItem item) {
+                LatLng pos = item.getPosition();
+                int index = getFacilityIndex(pos);
+                Intent i = RestaurantActivity.makeRestaurantIntent(MapScreen.this, index);
                 startActivityForResult(i, ACTIVITY_REST_WINDOW);
             }
         });
-
     }
 
-    private void getDeviceLocation(){
+    private int getFacilityIndex(LatLng position) {
+        for (int i = 0; i < listFacility.size(); i++) {
+            Facility currFacility = listFacility.get(i);
+            if (currFacility.getLatitude() == position.latitude && currFacility.getLongitude() == position.longitude) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private void getDeviceLocation() {
         //Getting device Location
         Log.d(TAG, "getDeviceLocation: getting device location");
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
-        try{
-            if(locationPermissionGranted){
+        try {
+            if (locationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found Location");
                             currentLocation = (Location) task.getResult();
                             LatLng locationLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                             moveCamera(locationLatLng, DEFAULT_ZOOM);
-                        }else{
+                        } else {
                             Log.d(TAG, "onComplete: current location is null");
                             Toast.makeText(MapScreen.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             Log.e(TAG, "getDeviceLocation: SecurityException: " + e.getMessage());
         }
 
     }
 
-    private void addResMarkers(){
-        if(map != null){
-            //Setting up needed objects
-            if(mClusterManager == null){
-                mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
-            }
-            if(mClusterRenderer == null){
-                mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
-            }
-            mClusterManager.setRenderer(mClusterRenderer);
+    private void addResMarkers() {
+        if (map != null) {
 
             map.setInfoWindowAdapter(new CustomInfoAdapter(MapScreen.this));
+            //Setting up needed objects
+            if (mClusterManager == null) {
+                mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
+            }
+            if (mClusterRenderer == null) {
+                mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
+            }
 
-            for(int i =0; i < listFacility.size(); i++){
-                Log.d(TAG, "Inside For loop to add icons" );
+            mClusterManager.setRenderer(mClusterRenderer);
+            map.setOnCameraIdleListener(mClusterManager);
+            map.setOnMarkerClickListener(mClusterManager);
+            mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener() {
+                @Override
+                public boolean onClusterClick(Cluster cluster) {
+                    return true;
+                }
+            });
+
+            checkInfoWindowClicked();
+
+            for (int i = 0; i < listFacility.size(); i++) {
+                Log.d(TAG, "Inside For loop to add icons");
 
                 int height = 50;
                 int width = 50;
@@ -188,70 +214,58 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
                 int iconToDisplay = R.drawable.green_circle;
                 HazardRating currentHazardLevel = inspectionList.get(i).getHazardRating();
                 Facility currentFacility = listFacility.get(i);
-                if(currentHazardLevel == High){
+                if (currentHazardLevel == High) {
                     iconToDisplay = R.drawable.red_triangle;
-                }else if (currentHazardLevel == Moderate){
+                } else if (currentHazardLevel == Moderate) {
                     iconToDisplay = R.drawable.yellow_diamond;
                 }
+
 
                 ClustorMarker newClustorMarker = new ClustorMarker(
                         new LatLng(currentFacility.getLatitude(), currentFacility.getLongitude()),
                         currentFacility.getName(),
                         currentHazardLevel.toString(),
                         currentFacility.getAddress(),
-                        iconToDisplay
+                        iconToDisplay,
+                        currentFacility
                 );
 
-                BitmapDrawable bitmapdraw = (BitmapDrawable)getDrawable(iconToDisplay);
-                Bitmap b = bitmapdraw.getBitmap();
-                Bitmap smallMarker = Bitmap.createScaledBitmap(b, width, height, false);
-
-                MarkerOptions markerOptions = new MarkerOptions()
-                        .position(new LatLng(currentFacility.getLatitude(), currentFacility.getLongitude()))
-                        .icon(BitmapDescriptorFactory.fromBitmap(smallMarker))
-                        .title(currentFacility.getName())
-                        .snippet("Address: " + currentFacility.getAddress() + "\nHazard Level: " + currentHazardLevel);
-
-                Marker newMarker = map.addMarker(markerOptions);
-                newMarker.setTag(currentFacility);
-                mMarkers.add(newMarker);
-
-                Log.d(TAG, "Adding cluster markers to manager and list of markers" );
+                Log.d(TAG, "Adding cluster markers to manager and list of markers");
                 mClusterManager.addItem(newClustorMarker);
                 mClusterMarkers.add(newClustorMarker);
 
             }
-//            mClusterManager.cluster();
-            Log.d(TAG, "ClusterManager.cluster called!!" );
+            mClusterManager.cluster();
+            Log.d(TAG, "ClusterManager.cluster called!!");
 
         }
     }
 
-    private void moveCamera(LatLng latLng, float zoom){
+    private void moveCamera(LatLng latLng, float zoom) {
         map.setInfoWindowAdapter(new CustomInfoAdapter(MapScreen.this));
         Log.d(TAG, "moveCamera: moving the map camera to lat: " + latLng.latitude + ", lng: " + latLng.longitude);
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
         checkInfoWindowClicked();
     }
 
-    private void getInspection(){
+    private void getInspection() {
         addRestaurants();
         DatabaseReader dr = new DatabaseReader(getApplicationContext());
-        for(int i =0; i < listFacility.size(); i++){
+        for (int i = 0; i < listFacility.size(); i++) {
             List<InspectionReport> facilityInspectionList = dr.getAllAssociatedInspections(listFacility.get(i).getTrackingNumber());
-            if(facilityInspectionList.size() == 0){
-                inspectionList.add(new InspectionReport(listFacility.get(i).getTrackingNumber(), null,"None",-1,-1,"low", "No Inspection yet"));
+            if (facilityInspectionList.size() == 0) {
+                inspectionList.add(new InspectionReport(listFacility.get(i).getTrackingNumber(), null, "None", -1, -1, "low", "No Inspection yet"));
                 continue;
             }
             InspectionReport latestInspection = facilityInspectionList.get(0);
-            for(int j = 1; j < facilityInspectionList.size(); j++){
-                if(facilityInspectionList.get(j).getInspectionDate().compareTo(latestInspection.getInspectionDate()) > 0){
+            for (int j = 1; j < facilityInspectionList.size(); j++) {
+                if (facilityInspectionList.get(j).getInspectionDate().compareTo(latestInspection.getInspectionDate()) > 0) {
                     //Change latestInspection
                     latestInspection = facilityInspectionList.get(j);
                 }
             }
             inspectionList.add(latestInspection);
-            Log.d(TAG, "Inspection Added" );
+            Log.d(TAG, "Inspection Added");
 
         }
     }
@@ -261,10 +275,9 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
         listFacility = reader.getFacilityArrayList();
     }
 
-    private void initializeMap(){
+    private void initializeMap() {
         Log.d(TAG, "initializeMap: Initializing Map");
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapView);
-
         mapFragment.getMapAsync(MapScreen.this);
     }
 

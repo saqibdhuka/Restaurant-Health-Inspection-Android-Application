@@ -10,17 +10,27 @@ public class ClustorMarker implements ClusterItem {
     private String address;
     private String snippet;
     private int iconPicture;
+    private Facility facility;
 
-    public ClustorMarker(LatLng position, String title, String hazardLevel, String address, int iconPicture) {
+    public ClustorMarker(LatLng position, String title, String hazardLevel, String address, int iconPicture, Facility facility) {
         this.position = position;
         this.title = title;
         this.hazardLevel = hazardLevel;
         this.address = address;
         this.iconPicture = iconPicture;
+        this.facility = facility;
         snippet = "Address: " + address + "\n" + "Hazard Level: " + hazardLevel.toString();
     }
 
     public ClustorMarker(){
+    }
+
+    public Facility getFacility() {
+        return facility;
+    }
+
+    public void setFacility(Facility facility) {
+        this.facility = facility;
     }
 
     public void setPosition(LatLng position) {
@@ -73,5 +83,7 @@ public class ClustorMarker implements ClusterItem {
     public void setIconPicture(int iconPicture) {
         this.iconPicture = iconPicture;
     }
+
+
 }
 
