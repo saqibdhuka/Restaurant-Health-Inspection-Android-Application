@@ -7,9 +7,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -42,13 +44,25 @@ public class RestaurantsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurants_list);
         //DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
 
-        addRestaurants();
-        populateListView();
-        setupMapButton();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                addRestaurants();
+                populateListView();
+                setupMapButton();
+                findViewById(R.id.resList_loading_layout).setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+            }
+        }, 50);
+
     }
 
     private void setupMapButton() {
         Button mapButton = findViewById(R.id.restaurantMap);
+        mapButton.setVisibility(View.VISIBLE);
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
