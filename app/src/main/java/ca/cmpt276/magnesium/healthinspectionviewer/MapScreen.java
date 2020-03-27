@@ -257,7 +257,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback{
     }
 
     private void addRestaurants() {
-        ReadingCSVFacility reader = new ReadingCSVFacility(this);
+        ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
         listFacility = reader.getFacilityArrayList();
     }
 

@@ -168,7 +168,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
     }
 
     private void addRestaurants() {
-        ReadingCSVFacility reader = new ReadingCSVFacility(this);
+        ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
         facilities = reader.getFacilityArrayList();
     }
 

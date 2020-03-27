@@ -19,12 +19,24 @@ public class ReadingCSVFacility {
     private ArrayList<Facility> facilitiesList;
     private static Context context;
 
-    public ReadingCSVFacility(Context cont) {
+    private static ReadingCSVFacility reader;
+
+    private ReadingCSVFacility(Context cont) {
         context = cont;
         setFacilityRes(getFacilityFromTextFile());
     }
 
-    public static ArrayList<Facility> getFacilityFromTextFile(){
+    public static ReadingCSVFacility getCSVReader(Context context) {
+        // Lazy instantiation, singleton.
+        // This way, we don't recreate readers for no reason.
+        if (reader == null) {
+            reader = new ReadingCSVFacility(context);
+        }
+
+        return reader;
+    }
+
+    private static ArrayList<Facility> getFacilityFromTextFile(){
         InputStream is = null;
         BufferedReader bufferedReader = null;
         ArrayList<Facility> facilityArrayList = new ArrayList<Facility>();

@@ -48,7 +48,7 @@ public class RestaurantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_restaurant);
         setupToolbar();
 
-        ReadingCSVFacility reader = new ReadingCSVFacility(this);
+        ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
 
         // TODO: refactor this? Seems like a waste to ask for ALL FACILITIES
         // just to pick one out.
