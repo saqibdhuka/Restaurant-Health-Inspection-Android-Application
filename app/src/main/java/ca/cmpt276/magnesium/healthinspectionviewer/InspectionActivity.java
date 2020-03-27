@@ -25,6 +25,7 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 import ca.cmpt276.magnesium.restaurantmodel.Violation;
 
 public class InspectionActivity extends AppCompatActivity {
@@ -56,7 +57,9 @@ public class InspectionActivity extends AppCompatActivity {
             public void run() {
                 DatabaseReader reader = new DatabaseReader(getApplicationContext());
 
-                ArrayList<Facility> facilities = reader.getAllFacilities();
+                // TODO refactor this - seems very wasteful to get ALL facilities here!
+                ReadingCSVFacility CSVreader = ReadingCSVFacility.getCSVReader(InspectionActivity.this);
+                ArrayList<Facility> facilities = CSVreader.getFacilityArrayList();
                 int facilityIndex = getIntent().getIntExtra(EXTRA_FACILITY_ID, 0);
                 Facility currentFacility = facilities.get(facilityIndex);
 

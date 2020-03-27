@@ -14,6 +14,7 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
     public static final String DATABASE_INSP_NAME = "inspection.db";
     public static final String TABLE_INSP_NAME = "inspection_table";
+    public static final String TABLE_INDEX_NAME = "inspection_index";
 
     // Inspection database column names
     public static final String COL_1="TrackingNumber";
@@ -48,7 +49,9 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         // Ensure DB is starting from scratch with the csv as our base:
         String dropDB = "DROP TABLE IF EXISTS " + TABLE_INSP_NAME;
+        String dropIndex = "DROP INDEX IF EXISTS " + TABLE_INDEX_NAME;
         db.execSQL(dropDB);
+        db.execSQL(dropIndex);
         ensureInspectionDBCreation(db);
 
         // Now add back values:
@@ -91,6 +94,10 @@ public class DatabaseHelperInspection extends SQLiteOpenHelper {
         // End final transaction:
         db.setTransactionSuccessful();
         db.endTransaction();
+
+        // Create index for faster retrievals:
+        String indexSQL = "CREATE INDEX IF NOT EXISTS " + TABLE_INDEX_NAME + " ON " + TABLE_INSP_NAME + " (" + COL_1 + ")";
+        db.execSQL(indexSQL);
 
         DateTime endTime = DateTime.now();
         Log.d("DatabaseHelperInspsection", "Insert complete");

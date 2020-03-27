@@ -62,7 +62,7 @@ public class DatabaseHelperFacility extends SQLiteOpenHelper {
 
         // Now add back values:
         ContentValues contentValues = new ContentValues();
-        ReadingCSVFacility facility = new ReadingCSVFacility(contextActivity);
+        ReadingCSVFacility facility = ReadingCSVFacility.getCSVReader(contextActivity);
 
         String insertString = String.format(
                 "INSERT INTO %s (%s, %s, %s, %s, %s, %s, %s) VALUES (?, ?, ?, ?, ?, ?, ?)",

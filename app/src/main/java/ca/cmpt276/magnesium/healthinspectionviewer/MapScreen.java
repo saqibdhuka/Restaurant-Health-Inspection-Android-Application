@@ -50,6 +50,7 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
 import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
@@ -285,8 +286,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
     }
 
     private void addRestaurants() {
-        DatabaseReader reader = new DatabaseReader(getApplicationContext());
-        listFacility = reader.getAllFacilities();
+        ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
+        listFacility = reader.getFacilityArrayList();
     }
 
     private void initializeMap() {

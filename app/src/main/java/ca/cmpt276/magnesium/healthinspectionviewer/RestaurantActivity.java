@@ -25,6 +25,7 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
 public class RestaurantActivity extends AppCompatActivity {
 
@@ -55,8 +56,11 @@ public class RestaurantActivity extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                DatabaseReader reader = new DatabaseReader(getApplicationContext());
-                ArrayList<Facility> facilities = reader.getAllFacilities();
+                ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(RestaurantActivity.this);
+
+                // TODO: refactor this? Seems like a waste to ask for ALL FACILITIES
+                // just to pick one out.
+                ArrayList<Facility> facilities = reader.getFacilityArrayList();
                 restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
 
                 currentRestaurant = facilities.get(restaurantID);
@@ -78,7 +82,6 @@ public class RestaurantActivity extends AppCompatActivity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }, 50);
-
 
         setupGPSToMap();
 

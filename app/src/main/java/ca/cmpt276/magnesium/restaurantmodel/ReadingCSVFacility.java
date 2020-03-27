@@ -19,12 +19,24 @@ public class ReadingCSVFacility {
     private ArrayList<Facility> facilitiesList;
     private static Context context;
 
-    public ReadingCSVFacility(Context cont) {
+    private static ReadingCSVFacility reader;
+
+    private ReadingCSVFacility(Context cont) {
         context = cont;
         setFacilityRes(getFacilityFromTextFile());
     }
 
-    public static ArrayList<Facility> getFacilityFromTextFile(){
+    public static ReadingCSVFacility getCSVReader(Context context) {
+        // Lazy instantiation, singleton.
+        // This way, we don't recreate readers for no reason.
+        if (reader == null) {
+            reader = new ReadingCSVFacility(context);
+        }
+
+        return reader;
+    }
+
+    private static ArrayList<Facility> getFacilityFromTextFile(){
         InputStream is = null;
         BufferedReader bufferedReader = null;
         ArrayList<Facility> facilityArrayList = new ArrayList<Facility>();
@@ -74,16 +86,64 @@ public class ReadingCSVFacility {
                     index++;
                     String city = strFacility[index];
                     index++;
-                    String facilityType = strFacility[index];
+                    String facilityTypeString = strFacility[index];
+                    // Convert this facility type to enum:
+                    FacilityType facilityType = FacilityType.valueOf(facilityTypeString);
                     index++;
                     Double latitude = Double.parseDouble(strFacility[index]);;
                     index++;
                     Double longitude = Double.parseDouble(strFacility[index]);
+                    DatabaseReader reader = new DatabaseReader(context);
+                    InspectionReport firstReport = reader.getFirstAssociatedInspection(trackingNumber);
+                    String inspectionString = "N/A";
+                    if (firstReport != null) {
+                        inspectionString = firstReport.getInspectionDateString();
+                    }
+
+                    // Set the restaurant ID based on a few context clues:
+                    int iconID;
+                    if(name.toLowerCase().contains("freshslice")
+                            && name.toLowerCase().contains("pizza")) {
+                        iconID = R.drawable.freshslice;
+                    } else if(name.toLowerCase().contains("burger")
+                            && name.toLowerCase().contains("king")){
+                        iconID = R.drawable.burgerking;
+                    } else if (name.toLowerCase().contains("pizza")) {
+                        iconID = R.drawable.pizza;
+                    } else if (name.toLowerCase().contains("seafood")
+                            || name.toLowerCase().contains("sushi")) {
+                        iconID = R.drawable.fish;
+                    } else if (name.toLowerCase().contains("burger")) {
+                        iconID = R.drawable.burger;
+                    } else if(name.toLowerCase().contains("a&w")){
+                        iconID = R.drawable.aandw;
+                    }  else if(name.toLowerCase().contains("donalds")){
+                        iconID = R.drawable.mcdonald;
+                    } else if(name.toLowerCase().contains("hortons")){
+                        iconID = R.drawable.timhortons;
+                    } else if(name.toLowerCase().contains("eleven")){
+                        iconID = R.drawable.seveneleven;
+                    } else if(name.toLowerCase().contains("kfc")){
+                        iconID = R.drawable.kfc;
+                    } else if(name.toLowerCase().contains("subway")){
+                        iconID = R.drawable.subway;
+                    } else if(name.toLowerCase().contains("starbucks")){
+                        iconID = R.drawable.starbucks;
+                    } else if(name.toLowerCase().contains("wendy's")){
+                        iconID = R.drawable.wendys;
+                    }
+                    else {
+                        // Default "generic" icon: kitchen
+                        iconID = R.drawable.kitchen;
+                    }
+
                     facilityArrayList.add(new Facility(trackingNumber, name,
                             address, city,
                             facilityType,
                             latitude,
-                            longitude));
+                            longitude,
+                            iconID,
+                            inspectionString));
                 } else {
                     break;
                 }

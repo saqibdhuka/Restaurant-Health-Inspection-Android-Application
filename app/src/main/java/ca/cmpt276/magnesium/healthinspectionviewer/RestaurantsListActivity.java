@@ -26,6 +26,7 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
 public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
@@ -181,8 +182,8 @@ public class RestaurantsListActivity extends AppCompatActivity {
     }
 
     private void addRestaurants() {
-        DatabaseReader reader = new DatabaseReader(getApplicationContext());
-        facilities = reader.getAllFacilities();
+        ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
+        facilities = reader.getFacilityArrayList();
     }
 
     @Override

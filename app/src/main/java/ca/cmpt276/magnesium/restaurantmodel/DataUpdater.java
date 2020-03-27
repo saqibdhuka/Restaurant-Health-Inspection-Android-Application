@@ -431,15 +431,15 @@ public class DataUpdater {
             dbUpdateRequired = true;
         }
         if (dbUpdateRequired) {
-            DatabaseHelperFacility dbFacility = new DatabaseHelperFacility(callerContext);
-            dbFacility.getWritableDatabase();
-            dbFacility.insertData();
-            dbFacility.close();
-
             DatabaseHelperInspection dbInspection = new DatabaseHelperInspection(callerContext);
             dbInspection.getWritableDatabase();
             dbInspection.insertData();
             dbInspection.close();
+
+            DatabaseHelperFacility dbFacility = new DatabaseHelperFacility(callerContext);
+            dbFacility.getWritableDatabase();
+            dbFacility.insertData();
+            dbFacility.close();
 
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(dbUpdateRequiredKey, false);
