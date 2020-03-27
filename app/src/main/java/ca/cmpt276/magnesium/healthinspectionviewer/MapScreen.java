@@ -354,15 +354,22 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                         break;
                     }
                 }
-                for (Marker marker : mClusterManager.getMarkerCollection().getMarkers()){
-                    if (marker.getTitle().equals(f.getName())) {
-                        marker.showInfoWindow();
-                        if(marker.isInfoWindowShown()){
-                            marker.showInfoWindow();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (Marker marker : mClusterManager.getMarkerCollection().getMarkers()){
+                            if (marker.getTitle().equals(f.getName())) {
+                                marker.showInfoWindow();
+                                if(marker.isInfoWindowShown()){
+                                    marker.showInfoWindow();
+                                }
+                                break;
+                            }
                         }
-                        break;
                     }
-                }
+                }, 100);
+
                 break;
             }
         }
@@ -377,13 +384,23 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                 if (data==null)
                     finish();
                 else
-                    if (data.hasExtra("restTrackNum"))
+                    if (data.hasExtra("restTrackNum")) {
+                        LatLng temp_location = new LatLng(currentLocation.getLatitude()+0.001, currentLocation.getLongitude());
+                        LatLng locationLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                        moveCamera(temp_location, 20);
+                        moveCamera(locationLatLng,30);
                         showRestInfo(data.getStringExtra("restTrackNum"));
+                    }
                 break;
             case ACTIVITY_REST_WINDOW:
                 if (data != null)
-                    if (data.hasExtra("restTrackNum"))
+                    if (data.hasExtra("restTrackNum")) {
+                        LatLng temp_location = new LatLng(currentLocation.getLatitude()+0.001, currentLocation.getLongitude());
+                        LatLng locationLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                        moveCamera(temp_location, 20);
+                        moveCamera(locationLatLng,30);
                         showRestInfo(data.getStringExtra("restTrackNum"));
+                    }
                 break;
         }
     }
