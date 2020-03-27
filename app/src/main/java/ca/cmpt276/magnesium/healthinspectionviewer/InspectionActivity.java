@@ -58,7 +58,7 @@ public class InspectionActivity extends AppCompatActivity {
                 DatabaseReader reader = new DatabaseReader(getApplicationContext());
 
                 // TODO refactor this - seems very wasteful to get ALL facilities here!
-                ReadingCSVFacility CSVreader = ReadingCSVFacility.getCSVReader(this);
+                ReadingCSVFacility CSVreader = ReadingCSVFacility.getCSVReader(InspectionActivity.this);
                 ArrayList<Facility> facilities = CSVreader.getFacilityArrayList();
                 int facilityIndex = getIntent().getIntExtra(EXTRA_FACILITY_ID, 0);
                 Facility currentFacility = facilities.get(facilityIndex);

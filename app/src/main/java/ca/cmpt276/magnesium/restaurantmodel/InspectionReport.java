@@ -6,6 +6,10 @@ import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * SFU CMPT 276
@@ -64,19 +68,42 @@ public class InspectionReport {
 
     private ArrayList<Violation> getViolationsFromString(String violationStatement) {
         ArrayList<Violation> returnArray = new ArrayList<>();
+        List<String> violationArray = Arrays.asList(violationStatement.split("\\|"));
         // Do some string processing on violation statements:
+        int positionOfFirstComma = violationStatement.indexOf(',');
+        if (positionOfFirstComma >= 0) {
+            violationStatement = violationStatement.substring(positionOfFirstComma + 1);
+        }
         // We know that in cases of multiple violations, they are seperated by "pipe" or '|'
-        String[] violationArray = violationStatement.split("\\|");
+
         // Process each possible "violation" in the report:
         for (String violation : violationArray) {
             // Components of a violation are split up by commas
-            String[] violationParams = violation.split(",");
+            ArrayList<String> violationParams = new ArrayList<String>();
+            Collections.addAll(violationParams, violation.split(","));
+            // Figure out if we need to remove a hazard rating:
+            if (violationParams.size() > 0) {
+                if (violationParams.get(0).equalsIgnoreCase("low")
+                        || (violationParams.get(0).equalsIgnoreCase("moderate")
+                        || (violationParams.get(0).equalsIgnoreCase("high")))) {
+                    // We need to remove this one.
+                    violationParams.remove(0);
+                }
+                // Also check the last.
+                int lastIndex = violationParams.size() - 1;
+                if (violationParams.get(lastIndex).equalsIgnoreCase("low")
+                        || (violationParams.get(lastIndex).equalsIgnoreCase("moderate")
+                        || (violationParams.get(lastIndex).equalsIgnoreCase("high")))) {
+                    // We need to remove this one.
+                    violationParams.remove(lastIndex);
+                }
+            }
             // Only try to pull values with a correct number of terms!
-            if (violationParams.length == 4) {
-                Violation tmpViol = new Violation(violationParams[0],
-                                                violationParams[1],
-                                                violationParams[2],
-                                                violationParams[3]);
+            if (violationParams.size() == 4) {
+                Violation tmpViol = new Violation(violationParams.get(0),
+                                                violationParams.get(1),
+                                                violationParams.get(2),
+                                                violationParams.get(3));
                 returnArray.add(tmpViol);
             }
         }

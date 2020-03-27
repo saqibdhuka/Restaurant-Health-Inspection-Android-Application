@@ -46,17 +46,17 @@ public class RestaurantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_restaurant);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         setupToolbar();
+
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(this);
+                ReadingCSVFacility reader = ReadingCSVFacility.getCSVReader(RestaurantActivity.this);
 
                 // TODO: refactor this? Seems like a waste to ask for ALL FACILITIES
                 // just to pick one out.
@@ -82,7 +82,6 @@ public class RestaurantActivity extends AppCompatActivity {
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }, 50);
-
 
         setupGPSToMap();
 
