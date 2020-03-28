@@ -81,5 +81,14 @@
     <string name="loading_res_text">Loading Restaurant Details</string>
     <string name="loading_inspection_text">Loading Inspection</string>
 
+    <!-- Strings used for the data updater class -->
+    <string name="dataupdater_contentAvailable">New content available for restaurant resources - would you like to update now?</string>
+    <string name="dataUpdater_updateButton">Update Now</string>
+    <string name="dataUpdater_ignoreButton">Ignore Update</string>
+    <string name="dataupdater_downloadingString">Downloading new data…</string>
+    <string name="dataupdater_restartButton">Restart</string>
+    <string name="dataUpdater_cancelButton">Cancel</string>
+    <string name="dataupdater_restartText">Data successfully updated. Please restart this application to use new data.</string>
+
 
 </resources>
