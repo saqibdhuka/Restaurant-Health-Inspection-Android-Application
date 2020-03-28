@@ -30,6 +30,8 @@ import org.joda.time.Hours;
 
 import java.io.File;
 
+import ca.cmpt276.magnesium.healthinspectionviewer.R;
+
 /**
  *  DataUpdater class
  *  Facilitates reading of updated data from remote server.
@@ -227,14 +229,14 @@ public class DataUpdater {
 
             if (restaurantsNeedUpdate || inspectionsNeedUpdate) {
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(callerContext);
-                alertBuilder.setPositiveButton("Update Now", new DialogInterface.OnClickListener() {
+                alertBuilder.setPositiveButton(callerContext.getResources().getString(R.string.dataUpdater_updateButton), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         downloadFiles(callerContext);
                     }
                 });
 
-                alertBuilder.setNegativeButton("Ignore Update", new DialogInterface.OnClickListener() {
+                alertBuilder.setNegativeButton(callerContext.getResources().getString(R.string.dataUpdater_ignoreButton), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Set this as "update ignored" so we only call this on the first time:
@@ -243,8 +245,7 @@ public class DataUpdater {
                         edit.apply();
                     }
                 });
-                // TODO: replace these UI strings with resources from strings.xml!
-                alertBuilder.setMessage("New content available for restaurant resources - would you like to update now?");
+                alertBuilder.setMessage(callerContext.getResources().getString(R.string.dataupdater_contentAvailable));
                 // Show this alertDialog:
                 alertBuilder.create().show();
             }
@@ -342,7 +343,7 @@ public class DataUpdater {
     private static AlertDialog.Builder getProgressDialog(Context callerContext) {
         if (progressBarBuilder == null) {
             progressBarBuilder = new AlertDialog.Builder(callerContext);
-            progressBarBuilder.setTitle("Downloading new data...");
+            progressBarBuilder.setTitle(callerContext.getResources().getString(R.string.dataupdater_downloadingString));
             progress = new ProgressBar(callerContext);
             // Create an inline LinearLayout and add this progressBar to it:
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -350,7 +351,7 @@ public class DataUpdater {
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             progress.setLayoutParams(params);
             progressBarBuilder.setView(progress);
-            progressBarBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            progressBarBuilder.setNegativeButton(callerContext.getResources().getString(R.string.dataUpdater_cancelButton), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     cancelDownloads(callerContext);
@@ -378,14 +379,14 @@ public class DataUpdater {
                 progressDialog.dismiss();
                 // Create a dialog telling the user to restart the app for new data.
                 AlertDialog.Builder builder = new AlertDialog.Builder(callerContext);
-                builder.setPositiveButton("Restart", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(callerContext.getResources().getString(R.string.dataupdater_restartButton), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         ProcessPhoenix.triggerRebirth(callerContext);
                     }
                 });
-                builder.setMessage("Data successfully updated. Please restart this application to use new data.");
+                builder.setMessage(callerContext.getResources().getString(R.string.dataupdater_restartText));
                 builder.create().show();
             }
         } else {
