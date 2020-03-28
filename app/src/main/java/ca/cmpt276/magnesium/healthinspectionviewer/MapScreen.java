@@ -22,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.internal.maps.zzt;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -39,8 +40,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.collections.CircleManager;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import ca.cmpt276.magnesium.restaurantmodel.ClusterRenderer;
@@ -87,6 +90,9 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
     public static Intent makeMapScreenIntent(Context context) {
         return new Intent(context, MapScreen.class);
     }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -343,17 +349,30 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
             if (trackNum.equals(f.getTrackingNumber())) {
                 for (ClustorMarker marker : mClusterMarkers) {
                     if (marker.getTitle().equals(f.getName())) {
-                        moveCamera(marker.getPosition(), DEFAULT_ZOOM);
+                        moveCamera(marker.getPosition(), 25);
+                        break;
                     }
                 }
-                for (Marker marker : mMarkers){
-                    if (marker.getTitle().equals(f.getName())) {
-                        marker.showInfoWindow();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (Marker marker : mClusterManager.getMarkerCollection().getMarkers()){
+                            if (marker.getTitle().equals(f.getName())) {
+                                marker.showInfoWindow();
+                                if(marker.isInfoWindowShown()){
+                                    marker.showInfoWindow();
+                                }
+                                break;
+                            }
+                        }
                     }
-                }
+                }, 500);
+
                 break;
             }
         }
+        mClusterManager.cluster();
     }
 
     @Override
@@ -364,13 +383,15 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                 if (data==null)
                     finish();
                 else
-                    if (data.hasExtra("restTrackNum"))
+                    if (data.hasExtra("restTrackNum")) {
                         showRestInfo(data.getStringExtra("restTrackNum"));
+                    }
                 break;
             case ACTIVITY_REST_WINDOW:
                 if (data != null)
-                    if (data.hasExtra("restTrackNum"))
+                    if (data.hasExtra("restTrackNum")) {
                         showRestInfo(data.getStringExtra("restTrackNum"));
+                    }
                 break;
         }
     }
