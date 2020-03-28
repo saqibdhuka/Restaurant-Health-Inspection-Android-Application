@@ -367,7 +367,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                             }
                         }
                     }
-                }, 100);
+                }, 500);
 
                 break;
             }
