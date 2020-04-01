@@ -7,13 +7,13 @@ The end result should be a useful Android app to view health inspection report d
 
 ## Iteration 2 Roles
 
-### [Product Owner](https://www.mountaingoatsoftware.com/agile/scrum/roles/product-owner) - Saqib
+### [Product Owner](https://www.mountaingoatsoftware.com/agile/scrum/roles/product-owner) - Devon
 
-### [Scrum Master](https://www.mountaingoatsoftware.com/agile/scrum/roles/scrummaster) - Devon
+### [Scrum Master](https://www.mountaingoatsoftware.com/agile/scrum/roles/scrummaster) - Minh
 
-### Repo Manager - Justin
+### Repo Manager -  Saqib
 
-### Team Member - Minh
+### Team Member - Justin
 
 ## Git Rules
 
