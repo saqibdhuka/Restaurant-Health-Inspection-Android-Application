@@ -53,6 +53,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 addRestaurants();
                 populateListView();
                 setupMapButton();
+                setupFilterButton();
                 findViewById(R.id.resList_loading_layout).setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
@@ -68,6 +69,20 @@ public class RestaurantsListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent().putExtra("button","back");
                 setResult(ACTIVITY_REST_LIST_MAP_BUTTON,intent);
+                finish();
+            }
+        });
+    }
+
+    // TODO ensure that this has correct back-button activity
+    private void setupFilterButton() {
+        Button filterButton = findViewById(R.id.startSearchActivity);
+        filterButton.setVisibility(View.VISIBLE);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SearchActivity.getSearchActivityIntent(RestaurantsListActivity.this);
+                startActivity(intent);
                 finish();
             }
         });

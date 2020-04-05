@@ -116,6 +116,10 @@
     <string name="search_greaterThenCheckbox_1">More than </string>
     <string name="search_lessThenCheckbox_2">critical violations in the last year</string>
     <string name="search_favoritesCheckbox">Search only from designated favorites</string>
+    <string name="search_high">High</string>
+    <string name="search_mod">Moderate</string>
+    <string name="search_low">Low</string>
+    <string name="search_button">Filter</string>
 
 
 </resources>
