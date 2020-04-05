@@ -89,6 +89,33 @@
     <string name="dataupdater_restartButton">Restart</string>
     <string name="dataUpdater_cancelButton">Cancel</string>
     <string name="dataupdater_restartText">Data successfully updated. Please restart this application to use new data.</string>
+    <string name="title_activity_search">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+
+    <!-- Searching Activity -->
+    <string name="search_header">Filter Restaurants</string>
+    <string name="search_filterHint">Restaurant Name</string>
+    <string name="search_filterHazardLevel">Hazard level of last inspection:</string>
+    <string name="search_applyFilters">Apply Filters</string>
+    <string name="search_resetFilters">Reset all Filters</string>
+    <string name="search_lessThenCheckbox_1">Less than </string>
+    <string name="search_greaterThenCheckbox_1">More than </string>
+    <string name="search_lessThenCheckbox_2">critical violations in the last year</string>
+    <string name="search_favoritesCheckbox">Search only from designated favorites</string>
 
 
 </resources>

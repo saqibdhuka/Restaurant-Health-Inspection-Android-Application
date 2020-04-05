@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.devonlutz.depthoffieldcalculator.LensAddActivity">
+
+    <CheckBox
+        android:id="@+id/searchActivity_enableLessThen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/search_lessThenCheckbox_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_filterHazardLevelText" />
+
+    <EditText
+        android:id="@+id/searchActivity_lessThanNumberInput2"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="40dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_enableMoreThen"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_filterHazardLevelText" />
+
+    <TextView
+        android:id="@+id/searchActivity_)inLastYearText"
+        android:layout_width="216dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/search_lessThenCheckbox_2"
+        android:textAppearance="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:textSize="15"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_lessThanNumberInput"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_hazardSpinner" />
+
+    <TextView
+        android:id="@+id/searchActivity_filterHazardLevelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/search_filterHazardLevel"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_nameFilterEditable" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_header">
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/searchActivity_nameFilterEditable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:hint="@string/search_filterHint"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_header" />
+
+    <TextView
+        android:id="@+id/searchActivity_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="125dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="126dp"
+        android:text="@string/search_header"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/searchActivity_hazardSpinner"
+        android:layout_width="142dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="40dp"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_filterHazardLevelText"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_nameFilterEditable" />
+
+    <Button
+        android:id="@+id/search_applyFilter"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="44dp"
+        android:text="@string/search_applyFilters"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/searchActivity_resetFilter"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="108dp"
+        android:backgroundTint="#D63838"
+        android:text="@string/search_resetFilters"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <CheckBox
+        android:id="@+id/searchActivity_enableMoreThen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/search_greaterThenCheckbox_1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_enableLessThen" />
+
+    <EditText
+        android:id="@+id/searchActivity_lessThanNumberInput"
+        android:layout_width="40dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_enableMoreThen"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_lessThanNumberInput2" />
+
+    <TextView
+        android:id="@+id/searchActivity_inLastYearText_greater"
+        android:layout_width="216dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="13dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/search_lessThenCheckbox_2"
+        android:textAppearance="@style/Widget.AppCompat.CompoundButton.CheckBox"
+        android:textSize="15"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_lessThanNumberInput"
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_)inLastYearText" />
+
+    <CheckBox
+        android:id="@+id/searchActivity_onlyFromFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/search_favoritesCheckbox"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="339dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
