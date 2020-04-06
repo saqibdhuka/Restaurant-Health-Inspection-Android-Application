@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">餐廳衛生檢查</string>
+
+    <!--  Start Screen  -->
+    <string name="start_welcome_sentence">正在使用</string>
+
+    <!--  Restaurant List Screen  -->
+    <string name="resList_title">素里餐廳</string>
+
+    <!--  Restaurant Screen  -->
+    <string name="restaurant_title">餐廳</string>
+    <string name="res_icon">餐廳商標</string>
+    <string name="res_address">地址 :</string>
+    <string name="res_GPS_text">座標 :</string>
+    <string name="res_latitude">緯度 :</string>
+    <string name="res_Longitude">經度：</string>
+    <string name="res_inspection">檢查 :</string>
+    <string name="res_inspection_empty">這餐廳並無相關檢查</string>
+
+    <!--  Inspection Screen  -->
+    <string name="inspection_title">檢查</string>
+    <string name="inspection_date">日期 :</string>
+    <string name="inspection_type">類型 :</string>
+    <string name="inspection_hazard">風險 :</string>
+    <string name="inspection_violation">違反項目 :</string>
+    <string name="inspection_violation_empty">這餐廳並無相關違反項目</string>
+    <string name="inspection_issue">違反項目 :</string>
+    <string name="inspection_crit">嚴重違反數量 :</string>
+    <string name="inspection_noncrit">非嚴重違反數量 :</string>
+
+    <!--  Restaurant List View  -->
+    <string name="resListView_res_icon">餐廳商標</string>
+    <string name="resListView_issue">違反數量 :</string>
+    <string name="resListView_hazard">風險程度 :</string>
+    <string name="resListView_inspection">最近檢查 :</string>
+    <string name="resListView_date">日期 :</string>
+    <string name="resListView_no_inspection">這餐廳尚未檢查</string>
+
+
+    <!--  Inspection List View  -->
+    <string name="inspectionListView_hazard">風險程度 :</string>
+    <string name="inspectionListView_crit">嚴重違反數量 :</string>
+    <string name="inspectionListView_noncrit">非嚴重違反數量 :</string>
+    <string name="inspectionListView_date">日期 :</string>
+
+    <!-- Violation List View  -->
+    <string name="violationArrayList_vio_text">違反種類 :</string>
+    <string name="violationArrayList_issue_text">違反項目 :</string>
+
+
+    <!--  sample string for generate UI  -->
+    <string name="sample_restaurant_name">例子餐廳</string>
+    <string name="sample_issue_num">2</string>
+    <string name="sample_hazard_lv">中等</string>
+    <string name="sample_inspection_date">十二月 2020</string>
+    <string name="sample_address">12808 King George Blvd</string>
+    <string name="sample_lat">49.20611</string>
+    <string name="sample_long">-122.867</string>
+    <string name="sample_crit_num">0</string>
+    <string name="sample_noncrit_num">0</string>
+    <string name="sample_inspection_date_full">2019-02-27</string>
+    <string name="sample_inspection_type">Follow-Up</string>
+    <string name="sample_violation_nature">Sanitization</string>
+    <string name="sample_violation_issue">non-critical</string>
+    <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
+    <string name="title_activity_map_screen">餐廳地圖</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <string name="restaurant_list">餐廳列表</string>
+    <string name="restaurant_map">餐廳地圖</string>
+
+
+    <string name="loading_res_list_text">讀取資料中…</string>
+    <string name="loading_map_text">更新地圖中...</string>
+    <string name="loading_res_text">讀取資料中…</string>
+    <string name="loading_inspection_text">讀取資料中…</string>
+
+    <!-- Strings used for the data updater class -->
+    <string name="dataupdater_contentAvailable">偵查到新的餐廳資料 - 立即進行更新嗎？</string>
+    <string name="dataUpdater_updateButton">更新</string>
+    <string name="dataUpdater_ignoreButton">取消更新</string>
+    <string name="dataupdater_downloadingString">更新資料中…</string>
+    <string name="dataupdater_restartButton">重啟</string>
+    <string name="dataUpdater_cancelButton">取消</string>
+    <string name="dataupdater_restartText">數據下載完畢 請重新啟動程式</string>
+
+
+</resources>

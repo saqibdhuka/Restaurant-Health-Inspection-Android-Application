@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Inspection des Restaurants</string>
+
+    <!--  Start Screen  -->
+    <string name="start_welcome_sentence">Bienvenue à</string>
+
+    <!--  Restaurant List Screen  -->
+    <string name="resList_title">Surrey Restaurants</string>
+
+    <!--  Restaurant Screen  -->
+    <string name="restaurant_title">Restaurant</string>
+    <string name="res_icon">icône de restaurant</string>
+    <string name="res_address">Adresse :</string>
+    <string name="res_GPS_text">Coords GPS:</string>
+    <string name="res_latitude">Latitude :</string>
+    <string name="res_Longitude">Longitude :</string>
+    <string name="res_inspection">Inspection :</string>
+    <string name="res_inspection_empty">Ce restaurant n\'a pas d\'inspection associée.</string>
+
+    <!--  Inspection Screen  -->
+    <string name="inspection_title">Inspection</string>
+    <string name="inspection_date">Date :</string>
+    <string name="inspection_type">Type :</string>
+    <string name="inspection_hazard">Risque :</string>
+    <string name="inspection_violation">Toutes les violations :</string>
+    <string name="inspection_violation_empty">Cette inspection n\'a pas de violation associée.</string>
+    <string name="inspection_issue">Questions :</string>
+    <string name="inspection_crit"># questions critiques:</string>
+    <string name="inspection_noncrit"># questions non critiques:</string>
+
+    <!--  Restaurant List View  -->
+    <string name="resListView_res_icon">icône de restaurant</string>
+    <string name="resListView_issue"># questions :</string>
+    <string name="resListView_hazard">Niveau de risque :</string>
+    <string name="resListView_inspection">Inspection récente:</string>
+    <string name="resListView_date">Date :</string>
+    <string name="resListView_no_inspection">Ce restaurant n\'a pas de rapport d\'inspection..</string>
+
+
+    <!--  Inspection List View  -->
+    <string name="inspectionListView_hazard">Niveau de risque :</string>
+    <string name="inspectionListView_crit"># questions critiques:</string>
+    <string name="inspectionListView_noncrit"># questions non critiques</string>
+    <string name="inspectionListView_date">Date :</string>
+
+    <!-- Violation List View  -->
+    <string name="violationArrayList_vio_text">Nature de la violation :</string>
+    <string name="violationArrayList_issue_text">Questions :</string>
+
+
+    <!--  sample string for generate UI  -->
+    <string name="sample_restaurant_name">Exemple de restaurant</string>
+    <string name="sample_issue_num">2</string>
+    <string name="sample_hazard_lv">Moderate</string>
+    <string name="sample_inspection_date">Dec 2020</string>
+    <string name="sample_address">12808 King George Blvd</string>
+    <string name="sample_lat">49.20611</string>
+    <string name="sample_long">-122.867</string>
+    <string name="sample_crit_num">0</string>
+    <string name="sample_noncrit_num">0</string>
+    <string name="sample_inspection_date_full">2019-02-27</string>
+    <string name="sample_inspection_type">Follow-Up</string>
+    <string name="sample_violation_nature">Sanitization</string>
+    <string name="sample_violation_issue">non-critical</string>
+    <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
+    <string name="title_activity_map_screen">MapScreen</string>
+    <!-- Strings used for fragments for navigation -->
+
+    <string name="restaurant_list">Liste des Restaurants</string>
+    <string name="restaurant_map">Carte du Restaurant</string>
+
+
+    <string name="loading_res_list_text">Chargement de la liste des restaurants</string>
+    <string name="loading_map_text">Mise à jour de la carte</string>
+    <string name="loading_res_text">Chargement des détails du restaurant</string>
+    <string name="loading_inspection_text">Inspection de chargement</string>
+
+    <!-- Strings used for the data updater class -->
+    <string name="dataupdater_contentAvailable">Nouveau contenu disponible pour les ressources du restaurant - souhaitez-vous mettre à jour maintenant?</string>
+    <string name="dataUpdater_updateButton">Mettez à jour maintenant</string>
+    <string name="dataUpdater_ignoreButton">Ignorer la mise à jour</string>
+    <string name="dataupdater_downloadingString">Téléchargement de nouvelles données…</string>
+    <string name="dataupdater_restartButton">Redémarrer</string>
+    <string name="dataUpdater_cancelButton">Annuler</string>
+    <string name="dataupdater_restartText">Les données ont été mises à jour avec succès. Veuillez redémarrer cette application pour utiliser de nouvelles données.</string>
+
+
+</resources>
