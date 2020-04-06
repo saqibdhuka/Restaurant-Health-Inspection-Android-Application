@@ -28,6 +28,9 @@ import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
+
 public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
@@ -145,7 +148,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
                         hazardIcon.setImageResource(R.drawable.high_hazard_level);
                         break;
                 }
-                hazardText.setText(restaurantRating.toString());
+                hazardText.setText(getText(hazardLanguage(restaurantRating)));
 
                 // Set the number of issues as of the last inspection:
                 TextView numIssues = convertView.findViewById(R.id.resArrayList_res_issue_num);
@@ -179,6 +182,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
                     Intent intent = RestaurantActivity.makeRestaurantIntent(RestaurantsListActivity.this, position);
                     startActivityForResult(intent, ACTIVITY_REST_WINDOW);
         });
+    }
+
+    private int hazardLanguage(HazardRating currentHazardLevel) {
+        if (currentHazardLevel == High) {
+            return R.string.hazard_high;
+        } else if (currentHazardLevel == Moderate) {
+            return R.string.hazard_moderate;
+        }
+        return R.string.hazard_low;
     }
 
     private void addRestaurants() {

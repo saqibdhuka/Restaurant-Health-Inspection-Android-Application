@@ -60,9 +60,9 @@
     <string name="sample_crit_num">0</string>
     <string name="sample_noncrit_num">0</string>
     <string name="sample_inspection_date_full">2019-02-27</string>
-    <string name="sample_inspection_type">Follow-Up</string>
-    <string name="sample_violation_nature">Sanitization</string>
-    <string name="sample_violation_issue">non-critical</string>
+    <string name="sample_inspection_type">跟進</string>
+    <string name="sample_violation_nature">消毒</string>
+    <string name="sample_violation_issue">非嚴重</string>
     <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
     <string name="title_activity_map_screen">餐廳地圖</string>
     <!-- Strings used for fragments for navigation -->
@@ -84,6 +84,20 @@
     <string name="dataupdater_restartButton">重啟</string>
     <string name="dataUpdater_cancelButton">取消</string>
     <string name="dataupdater_restartText">數據下載完畢 請重新啟動程式</string>
+    <string name="map_marker_address">"地址 : "</string>
+    <string name="map_marker_hazard">"風險 : "</string>
+
+    <string name="hazard_moderate">中等</string>
+    <string name="hazard_high">高</string>
+    <string name="hazard_low">低</string>
+
+    <string name="type_routine">例行</string>
+    <string name="type_followUp">跟進</string>
+    <string name="type_none">無</string>
+
+    <string name="crit_noncrit">非嚴重</string>
+    <string name="crit_crit">嚴重</string>
+    <string name="date_day_format">日前</string>
 
 
 </resources>

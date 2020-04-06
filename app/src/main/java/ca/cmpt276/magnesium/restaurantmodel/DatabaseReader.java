@@ -213,7 +213,7 @@ public class DatabaseReader {
         String returnString;
 
         if (inspections.size() > 0) {
-            returnString = inspections.get(0).getInspectionDateString();
+            returnString = inspections.get(0).getInspectionDateString(activityContext);
         } else {
             returnString = "N/A"; // Case where there are no associated inspections
         }

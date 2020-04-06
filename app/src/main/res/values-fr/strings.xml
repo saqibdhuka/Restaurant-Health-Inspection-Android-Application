@@ -40,8 +40,8 @@
 
     <!--  Inspection List View  -->
     <string name="inspectionListView_hazard">Niveau de risque :</string>
-    <string name="inspectionListView_crit"># questions critiques:</string>
-    <string name="inspectionListView_noncrit"># questions non critiques</string>
+    <string name="inspectionListView_crit"># questions critiques :</string>
+    <string name="inspectionListView_noncrit"># questions non critiques :</string>
     <string name="inspectionListView_date">Date :</string>
 
     <!-- Violation List View  -->
@@ -60,9 +60,9 @@
     <string name="sample_crit_num">0</string>
     <string name="sample_noncrit_num">0</string>
     <string name="sample_inspection_date_full">2019-02-27</string>
-    <string name="sample_inspection_type">Follow-Up</string>
-    <string name="sample_violation_nature">Sanitization</string>
-    <string name="sample_violation_issue">non-critical</string>
+    <string name="sample_inspection_type">Suivre</string>
+    <string name="sample_violation_nature">Désinfection</string>
+    <string name="sample_violation_issue">non critiques</string>
     <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
     <string name="title_activity_map_screen">MapScreen</string>
     <!-- Strings used for fragments for navigation -->
@@ -84,6 +84,17 @@
     <string name="dataupdater_restartButton">Redémarrer</string>
     <string name="dataUpdater_cancelButton">Annuler</string>
     <string name="dataupdater_restartText">Les données ont été mises à jour avec succès. Veuillez redémarrer cette application pour utiliser de nouvelles données.</string>
+    <string name="map_marker_address">Adresse :</string>
+    <string name="map_marker_hazard">Risque :</string>
+    <string name="hazard_moderate">modéré</string>
+    <string name="hazard_high">haut</string>
+    <string name="hazard_low">bas</string>
+    <string name="type_none">nul</string>
+    <string name="type_routine">Routine</string>
+    <string name="type_followUp">Suivre</string>
+    <string name="crit_noncrit">non critiques</string>
+    <string name="crit_crit">critiques</string>
+    <string name="date_day_format">il y a  jours</string>
 
 
 </resources>

@@ -97,7 +97,7 @@ public class ReadingCSVFacility {
                     InspectionReport firstReport = reader.getFirstAssociatedInspection(trackingNumber);
                     String inspectionString = "N/A";
                     if (firstReport != null) {
-                        inspectionString = firstReport.getInspectionDateString();
+                        inspectionString = firstReport.getInspectionDateString(context);
                     }
 
                     // Set the restaurant ID based on a few context clues:

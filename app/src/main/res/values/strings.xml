@@ -84,6 +84,17 @@
     <string name="dataupdater_restartButton">Restart</string>
     <string name="dataUpdater_cancelButton">Cancel</string>
     <string name="dataupdater_restartText">Data successfully updated. Please restart this application to use new data.</string>
+    <string name="map_marker_address">Address : </string>
+    <string name="map_marker_hazard">Hazard : </string>
+    <string name="hazard_high">High</string>
+    <string name="hazard_moderate">Moderate</string>
+    <string name="hazard_low">Low</string>
+    <string name="type_followUp">Follow Up</string>
+    <string name="type_none">None</string>
+    <string name="type_routine">Routine</string>
+    <string name="crit_crit">Critical</string>
+    <string name="crit_noncrit">Non Critical</string>
+    <string name="date_day_format">days ago</string>
 
 
 </resources>

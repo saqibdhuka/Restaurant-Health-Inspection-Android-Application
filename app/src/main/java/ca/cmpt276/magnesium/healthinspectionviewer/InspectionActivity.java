@@ -25,8 +25,12 @@ import ca.cmpt276.magnesium.restaurantmodel.DatabaseReader;
 import ca.cmpt276.magnesium.restaurantmodel.Facility;
 import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
+import ca.cmpt276.magnesium.restaurantmodel.InspectionType;
 import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 import ca.cmpt276.magnesium.restaurantmodel.Violation;
+
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
 
 public class InspectionActivity extends AppCompatActivity {
 
@@ -72,10 +76,10 @@ public class InspectionActivity extends AppCompatActivity {
                 name.setText(currentFacility.getName());
 
                 TextView type = findViewById(R.id.inspection_type);
-                type.setText(inspection.getInspectionType().toString());
+                type.setText(getText(typeLanguage(inspection.getInspectionType())));
 
                 TextView hazardLevel = findViewById(R.id.inspection_hazard_lv);
-                hazardLevel.setText(inspection.getHazardRating().toString());
+                hazardLevel.setText(getText(hazardLanguage(inspection.getHazardRating())));
 
                 ImageView hazardIcon = findViewById(R.id.inspection_hazard_color);
                 HazardRating hazardRating = inspection.getHazardRating();
@@ -163,13 +167,14 @@ public class InspectionActivity extends AppCompatActivity {
 
                 TextView criticality = (TextView) convertView.findViewById(
                                                 R.id.violationArrayList_issue_lv);
-                criticality.setText(currentViolation.getCriticality());
 
                 ImageView criticalityIcon = convertView.findViewById(R.id.violationArrayList_vio_type);
                 if (currentViolation.getCriticality().toLowerCase().equals("critical")) {
                     criticalityIcon.setImageDrawable(getDrawable(R.drawable.critical_violation));
+                    criticality.setText(getText(R.string.crit_crit));
                 } else if (currentViolation.getCriticality().toLowerCase().equals("non-critical")) {
                     criticalityIcon.setImageDrawable(getDrawable(R.drawable.non_critical_violation));
+                    criticality.setText(getText(R.string.crit_noncrit));
                 }
 
                 TextView description = (TextView) convertView.findViewById(R.id.violationArrayList_issue_description);
@@ -201,6 +206,24 @@ public class InspectionActivity extends AppCompatActivity {
         };
 
         lv.setAdapter(adapter);
+    }
+
+    private int hazardLanguage(HazardRating currentHazardLevel) {
+        if (currentHazardLevel == High) {
+            return R.string.hazard_high;
+        } else if (currentHazardLevel == Moderate) {
+            return R.string.hazard_moderate;
+        }
+        return R.string.hazard_low;
+    }
+
+    private int typeLanguage(InspectionType type) {
+        if (type == InspectionType.FollowUp) {
+            return R.string.type_followUp;
+        } else if (type == InspectionType.Routine) {
+            return R.string.type_routine;
+        }
+        return R.string.type_none;
     }
 
     private int getNatureIcon(String vioNature) {

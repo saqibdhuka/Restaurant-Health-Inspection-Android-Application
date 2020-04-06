@@ -251,6 +251,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                         currentFacility
                 );
 
+                newClustorMarker.setSnippet(getText(R.string.map_marker_address) + newClustorMarker.getAddress() + "\n" +getText(R.string.map_marker_hazard) + getText(hazardLanguage(currentHazardLevel)) );
+
                 Log.d(TAG, "Adding cluster markers to manager and list of markers");
                 mClusterManager.addItem(newClustorMarker);
                 mClusterMarkers.add(newClustorMarker);
@@ -260,6 +262,15 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
             Log.d(TAG, "ClusterManager.cluster called!!");
 
         }
+    }
+
+    private int hazardLanguage(HazardRating currentHazardLevel) {
+        if (currentHazardLevel == High) {
+            return R.string.hazard_high;
+        } else if (currentHazardLevel == Moderate) {
+            return R.string.hazard_moderate;
+        }
+        return R.string.hazard_low;
     }
 
     private void moveCamera(LatLng latLng, float zoom) {
