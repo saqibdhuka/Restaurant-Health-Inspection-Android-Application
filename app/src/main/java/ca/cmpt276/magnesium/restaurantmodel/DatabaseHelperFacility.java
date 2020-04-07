@@ -21,7 +21,7 @@ import java.sql.Statement;
 
 public class DatabaseHelperFacility extends SQLiteOpenHelper {
 
-    public static final String DATABASE_FACILITY_NAME = "facility.db";
+    public static final String DATABASE_FACILITY_NAME = "healthInspection.db";
     public static final String TABLE_FACILITY_NAME = "facility_table";
 
     // Facility database column names
