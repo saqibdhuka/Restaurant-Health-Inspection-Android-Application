@@ -91,14 +91,14 @@
         android:id="@+id/startSearchActivity_restaurantList"
         android:layout_width="109dp"
         android:layout_height="48dp"
-        android:layout_marginEnd="41dp"
         android:gravity="center"
         android:text="@string/search_button"
         android:textColor="#2962FF"
         android:textSize="18sp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/res_ver90_guideline"
+        app:layout_constraintStart_toEndOf="@+id/restaurantMap"
         app:layout_constraintTop_toTopOf="@+id/resList_hor91_guideline"
         app:layout_constraintVertical_bias="0.483" />
 
