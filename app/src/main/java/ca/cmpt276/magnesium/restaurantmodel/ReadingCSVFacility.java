@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 import ca.cmpt276.magnesium.healthinspectionviewer.R;
+import ca.cmpt276.magnesium.healthinspectionviewer.SearchActivity;
 
 public class ReadingCSVFacility {
     private ArrayList<Facility> facilitiesList;
@@ -163,7 +164,18 @@ public class ReadingCSVFacility {
     }
 
     public ArrayList<Facility> getFacilityArrayList() {
-        return facilitiesList;
+        ArrayList<Facility> returnList = null;
+        SharedPreferences prefs = context.getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        String query = prefs.getString(SearchActivity.SEARCH_QUERYSTRING, null);
+        if (query != null) {
+            // We need to pull this out from the DatabaseHelper!
+            DatabaseReader reader = new DatabaseReader(context);
+            returnList = reader.getFacilitiesFromDB();
+        } else {
+            // Return what we already have, it's faster:
+            returnList = facilitiesList;
+        }
+        return returnList;
     }
 
     public Facility getFacilityAtPos(int i){

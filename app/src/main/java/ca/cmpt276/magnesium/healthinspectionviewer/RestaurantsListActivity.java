@@ -6,6 +6,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -82,7 +83,6 @@ public class RestaurantsListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = SearchActivity.getSearchActivityIntent(RestaurantsListActivity.this);
                 startActivity(intent);
-                finish();
             }
         });
     }
@@ -92,6 +92,17 @@ public class RestaurantsListActivity extends AppCompatActivity {
         super.onResume();
         // Check if we need to prompt for updates:
         DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
+
+        // Check if we need to update the data:
+        SharedPreferences prefs = getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        boolean needToUpdate = prefs.getBoolean(SearchActivity.SEARCH_RESTLIST_NEED_UPDATE, false);
+        if (needToUpdate) {
+            addRestaurants();
+            populateListView();
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(SearchActivity.SEARCH_RESTLIST_NEED_UPDATE, false);
+            edit.apply();
+        }
     }
 
     private void populateListView() {

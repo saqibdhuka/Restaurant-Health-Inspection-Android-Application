@@ -26,6 +26,8 @@ public class SearchActivity extends AppCompatActivity {
 
     public static final String SEARCH_QUERYSTRING = "SearchActivity_SQLQueryString";
     public static final String SEARCH_PREFSFILE = "SearchActivity_PrefsFile";
+    public static final String SEARCH_MAPS_NEED_UPDATE = "SearchActivity_MapScreen_Bool";
+    public static final String SEARCH_RESTLIST_NEED_UPDATE = "SearchActivity_RestList_Bool";
 
     public static Intent getSearchActivityIntent(Context context) {
         Intent returnIntent = new Intent(context, SearchActivity.class);
@@ -180,6 +182,8 @@ public class SearchActivity extends AppCompatActivity {
                     SharedPreferences prefs = getSharedPreferences(SEARCH_PREFSFILE, 0);
                     SharedPreferences.Editor edit = prefs.edit();
                     edit.putString(SEARCH_QUERYSTRING, sqlQuery);
+                    edit.putBoolean(SEARCH_RESTLIST_NEED_UPDATE, true);
+                    edit.putBoolean(SEARCH_MAPS_NEED_UPDATE, true);
                     edit.apply();
                     SearchActivity.super.onBackPressed();
                 } catch (Exception e) {

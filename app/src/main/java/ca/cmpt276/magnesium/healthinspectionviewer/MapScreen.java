@@ -3,6 +3,7 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -65,6 +66,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
     private static final int ACTIVITY_REST_WINDOW = 200;
+    private static final int ACTIVITY_SEARCH_BUTTON = 300;
     private static final long MIN_TIME = 3000;
     private static final float MIN_DISTANCE = 1000;
 
@@ -123,6 +125,23 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Only update the map if the flag has been set:
+        SharedPreferences prefs = getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        boolean needToUpdate = prefs.getBoolean(SearchActivity.SEARCH_MAPS_NEED_UPDATE, false);
+        if (needToUpdate) {
+            listFacility = new ArrayList<>();
+            inspectionList = new ArrayList<>();
+            getInspection();
+            addResMarkers();
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(SearchActivity.SEARCH_MAPS_NEED_UPDATE, false);
+            edit.apply();
+        }
+    }
+
 
     private void setupRestListButton() {
         restListBtn = (Button) findViewById(R.id.restaurantList);
@@ -143,8 +162,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 Intent intent = SearchActivity.getSearchActivityIntent(MapScreen.this);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, ACTIVITY_SEARCH_BUTTON);
             }
         });
     }

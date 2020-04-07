@@ -1,6 +1,7 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -12,6 +13,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import ca.cmpt276.magnesium.healthinspectionviewer.R;
+import ca.cmpt276.magnesium.healthinspectionviewer.SearchActivity;
 
 /**
  * SFU CMPT 276
@@ -93,7 +95,7 @@ public class DatabaseReader {
         return returnArray;
     }
 
-    public ArrayList<Facility> getAllFacilities() {
+    public ArrayList<Facility> getFacilitiesFromDB() {
         ArrayList<Facility> returnArray = new ArrayList<>();
 
         // Get the dbHelper instance:
@@ -103,12 +105,22 @@ public class DatabaseReader {
         // Get database to read from:
         SQLiteDatabase facilityDB = dbHelper.getReadableDatabase();
 
-        String allTrackingNumQuery = "SELECT * FROM " +
+        String allFacilitiesQuery = "SELECT * FROM " +
                 DatabaseHelperFacility.TABLE_FACILITY_NAME
                 + " ORDER BY " + DatabaseHelperFacility.COL_2 + " ASC";
 
+        String savedQuery = null;
+        SharedPreferences prefs = activityContext.getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        savedQuery = prefs.getString(SearchActivity.SEARCH_QUERYSTRING, null);
+        String finalQuery = null;
+        if (savedQuery != null) {
+            finalQuery = savedQuery;
+        } else {
+            finalQuery = allFacilitiesQuery;
+        }
+
         // Cursor to peruse all results:
-        Cursor queryResults = facilityDB.rawQuery(allTrackingNumQuery, null);
+        Cursor queryResults = facilityDB.rawQuery(finalQuery, null);
 
         // Now, go through the Cursor and add all resulting values to the ArrayList:
         // But only do it if the result is not empty.
