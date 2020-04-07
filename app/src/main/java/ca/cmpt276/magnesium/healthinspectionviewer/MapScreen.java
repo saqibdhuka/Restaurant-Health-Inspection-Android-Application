@@ -134,6 +134,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
         if (needToUpdate) {
             listFacility = new ArrayList<>();
             inspectionList = new ArrayList<>();
+            mClusterMarkers = new ArrayList<>();
+            mMarkers = new ArrayList<>();
             getInspection();
             addResMarkers();
             SharedPreferences.Editor edit = prefs.edit();

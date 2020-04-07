@@ -104,6 +104,10 @@ public class SearchActivity extends AppCompatActivity {
                 SharedPreferences prefs = getSharedPreferences(SEARCH_PREFSFILE, 0);
                 SharedPreferences.Editor edit = prefs.edit();
                 edit.putString(SEARCH_QUERYSTRING, null);
+                // Ensure other activities reset to "all" restaurants
+                edit.putBoolean(SEARCH_RESTLIST_NEED_UPDATE, true);
+                edit.putBoolean(SEARCH_MAPS_NEED_UPDATE, true);
+                edit.apply();
                 edit.apply();
                 // Finish the activity:
                 finish();
