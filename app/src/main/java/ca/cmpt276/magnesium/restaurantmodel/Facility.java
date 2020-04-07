@@ -24,6 +24,7 @@ public class Facility {
     private FacilityType facilityType;
     private double latitude;
     private double longitude;
+    private boolean favourite;
 
     public Facility(String tracking, String resName, String addr,
                      String resCity, String facType, double resLatitude, double resLongitude){
@@ -60,6 +61,7 @@ public class Facility {
         this.longitude = longitude;
         this.iconID = iconID;
         this.dateString = dateString;
+        this.favourite=false;
     }
 
     public int getIconID() {
@@ -92,6 +94,10 @@ public class Facility {
             return "N/A";
         }
     }
+
+    public boolean getFavourite() {return favourite;}
+
+    public void setFavourite(boolean checked) {favourite = checked;}
 
     public String getTrackingNumber() {
         return trackingNumber;

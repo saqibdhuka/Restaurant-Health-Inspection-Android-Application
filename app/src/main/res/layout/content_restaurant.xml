@@ -116,8 +116,10 @@
         app:layout_constraintStart_toStartOf="@+id/res_ver30_guideline"
         app:layout_constraintTop_toTopOf="@id/res_hor03_guideline"
         app:layout_constraintBottom_toBottomOf="@id/res_hor10_guideline"/>
-    
-    
+
+
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/favourite_icon"
         android:layout_height="0dp"
@@ -127,13 +129,16 @@
         app:layout_constraintTop_toBottomOf="@id/res_hor20_guideline"
         app:layout_constraintStart_toEndOf="@id/res_ver67_guideline"
         app:layout_constraintBottom_toTopOf="@id/res_inspection_listView">
-        
+
         <CheckBox
             android:id="@+id/favourite_icon_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:button="@drawable/favourite_icon"
+            android:button="@null"
+            android:background="@drawable/favourite_icon"
+            android:adjustViewBounds="true"
             android:gravity="center"
+            android:scaleType="fitCenter"
             android:foregroundGravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
