@@ -176,7 +176,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
 
-                queryBuilder.append(" GROUP BY facility_table.TrackingNumber;");
+                queryBuilder.append(" GROUP BY facility_table.TrackingNumber ORDER BY Name ASC;");
                 String sqlQuery = queryBuilder.toString();
                 // Error checking - don't allow this query to be saved unless it runs properly!
                 try {
