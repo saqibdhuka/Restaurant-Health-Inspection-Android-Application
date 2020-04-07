@@ -98,6 +98,13 @@
     <string name="crit_noncrit">非嚴重</string>
     <string name="crit_crit">嚴重</string>
     <string name="date_day_format">日前</string>
+    <string name="vioNature_regulatory" translatable="false">行政</string>
+    <string name="vioNature_food" translatable="false">食物</string>
+    <string name="vioNature_sanitization" translatable="false">衛生</string>
+    <string name="vioNature_pests" translatable="false">蟲患</string>
+    <string name="vioNature_facility">設施</string>
+    <string name="vioNature_employee" translatable="false">員工</string>
+    <string name="vioNature_operator" translatable="false">操作</string>
 
 
 </resources>

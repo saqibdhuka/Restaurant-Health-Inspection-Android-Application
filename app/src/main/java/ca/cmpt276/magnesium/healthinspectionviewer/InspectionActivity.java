@@ -182,7 +182,7 @@ public class InspectionActivity extends AppCompatActivity {
 
                 TextView nature = (TextView) convertView.findViewById(
                                                 R.id.violationArrayList_vio_lv);
-                String vioNature = currentViolation.getViolationNature();
+                String vioNature = currentViolation.getViolationNature(InspectionActivity.this);
                 ImageView natureIcon = convertView.findViewById(R.id.violationArrayList_nature_icon);
                 natureIcon.setImageDrawable(getDrawable(getNatureIcon(vioNature)));
                 nature.setText(vioNature);

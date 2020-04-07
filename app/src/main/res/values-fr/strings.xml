@@ -94,7 +94,14 @@
     <string name="type_followUp">Suivre</string>
     <string name="crit_noncrit">non critiques</string>
     <string name="crit_crit">critiques</string>
-    <string name="date_day_format">il y a  jours</string>
+    <string name="date_day_format">jours avant</string>
+    <string name="vioNature_regulatory">régulation</string>
+    <string name="vioNature_food" translatable="false">nourriture</string>
+    <string name="vioNature_sanitization">Désinfection</string>
+    <string name="vioNature_pests">ravageur</string>
+    <string name="vioNature_facility" translatable="false">facilité</string>
+    <string name="vioNature_employee" translatable="false">Employé</string>
+    <string name="vioNature_operator">opérer</string>
 
 
 </resources>

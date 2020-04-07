@@ -95,6 +95,14 @@
     <string name="crit_crit">Critical</string>
     <string name="crit_noncrit">Non Critical</string>
     <string name="date_day_format">days ago</string>
+    <string name="vioNature_regulatory">Regulatory</string>
+    <string name="vioNature_food">Food</string>
+    <string name="vioNature_sanitization">Sanitization</string>
+    <string name="vioNature_pests">Pests</string>
+    <string name="vioNature_facility">Facility</string>
+    <string name="vioNature_employee">Employee</string>
+    <string name="vioNature_operator">Operator</string>
+    <string name="vioNature_NA" translatable="false">N/A</string>
 
 
 </resources>
