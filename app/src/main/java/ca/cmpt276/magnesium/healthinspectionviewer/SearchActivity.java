@@ -21,6 +21,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 
 import ca.cmpt276.magnesium.restaurantmodel.DatabaseHelperFacility;
+import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -28,6 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     public static final String SEARCH_PREFSFILE = "SearchActivity_PrefsFile";
     public static final String SEARCH_MAPS_NEED_UPDATE = "SearchActivity_MapScreen_Bool";
     public static final String SEARCH_RESTLIST_NEED_UPDATE = "SearchActivity_RestList_Bool";
+    public static final String SEARCH_HAZARDLEVEL = "SearchActivity_HazardLevel";
 
     public static Intent getSearchActivityIntent(Context context) {
         Intent returnIntent = new Intent(context, SearchActivity.class);
@@ -107,6 +109,7 @@ public class SearchActivity extends AppCompatActivity {
                 // Ensure other activities reset to "all" restaurants
                 edit.putBoolean(SEARCH_RESTLIST_NEED_UPDATE, true);
                 edit.putBoolean(SEARCH_MAPS_NEED_UPDATE, true);
+                edit.putString(SEARCH_HAZARDLEVEL, null);
                 edit.apply();
                 edit.apply();
                 // Finish the activity:
@@ -123,10 +126,11 @@ public class SearchActivity extends AppCompatActivity {
                 SQLiteDatabase facilityDB = facilityDBHelper.getReadableDatabase();
                 // Get data from all these fields:
                 StringBuilder queryBuilder = new StringBuilder();
-                queryBuilder.append("SELECT * FROM facility_table INNER JOIN inspection_table ON " +
-                        "facility_table.TrackingNumber == inspection_table.TrackingNumber\n");
+                queryBuilder.append("SELECT * FROM facility_table INNER JOIN (SELECT * FROM inspection_table GROUP BY TrackingNumber ORDER BY InspectionDate DESC) AS inspections ON " +
+                        "facility_table.TrackingNumber == inspections.TrackingNumber");
 
                 // Add all conditionals.
+                String hazardLevel = null;
 
                 // TextBox:
                 TextInputEditText nameFilter = findViewById(R.id.searchActivity_nameFilterEditable);
@@ -142,8 +146,7 @@ public class SearchActivity extends AppCompatActivity {
                 Spinner hazardDropDown = findViewById(R.id.searchActivity_hazardSpinner);
                 String currentItem = (String)hazardDropDown.getSelectedItem();
                 if (!currentItem.equals("")) {
-                    queryBuilder.append(" AND ");
-                    queryBuilder.append(String.format("HazardRating == '%s'", currentItem));
+                    hazardLevel = currentItem;
                 }
 
                 CheckBox lessThan = findViewById(R.id.searchActivity_enableLessThen);
@@ -180,7 +183,8 @@ public class SearchActivity extends AppCompatActivity {
                 String sqlQuery = queryBuilder.toString();
                 // Error checking - don't allow this query to be saved unless it runs properly!
                 try {
-                    Cursor result = facilityDB.rawQuery(sqlQuery, null);
+                    String[] bogusArray = {};
+                    Cursor result = facilityDB.rawQuery(sqlQuery, bogusArray);
                     result.close();
                     // This means the query is good.
                     SharedPreferences prefs = getSharedPreferences(SEARCH_PREFSFILE, 0);
@@ -188,6 +192,7 @@ public class SearchActivity extends AppCompatActivity {
                     edit.putString(SEARCH_QUERYSTRING, sqlQuery);
                     edit.putBoolean(SEARCH_RESTLIST_NEED_UPDATE, true);
                     edit.putBoolean(SEARCH_MAPS_NEED_UPDATE, true);
+                    edit.putString(SEARCH_HAZARDLEVEL, hazardLevel);
                     edit.apply();
                     SearchActivity.super.onBackPressed();
                 } catch (Exception e) {

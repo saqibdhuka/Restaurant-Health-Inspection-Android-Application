@@ -113,19 +113,24 @@ public class DatabaseReader {
         SharedPreferences prefs = activityContext.getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
         savedQuery = prefs.getString(SearchActivity.SEARCH_QUERYSTRING, null);
         String finalQuery = null;
+        String hazardCompare = null;
         if (savedQuery != null) {
             finalQuery = savedQuery;
+            hazardCompare = prefs.getString(SearchActivity.SEARCH_HAZARDLEVEL, null);
         } else {
             finalQuery = allFacilitiesQuery;
         }
 
         // Cursor to peruse all results:
-        Cursor queryResults = facilityDB.rawQuery(finalQuery, null);
+        String[] bogusArray = {};
+        Cursor queryResults = facilityDB.rawQuery(finalQuery, bogusArray);
 
         // Now, go through the Cursor and add all resulting values to the ArrayList:
         // But only do it if the result is not empty.
+        int queryCount = 0;
         if (queryResults.moveToFirst()) {
             while (!queryResults.isAfterLast()) {
+                boolean addThisOne = true;
                 String trackingNum = queryResults.getString(
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_1)
@@ -134,6 +139,7 @@ public class DatabaseReader {
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_2)
                 );
+
                 String physicalAddr = queryResults.getString(
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_3)
@@ -203,14 +209,21 @@ public class DatabaseReader {
 
 
                 String inspectionString =
-                        getInspectionString(
-                                getAllAssociatedInspections(trackingNum)
-                        );
+                        getInspectionString(trackingNum);
+                if (hazardCompare != null) {
+                    InspectionReport firstReport = getFirstAssociatedInspection(trackingNum);
+                    if (!firstReport.getHazardRating().toString().equals(hazardCompare)) {
+                        addThisOne = false;
+                    }
+                }
 
-                Facility currentFacility = new Facility( trackingNum, name, physicalAddr,
+
+                Facility currentFacility = new Facility(trackingNum, name, physicalAddr,
                         city, facilityType, latitude, longitude, iconID, inspectionString);
 
-                returnArray.add(currentFacility);
+                if (addThisOne) {
+                    returnArray.add(currentFacility);
+                }
                 // Advance the Cursor:
                 queryResults.moveToNext();
             }
@@ -221,11 +234,12 @@ public class DatabaseReader {
         return returnArray;
     }
 
-    private String getInspectionString(ArrayList<InspectionReport> inspections) {
+    private String getInspectionString(String trackingNum) {
         String returnString;
+        InspectionReport firstInspection = getFirstAssociatedInspection(trackingNum);
 
-        if (inspections.size() > 0) {
-            returnString = inspections.get(0).getInspectionDateString();
+        if (firstInspection != null) {
+            returnString = firstInspection.getInspectionDateString();
         } else {
             returnString = "N/A"; // Case where there are no associated inspections
         }
