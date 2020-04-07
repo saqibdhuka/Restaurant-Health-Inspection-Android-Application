@@ -88,7 +88,7 @@
         app:layout_constraintVertical_bias="0.483" />
 
     <Button
-        android:id="@+id/startSearchActivity"
+        android:id="@+id/startSearchActivity_restaurantList"
         android:layout_width="109dp"
         android:layout_height="48dp"
         android:layout_marginEnd="41dp"

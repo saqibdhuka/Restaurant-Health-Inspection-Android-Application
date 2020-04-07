@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -76,7 +75,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
     // TODO ensure that this has correct back-button activity
     private void setupFilterButton() {
-        Button filterButton = findViewById(R.id.startSearchActivity);
+        Button filterButton = findViewById(R.id.startSearchActivity_restaurantList);
         filterButton.setVisibility(View.VISIBLE);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override

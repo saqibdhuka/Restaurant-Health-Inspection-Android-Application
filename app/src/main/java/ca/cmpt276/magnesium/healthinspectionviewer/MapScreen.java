@@ -114,6 +114,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                 // Check if we need to prompt for updates:
                 DataUpdater.notifyIfUpdateAvailable(MapScreen.this);
                 setupRestListButton();
+                setupFilterButton();
                 findViewById(R.id.mapView).setVisibility(View.VISIBLE);
                 findViewById(R.id.map_loading_layout).setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -131,6 +132,19 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
             public void onClick(View view) {
                 Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(MapScreen.this);
                 startActivityForResult(intent, ACTIVITY_REST_LIST_MAP_BUTTON);
+            }
+        });
+    }
+
+    private void setupFilterButton() {
+        Button filterButton = findViewById(R.id.startSearchActivity_mapScreen);
+        filterButton.setVisibility(View.VISIBLE);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SearchActivity.getSearchActivityIntent(MapScreen.this);
+                startActivity(intent);
+                finish();
             }
         });
     }

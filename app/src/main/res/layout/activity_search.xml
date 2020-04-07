@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.devonlutz.depthoffieldcalculator.LensAddActivity">
+    tools:context="ca.cmpt276.magnesium.healthinspectionviewer.SearchActivity">
 
     <CheckBox
         android:id="@+id/searchActivity_enableLessThen"
@@ -18,7 +18,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchActivity_filterHazardLevelText" />
 
     <EditText
-        android:id="@+id/searchActivity_lessThanNumberInput2"
+        android:id="@+id/searchActivity_lessThanNumberInput"
         android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginStart="13dp"
@@ -37,7 +37,7 @@
         android:text="@string/search_lessThenCheckbox_2"
         android:textAppearance="@style/Widget.AppCompat.CompoundButton.CheckBox"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/searchActivity_lessThanNumberInput"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_greaterThanNumberInput"
         app:layout_constraintTop_toBottomOf="@+id/searchActivity_hazardSpinner" />
 
     <TextView
@@ -128,7 +128,7 @@
         app:layout_constraintTop_toBottomOf="@+id/searchActivity_enableLessThen" />
 
     <EditText
-        android:id="@+id/searchActivity_lessThanNumberInput"
+        android:id="@+id/searchActivity_greaterThanNumberInput"
         android:layout_width="40dp"
         android:layout_height="39dp"
         android:layout_marginStart="12dp"
@@ -136,7 +136,7 @@
         android:ems="10"
         android:inputType="number"
         app:layout_constraintStart_toEndOf="@+id/searchActivity_enableMoreThen"
-        app:layout_constraintTop_toBottomOf="@+id/searchActivity_lessThanNumberInput2" />
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_lessThanNumberInput" />
 
     <TextView
         android:id="@+id/searchActivity_inLastYearText_greater"
@@ -147,7 +147,7 @@
         android:text="@string/search_lessThenCheckbox_2"
         android:textAppearance="@style/Widget.AppCompat.CompoundButton.CheckBox"
         android:textSize="15sp"
-        app:layout_constraintStart_toEndOf="@+id/searchActivity_lessThanNumberInput"
+        app:layout_constraintStart_toEndOf="@+id/searchActivity_greaterThanNumberInput"
         app:layout_constraintTop_toBottomOf="@+id/searchActivity_inLastYearText" />
 
     <CheckBox
@@ -158,6 +158,6 @@
         android:layout_marginTop="11dp"
         android:text="@string/search_favoritesCheckbox"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchActivity_lessThanNumberInput" />
+        app:layout_constraintTop_toBottomOf="@+id/searchActivity_greaterThanNumberInput" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

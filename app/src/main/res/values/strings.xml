@@ -120,6 +120,8 @@
     <string name="search_mod">Moderate</string>
     <string name="search_low">Low</string>
     <string name="search_button">Filter</string>
+    <string name="search_invalid_title">Invalid Search</string>
+    <string name="search_invalid_content">The settings you have entered are not valid for filtering restaurants!</string>
 
 
 </resources>
