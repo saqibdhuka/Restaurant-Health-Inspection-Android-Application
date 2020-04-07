@@ -178,7 +178,7 @@ public class InspectionActivity extends AppCompatActivity {
                 }
 
                 TextView description = (TextView) convertView.findViewById(R.id.violationArrayList_issue_description);
-                description.setText(currentViolation.toString());
+                description.setText(getText(briefVio(currentViolation.getViolationCode())));
 
                 TextView nature = (TextView) convertView.findViewById(
                                                 R.id.violationArrayList_vio_lv);
@@ -200,12 +200,17 @@ public class InspectionActivity extends AppCompatActivity {
                     }
                 });
 
-
                 return convertView;
             }
         };
 
         lv.setAdapter(adapter);
+    }
+
+    private int briefVio(int violationCode) {
+        return getResources().
+                getIdentifier("vio_"+violationCode,
+                        "string",getPackageName());
     }
 
     private int hazardLanguage(HazardRating currentHazardLevel) {

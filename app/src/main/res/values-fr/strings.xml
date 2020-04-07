@@ -63,7 +63,6 @@
     <string name="sample_inspection_type">Suivre</string>
     <string name="sample_violation_nature">Désinfection</string>
     <string name="sample_violation_issue">non critiques</string>
-    <string name="sample_violation_description">Equipment/facilities/hot &amp; cold water for sanitary maintenance not adequate [s. 17(3); s. 4(1)(f)]</string>
     <string name="title_activity_map_screen">MapScreen</string>
     <!-- Strings used for fragments for navigation -->
 
@@ -102,6 +101,42 @@
     <string name="vioNature_facility" translatable="false">facilité</string>
     <string name="vioNature_employee" translatable="false">Employé</string>
     <string name="vioNature_operator">opérer</string>
+    <string name="vio_101">Violation #101, Plans / construction / modifications non...</string>
+    <string name="vio_102">Violation #102, Exploitation d\'un lieu de restauration non...</string>
+    <string name="vio_103">Violation #103, Omission de détenir un permis valide...</string>
+    <string name="vio_104">Violation #104, Permis non affiché dans un endroit...</string>
+    <string name="vio_201">Violation #201, Aliments contaminés ou impropres à la...</string>
+    <string name="vio_202">Violation #202, Aliments non transformés de manière...</string>
+    <string name="vio_203">Violation #203 Aliments non refroidis de manière...</string>
+    <string name="vio_204">Violation #204,  Aliments non cuits ou réchauffés d\'une manière...</string>
+    <string name="vio_205">Violation #205, Cold Food potentiellement dangereux stocké...</string>
+    <string name="vio_206">Violation #206, Aliments chauds potentiellement dangereux...</string>
+    <string name="vio_208">Violation #208, Aliments obtenus de sources non approuvées...</string>
+    <string name="vio_209">Violation #209, Aliments non protégés contre la...</string>
+    <string name="vio_210">Violation #210, Aliments non décongelés de manière...</string>
+    <string name="vio_211">Violation #211, Congelés aliments potentiellement...</string>
+    <string name="vio_212">"Violation #212, L'exploitant n'a pas fourni de procédures... "</string>
+    <string name="vio_301">Violation #301, Équipement / ustensiles / surfaces en...</string>
+    <string name="vio_302">Violation #302, Équipement / ustensiles / surfaces en...</string>
+    <string name="vio_303">Violation #303, Équipement / installations / eau chaude...</string>
+    <string name="vio_304">Violation #304, Iocaux non exempts d\'organismes...</string>
+    <string name="vio_305">Violation #305, Conditions observées pouvant permettre...</string>
+    <string name="vio_306">Violation #306, Locaux pour aliments non maintenus...</string>
+    <string name="vio_307">Violation #307, L\'équipement / les ustensiles / les surfaces...</string>
+    <string name="vio_308">Violation #308, L\'équipement / les ustensiles / les surfaces...</string>
+    <string name="vio_309">Violation #309, Produits chimiques de nettoyage...</string>
+    <string name="vio_310">Violation #310, Les contenants et ustensiles à usage...</string>
+    <string name="vio_311">Violation #311, locaux non entretenus selon...</string>
+    <string name="vio_312">Violation #312, Articles non requis pour l\'exploitation...</string>
+    <string name="vio_313">Violation #313, Animal vivant sur les lieux, à l\'exception...</string>
+    <string name="vio_314">Violation #314, L\'exploitant n\'a pas fourni de procédure...</string>
+    <string name="vio_315">Violation #315, Les unités de réfrigération et l\'équipement...</string>
+    <string name="vio_401">Violation #401, Des stations de lavage des mains...</string>
+    <string name="vio_402">"Violation #402, L'employé ne se lave pas les mains correctement ou "</string>
+    <string name="vio_403">Violation #403, L\'employé n\'a pas une bonne hygiène personnelle,</string>
+    <string name="vio_404">Violation #404, Employé fumant dans les zones de préparation /</string>
+    <string name="vio_501">Violation #501, L\'opérateur n\'a pas le niveau 1 de FOODSAFE</string>
+    <string name="vio_502">Violation #502, En l\'absence de l\'exploitant, aucun membre</string>
 
 
 </resources>
