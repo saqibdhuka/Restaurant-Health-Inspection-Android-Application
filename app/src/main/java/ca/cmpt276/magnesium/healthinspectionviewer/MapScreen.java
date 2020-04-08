@@ -240,13 +240,9 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
         if (map != null) {
 
             map.setInfoWindowAdapter(new CustomInfoAdapter(MapScreen.this));
-            //Setting up needed objects
-            if (mClusterManager == null) {
-                mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
-            }
-            if (mClusterRenderer == null) {
-                mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
-            }
+            // Setting up needed objects
+            mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
+            mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
 
             mClusterManager.setRenderer(mClusterRenderer);
             map.setOnCameraIdleListener(mClusterManager);
