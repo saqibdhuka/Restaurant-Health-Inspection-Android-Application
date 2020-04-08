@@ -12,7 +12,7 @@ import org.joda.time.Seconds;
 
 public class DatabaseHelperInspection extends SQLiteOpenHelper {
 
-    public static final String DATABASE_INSP_NAME = "inspection.db";
+    public static final String DATABASE_INSP_NAME = "healthInspection.db";
     public static final String TABLE_INSP_NAME = "inspection_table";
     public static final String TABLE_INDEX_NAME = "inspection_index";
 
