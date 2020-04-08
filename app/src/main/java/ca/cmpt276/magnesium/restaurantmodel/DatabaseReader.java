@@ -1,6 +1,7 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -12,6 +13,7 @@ import org.joda.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import ca.cmpt276.magnesium.healthinspectionviewer.R;
+import ca.cmpt276.magnesium.healthinspectionviewer.SearchActivity;
 
 /**
  * SFU CMPT 276
@@ -93,7 +95,7 @@ public class DatabaseReader {
         return returnArray;
     }
 
-    public ArrayList<Facility> getAllFacilities() {
+    public ArrayList<Facility> getFacilitiesFromDB() {
         ArrayList<Facility> returnArray = new ArrayList<>();
 
         // Get the dbHelper instance:
@@ -103,17 +105,32 @@ public class DatabaseReader {
         // Get database to read from:
         SQLiteDatabase facilityDB = dbHelper.getReadableDatabase();
 
-        String allTrackingNumQuery = "SELECT * FROM " +
+        String allFacilitiesQuery = "SELECT * FROM " +
                 DatabaseHelperFacility.TABLE_FACILITY_NAME
                 + " ORDER BY " + DatabaseHelperFacility.COL_2 + " ASC";
 
+        String savedQuery = null;
+        SharedPreferences prefs = activityContext.getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        savedQuery = prefs.getString(SearchActivity.SEARCH_QUERYSTRING, null);
+        String finalQuery = null;
+        String hazardCompare = null;
+        if (savedQuery != null) {
+            finalQuery = savedQuery;
+            hazardCompare = prefs.getString(SearchActivity.SEARCH_HAZARDLEVEL, null);
+        } else {
+            finalQuery = allFacilitiesQuery;
+        }
+
         // Cursor to peruse all results:
-        Cursor queryResults = facilityDB.rawQuery(allTrackingNumQuery, null);
+        String[] bogusArray = {};
+        Cursor queryResults = facilityDB.rawQuery(finalQuery, bogusArray);
 
         // Now, go through the Cursor and add all resulting values to the ArrayList:
         // But only do it if the result is not empty.
+        int queryCount = 0;
         if (queryResults.moveToFirst()) {
             while (!queryResults.isAfterLast()) {
+                boolean addThisOne = true;
                 String trackingNum = queryResults.getString(
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_1)
@@ -122,6 +139,7 @@ public class DatabaseReader {
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_2)
                 );
+
                 String physicalAddr = queryResults.getString(
                         queryResults.getColumnIndex(
                                 DatabaseHelperFacility.COL_3)
@@ -191,14 +209,21 @@ public class DatabaseReader {
 
 
                 String inspectionString =
-                        getInspectionString(
-                                getAllAssociatedInspections(trackingNum)
-                        );
+                        getInspectionString(trackingNum);
+                if (hazardCompare != null) {
+                    InspectionReport firstReport = getFirstAssociatedInspection(trackingNum);
+                    if (!firstReport.getHazardRating().toString().equals(hazardCompare)) {
+                        addThisOne = false;
+                    }
+                }
 
-                Facility currentFacility = new Facility( trackingNum, name, physicalAddr,
+
+                Facility currentFacility = new Facility(trackingNum, name, physicalAddr,
                         city, facilityType, latitude, longitude, iconID, inspectionString);
 
-                returnArray.add(currentFacility);
+                if (addThisOne) {
+                    returnArray.add(currentFacility);
+                }
                 // Advance the Cursor:
                 queryResults.moveToNext();
             }
@@ -209,11 +234,12 @@ public class DatabaseReader {
         return returnArray;
     }
 
-    private String getInspectionString(ArrayList<InspectionReport> inspections) {
+    private String getInspectionString(String trackingNum) {
         String returnString;
+        InspectionReport firstInspection = getFirstAssociatedInspection(trackingNum);
 
-        if (inspections.size() > 0) {
-            returnString = inspections.get(0).getInspectionDateString(activityContext);
+        if (firstInspection != null) {
+            returnString = firstInspection.getInspectionDateString(activityContext);
         } else {
             returnString = "N/A"; // Case where there are no associated inspections
         }
