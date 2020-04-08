@@ -2,26 +2,21 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
-import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +36,6 @@ public class RestaurantActivity extends AppCompatActivity {
     private BaseAdapter adapter;
     private Facility currentRestaurant;
     private int restaurantID;
-
-    public static final String MyPREFERENCES = "MyPrefs";
 
     public static Intent makeRestaurantIntent(Context context, int restaurantID){
         Intent intent = new Intent(context, RestaurantActivity.class);
@@ -73,20 +66,33 @@ public class RestaurantActivity extends AppCompatActivity {
 
                 currentRestaurant = facilities.get(restaurantID);
 
+
                 // Choose favourite restaurant
                 CheckBox favourite = (CheckBox) findViewById(R.id.favourite_icon_checkbox);
-                SharedPreferences pref =  getApplicationContext().getSharedPreferences(MyPREFERENCES, 0);
+                if(currentRestaurant.getFavourite()){
+                    favourite.setBackgroundResource(R.drawable.heart_checked);
+                } else {
+                    favourite.setBackgroundResource(R.drawable.heart_unchecked);
+                }
 
                 favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if(isChecked) {
-                            currentRestaurant.setFavourite(true);
+                            if(currentRestaurant.getFavourite()){
+                                favourite.setBackgroundResource(R.drawable.heart_unchecked);
+                                currentRestaurant.setFavourite(false);
+                            } else {
+                                currentRestaurant.setFavourite(true);
+                                favourite.setBackgroundResource(R.drawable.heart_checked);
+                            }
                         } else {
                             currentRestaurant.setFavourite(false);
+                            favourite.setBackgroundResource(R.drawable.heart_unchecked);
                         }
                     }
                 });
+
 
                 setupTextFields();
 
@@ -110,6 +116,22 @@ public class RestaurantActivity extends AppCompatActivity {
         setupGPSToMap();
 
     }
+
+//    private String readFile() {
+//        File fileEvents = new File(RestaurantActivity.this.getFilesDir()+"/favourite_restaurant");
+//        StringBuilder text = new StringBuilder();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(fileEvents));
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                text.append(line);
+//                text.append('\n');
+//            }
+//            br.close();
+//        } catch (IOException e) { }
+//        String result = text.toString();
+//        return result;
+//    }
 
     private void setupGPSToMap() {
         View gps = findViewById(R.id.res_coords_layout);
