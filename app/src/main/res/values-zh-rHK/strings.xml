@@ -64,7 +64,6 @@
     <string name="sample_violation_nature">消毒</string>
     <string name="sample_violation_issue">非嚴重</string>
     <string name="title_activity_map_screen">餐廳地圖</string>
-    <!-- Strings used for fragments for navigation -->
 
     <string name="restaurant_list">餐廳列表</string>
     <string name="restaurant_map">餐廳地圖</string>
@@ -140,6 +139,30 @@
     <string name="vio_404" translatable="false">違規#404, 員工在食品準備/加工...</string>
     <string name="vio_502" translatable="false">違規#502, 在操作員不在的情況...</string>
     <string name="vio_501" translatable="false">違規#501, 操作員沒有食物安全...</string>
+    <string name="search_invalid_content">您輸入的設置不適用於過濾餐廳！</string>
+    <string name="search_invalid_title">搜索無效</string>
+    <string name="search_button">篩選</string>
+    <string name="search_low">低</string>
+    <string name="search_mod">中等</string>
+    <string name="search_high">高</string>
+    <string name="search_favoritesCheckbox">僅從指定的收藏夾中搜索</string>
+    <string name="search_lessThenCheckbox_2">去年的嚴重違規行為</string>
+    <string name="search_greaterThenCheckbox_1">多於</string>
+    <string name="search_lessThenCheckbox_1">少於</string>
+    <string name="search_resetFilters">重置</string>
+    <string name="search_applyFilters">套用</string>
+    <string name="search_filterHazardLevel">上次檢查的風險程度 :</string>
+    <string name="search_filterHint">餐廳名稱</string>
+    <string name="search_header">篩選餐廳</string>
+    <string name="attachment_summary_off">僅在手動請求時下載附件</string>
+    <string name="attachment_summary_on">自動下載傳入電子郵件的附件</string>
+    <string name="attachment_title">下載傳入的附件</string>
+    <string name="sync_title">定期同步電子郵件</string>
+    <string name="reply_title">默認回複動作</string>
+    <string name="signature_title">簽名</string>
+    <string name="sync_header">同步</string>
+    <string name="messages_header">Messages</string>
+    <string name="title_activity_search">設定</string>
 
 
 </resources>

@@ -166,7 +166,7 @@
     <string name="search_filterHint">Restaurant Name</string>
     <string name="search_filterHazardLevel">Hazard level of last inspection:</string>
     <string name="search_applyFilters">Apply Filters</string>
-    <string name="search_resetFilters">Reset all Filters</string>
+    <string name="search_resetFilters">Reset Filters</string>
     <string name="search_lessThenCheckbox_1">Less than </string>
     <string name="search_greaterThenCheckbox_1">More than </string>
     <string name="search_lessThenCheckbox_2">critical violations in the last year</string>

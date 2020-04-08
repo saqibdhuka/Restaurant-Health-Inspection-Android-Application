@@ -64,7 +64,7 @@
     <string name="sample_violation_nature">Désinfection</string>
     <string name="sample_violation_issue">non critiques</string>
     <string name="title_activity_map_screen">MapScreen</string>
-    <!-- Strings used for fragments for navigation -->
+
 
     <string name="restaurant_list">Liste des Restaurants</string>
     <string name="restaurant_map">Carte du Restaurant</string>
@@ -137,6 +137,30 @@
     <string name="vio_404">Violation #404, Employé fumant dans les zones de préparation /</string>
     <string name="vio_501">Violation #501, L\'opérateur n\'a pas le niveau 1 de FOODSAFE</string>
     <string name="vio_502">Violation #502, En l\'absence de l\'exploitant, aucun membre</string>
+    <string name="search_high">haut</string>
+    <string name="search_mod">modéré</string>
+    <string name="search_low">bas</string>
+    <string name="search_favoritesCheckbox">Rechercher uniquement à partir des favoris désignés</string>
+    <string name="search_button">Filtre</string>
+    <string name="search_invalid_title">Recherche invalide</string>
+    <string name="search_invalid_content">Les paramètres que vous avez saisis ne sont pas valides pour filtrer les restaurants!</string>
+    <string name="search_lessThenCheckbox_2">violations graves au cours de la dernière année</string>
+    <string name="search_greaterThenCheckbox_1">Plus que</string>
+    <string name="search_resetFilters">Réinitialiser les filtres</string>
+    <string name="search_lessThenCheckbox_1">Moins que</string>
+    <string name="search_applyFilters">Appliquer des filtres</string>
+    <string name="search_filterHazardLevel">Niveau de danger de la dernière inspection:</string>
+    <string name="search_filterHint">Nom du restaurant</string>
+    <string name="search_header">Filtrer les restaurants</string>
+    <string name="attachment_summary_on">Télécharger automatiquement les pièces jointes pour les e-mails entrants</string>
+    <string name="attachment_summary_off">Télécharger les pièces jointes uniquement sur demande manuelle</string>
+    <string name="attachment_title">Télécharger les pièces jointes entrantes</string>
+    <string name="sync_title">Synchroniser régulièrement les e-mails</string>
+    <string name="reply_title">Action de réponse par défaut</string>
+    <string name="signature_title">Votre signature</string>
+    <string name="sync_header">Sync</string>
+    <string name="messages_header">Messages</string>
+    <string name="title_activity_search">Paramètres</string>
 
 
 </resources>
