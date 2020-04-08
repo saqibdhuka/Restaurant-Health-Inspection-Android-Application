@@ -1,5 +1,7 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
+import android.content.Context;
+
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
@@ -10,6 +12,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import ca.cmpt276.magnesium.healthinspectionviewer.R;
 
 /**
  * SFU CMPT 276
@@ -110,13 +114,13 @@ public class InspectionReport {
         return returnArray;
     }
 
-    public String getInspectionDateString() {
+    public String getInspectionDateString(Context context) {
         String returnString;
 
         Days daysBetween = Days.daysBetween(inspectionDate, LocalDate.now());
         // Pretty printing for the user:
         if (daysBetween.getDays() <= 30) {
-            returnString = daysBetween.getDays() + " days ago";
+            returnString = daysBetween.getDays() + context.getResources().getString(R.string.date_day_format);
         } else if (daysBetween.getDays() <= 365) {
             returnString = inspectionDate.toString("MMMM d");
         } else {

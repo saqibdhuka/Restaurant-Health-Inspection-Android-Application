@@ -239,7 +239,7 @@ public class DatabaseReader {
         InspectionReport firstInspection = getFirstAssociatedInspection(trackingNum);
 
         if (firstInspection != null) {
-            returnString = firstInspection.getInspectionDateString();
+            returnString = firstInspection.getInspectionDateString(activityContext);
         } else {
             returnString = "N/A"; // Case where there are no associated inspections
         }
