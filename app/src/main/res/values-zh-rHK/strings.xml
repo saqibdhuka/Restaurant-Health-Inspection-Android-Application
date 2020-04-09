@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">餐廳衛生檢查</string>
+
+    <!--  Start Screen  -->
+    <string name="start_welcome_sentence">正在使用</string>
+
+    <!--  Restaurant List Screen  -->
+    <string name="resList_title">素里餐廳</string>
+
+    <!--  Restaurant Screen  -->
+    <string name="restaurant_title">餐廳</string>
+    <string name="res_icon">餐廳商標</string>
+    <string name="res_address">地址 :</string>
+    <string name="res_GPS_text">座標 :</string>
+    <string name="res_latitude">緯度 :</string>
+    <string name="res_Longitude">經度：</string>
+    <string name="res_inspection">檢查 :</string>
+    <string name="res_inspection_empty">這餐廳並無相關檢查</string>
+
+    <!--  Inspection Screen  -->
+    <string name="inspection_title">檢查</string>
+    <string name="inspection_date">日期 :</string>
+    <string name="inspection_type">類型 :</string>
+    <string name="inspection_hazard">風險 :</string>
+    <string name="inspection_violation">違反項目 :</string>
+    <string name="inspection_violation_empty">這餐廳並無相關違反項目</string>
+    <string name="inspection_issue">違反項目 :</string>
+    <string name="inspection_crit">嚴重違反數量 :</string>
+    <string name="inspection_noncrit">非嚴重違反數量 :</string>
+
+    <!--  Restaurant List View  -->
+    <string name="resListView_res_icon">餐廳商標</string>
+    <string name="resListView_issue">違反數量 :</string>
+    <string name="resListView_hazard">風險程度 :</string>
+    <string name="resListView_inspection">最近檢查 :</string>
+    <string name="resListView_date">日期 :</string>
+    <string name="resListView_no_inspection">這餐廳尚未檢查</string>
+
+
+    <!--  Inspection List View  -->
+    <string name="inspectionListView_hazard">風險程度 :</string>
+    <string name="inspectionListView_crit">嚴重違反數量 :</string>
+    <string name="inspectionListView_noncrit">非嚴重違反數量 :</string>
+    <string name="inspectionListView_date">日期 :</string>
+
+    <!-- Violation List View  -->
+    <string name="violationArrayList_vio_text">違反種類 :</string>
+    <string name="violationArrayList_issue_text">違反項目 :</string>
+
+
+    <!--  sample string for generate UI  -->
+    <string name="sample_restaurant_name">例子餐廳</string>
+    <string name="sample_issue_num">2</string>
+    <string name="sample_hazard_lv">中等</string>
+    <string name="sample_inspection_date">十二月 2020</string>
+    <string name="sample_address">12808 King George Blvd</string>
+    <string name="sample_lat">49.20611</string>
+    <string name="sample_long">-122.867</string>
+    <string name="sample_crit_num">0</string>
+    <string name="sample_noncrit_num">0</string>
+    <string name="sample_inspection_date_full">2019-02-27</string>
+    <string name="sample_inspection_type">跟進</string>
+    <string name="sample_violation_nature">消毒</string>
+    <string name="sample_violation_issue">非嚴重</string>
+    <string name="title_activity_map_screen">餐廳地圖</string>
+
+    <string name="restaurant_list">餐廳列表</string>
+    <string name="restaurant_map">餐廳地圖</string>
+
+
+    <string name="loading_res_list_text">讀取資料中…</string>
+    <string name="loading_map_text">更新地圖中...</string>
+    <string name="loading_res_text">讀取資料中…</string>
+    <string name="loading_inspection_text">讀取資料中…</string>
+
+    <!-- Strings used for the data updater class -->
+    <string name="dataupdater_contentAvailable">偵查到新的餐廳資料 - 立即進行更新嗎？</string>
+    <string name="dataUpdater_updateButton">更新</string>
+    <string name="dataUpdater_ignoreButton">取消更新</string>
+    <string name="dataupdater_downloadingString">更新資料中…</string>
+    <string name="dataupdater_restartButton">重啟</string>
+    <string name="dataUpdater_cancelButton">取消</string>
+    <string name="dataupdater_restartText">數據下載完畢 請重新啟動程式</string>
+    <string name="map_marker_address">"地址 : "</string>
+    <string name="map_marker_hazard">"風險 : "</string>
+
+    <string name="hazard_moderate">中等</string>
+    <string name="hazard_high">高</string>
+    <string name="hazard_low">低</string>
+
+    <string name="type_routine">例行</string>
+    <string name="type_followUp">跟進</string>
+    <string name="type_none">無</string>
+
+    <string name="crit_noncrit">非嚴重</string>
+    <string name="crit_crit">嚴重</string>
+    <string name="date_day_format">日前</string>
+    <string name="vioNature_regulatory" translatable="false">行政</string>
+    <string name="vioNature_food" translatable="false">食物</string>
+    <string name="vioNature_sanitization" translatable="false">衛生</string>
+    <string name="vioNature_pests" translatable="false">蟲患</string>
+    <string name="vioNature_facility">設施</string>
+    <string name="vioNature_employee" translatable="false">員工</string>
+    <string name="vioNature_operator" translatable="false">操作</string>
+    <string name="vio_101">違規#101, 計劃/構造/變更不符...</string>
+    <string name="vio_102" translatable="false">違規#102, 未經批准的食品經營...</string>
+    <string name="vio_103" translatable="false">違規#103, 經營餐飲服務機構時...</string>
+    <string name="vio_104" translatable="false">違規#104, 許可證未張貼在明顯...</string>
+    <string name="vio_201" translatable="false">違規#201, 食品被污染或不適合...</string>
+    <string name="vio_202" translatable="false">違規#202, 未以確保食用安全的...</string>
+    <string name="vio_203" translatable="false">違規#203, 食物未以可接受的方...</string>
+    <string name="vio_204" translatable="false">違規#204, 未經烹煮或重新加熱...</string>
+    <string name="vio_205" translatable="false">違規#205, 冷藏/儲存高於4°C的...</string>
+    <string name="vio_206" translatable="false">違規#206, 在60°C以下儲藏或展...</string>
+    <string name="vio_208" translatable="false">違規#208, 從未經批准的來源獲...</string>
+    <string name="vio_209" translatable="false">違規#209, 沒有保護食品免受污...</string>
+    <string name="vio_210" translatable="false">違規#210, 食物沒有以可接受的...</string>
+    <string name="vio_211" translatable="false">違規#211, 在-18°C以上存儲/顯...</string>
+    <string name="vio_212" translatable="false">違規#212, 操作員未提供可接受...</string>
+    <string name="vio_301" translatable="false">違規#301, 設備/器具/食品接觸表...</string>
+    <string name="vio_302" translatable="false">違規#302, 設備/器具/食品接觸表...</string>
+    <string name="vio_303" translatable="false">違規#303, 設備/設施/冷熱水的衛...</string>
+    <string name="vio_304" translatable="false">違規#304, 前提是沒有害蟲...</string>
+    <string name="vio_305" translatable="false">違規#305, 觀察到的條件可能...</string>
+    <string name="vio_306" translatable="false">違規#306, 食品場所未保持衛生...</string>
+    <string name="vio_307" translatable="false">違規#307, 設備/器具/食品接觸表...</string>
+    <string name="vio_308" translatable="false">違規#308, 設備/器具/食品接觸表...</string>
+    <string name="vio_309" translatable="false">違規#309, 化學清潔劑和類似試...</string>
+    <string name="vio_310" translatable="false">違規#310, 一次性容器和用具要...</string>
+    <string name="vio_311" translatable="false">違規#311, 未按照批准的計劃維...</string>
+    <string name="vio_312" translatable="false">違規#312, 食品場所操作不需要...</string>
+    <string name="vio_313" translatable="false">違規#313, 處所內的活體動物不...</string>
+    <string name="vio_314" translatable="false">違規#314, 操作員未提供可接受...</string>
+    <string name="vio_315" translatable="false">違規#315, 製冷設備和保溫設備...</string>
+    <string name="vio_401" translatable="false">違規#401, 員工不能使用足夠的...</string>
+    <string name="vio_402" translatable="false">違規#402, 員工不能正確或以足...</string>
+    <string name="vio_403" translatable="false">違規#403, 員工缺乏良好的個人...</string>
+    <string name="vio_404" translatable="false">違規#404, 員工在食品準備/加工...</string>
+    <string name="vio_502" translatable="false">違規#502, 在操作員不在的情況...</string>
+    <string name="vio_501" translatable="false">違規#501, 操作員沒有食物安全...</string>
+    <string name="search_invalid_content">您輸入的設置不適用於過濾餐廳！</string>
+    <string name="search_invalid_title">搜索無效</string>
+    <string name="search_button">篩選</string>
+    <string name="search_low">低</string>
+    <string name="search_mod">中等</string>
+    <string name="search_high">高</string>
+    <string name="search_favoritesCheckbox">僅從指定的收藏夾中搜索</string>
+    <string name="search_lessThenCheckbox_2">去年的嚴重違規行為</string>
+    <string name="search_greaterThenCheckbox_1">多於</string>
+    <string name="search_lessThenCheckbox_1">少於</string>
+    <string name="search_resetFilters">重置</string>
+    <string name="search_applyFilters">套用</string>
+    <string name="search_filterHazardLevel">上次檢查的風險程度 :</string>
+    <string name="search_filterHint">餐廳名稱</string>
+    <string name="search_header">篩選餐廳</string>
+    <string name="attachment_summary_off">僅在手動請求時下載附件</string>
+    <string name="attachment_summary_on">自動下載傳入電子郵件的附件</string>
+    <string name="attachment_title">下載傳入的附件</string>
+    <string name="sync_title">定期同步電子郵件</string>
+    <string name="reply_title">默認回複動作</string>
+    <string name="signature_title">簽名</string>
+    <string name="sync_header">同步</string>
+    <string name="messages_header">Messages</string>
+    <string name="title_activity_search">設定</string>
+
+
+</resources>
