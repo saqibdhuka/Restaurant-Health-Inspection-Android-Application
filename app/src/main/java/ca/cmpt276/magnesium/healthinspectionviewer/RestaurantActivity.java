@@ -4,16 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Handler;
-import android.text.Layout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -46,6 +46,7 @@ public class RestaurantActivity extends AppCompatActivity {
         return intent;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,35 @@ public class RestaurantActivity extends AppCompatActivity {
                 restaurantID = getIntent().getIntExtra(EXTRA_REST_ID, 0);
 
                 currentRestaurant = facilities.get(restaurantID);
+
+
+                // Choose favourite restaurant
+                CheckBox favourite = (CheckBox)findViewById(R.id.favourite_icon_checkbox);
+                if(currentRestaurant.getFavourite()){
+                    favourite.setBackgroundResource(R.drawable.heart_checked);
+                } else {
+                    favourite.setBackgroundResource(R.drawable.heart_unchecked);
+                }
+
+                favourite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if(isChecked) {
+                            if(currentRestaurant.getFavourite()){
+                                favourite.setBackgroundResource(R.drawable.heart_unchecked);
+                                currentRestaurant.setFavourite(false);
+                            } else {
+                                currentRestaurant.setFavourite(true);
+                                favourite.setBackgroundResource(R.drawable.heart_checked);
+                            }
+                        } else {
+                            currentRestaurant.setFavourite(false);
+                            favourite.setBackgroundResource(R.drawable.heart_unchecked);
+                        }
+                    }
+                });
+
+
                 setupTextFields();
 
                 addTestInspection();
@@ -90,6 +120,22 @@ public class RestaurantActivity extends AppCompatActivity {
 
     }
 
+//    private String readFile() {
+//        File fileEvents = new File(RestaurantActivity.this.getFilesDir()+"/favourite_restaurant");
+//        StringBuilder text = new StringBuilder();
+//        try {
+//            BufferedReader br = new BufferedReader(new FileReader(fileEvents));
+//            String line;
+//            while ((line = br.readLine()) != null) {
+//                text.append(line);
+//                text.append('\n');
+//            }
+//            br.close();
+//        } catch (IOException e) { }
+//        String result = text.toString();
+//        return result;
+//    }
+
     private void setupGPSToMap() {
         View gps = findViewById(R.id.res_coords_layout);
         gps.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +155,8 @@ public class RestaurantActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                editor.putBoolean("checkbox", favourite.isChecked());
+//                editor.commit();
                 finish();
             }
         });

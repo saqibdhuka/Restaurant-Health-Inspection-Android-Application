@@ -7,6 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +37,7 @@ import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
 public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
+
 
     private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
     private static final int ACTIVITY_REST_WINDOW = 200;
@@ -59,10 +63,12 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 setupFilterButton();
                 findViewById(R.id.resList_loading_layout).setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
+                //Load_checkbox();
             }
         }, 50);
 
     }
+
 
     private void setupMapButton() {
         Button mapButton = findViewById(R.id.restaurantMap);
@@ -95,6 +101,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
         super.onResume();
         // Check if we need to prompt for updates:
         DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
+        populateListView();
 
         // Check if we need to update the data:
         SharedPreferences prefs = getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
@@ -134,10 +141,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
 
                 Facility restaurant = getItem(position);
 
+                // Set favourite restaurant
+                if(restaurant.getFavourite()){
+                    TextView layout = convertView.findViewById(R.id.resArrayList_res_name);
+                    layout.setBackgroundColor(Color.parseColor("#ff726f"));
+                }
+
                 // Get maximum hazard and set the text:
                 DatabaseReader reader = new DatabaseReader(getApplicationContext());
                 InspectionReport firstInspection = reader.getFirstAssociatedInspection(restaurant.getTrackingNumber());
-
 
                 TextView empty = convertView.findViewById(R.id.resArrayList_res_no_inspection);
                 ConstraintLayout layout = convertView.findViewById(R.id.resArrayList_res_inspection_layout);

@@ -52,7 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_name">
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/resArrayList_ver65_guideline"
+            android:id="@+id/resArrayList_ver5_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -80,7 +80,7 @@
             android:text="@string/resListView_issue"
             android:textStyle="bold"
             app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver65_guideline"
+            app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver5_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection" />
 
@@ -92,7 +92,7 @@
             android:maxLines="1"
             android:text="@string/sample_issue_num"
             app:autoSizeTextType="uniform"
-            app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver65_guideline"
+            app:layout_constraintEnd_toStartOf="@+id/resArrayList_ver5_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_issue" />
 
@@ -106,7 +106,7 @@
             android:textStyle="bold"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/resArrayList_ver65_guideline"
+            app:layout_constraintStart_toEndOf="@id/resArrayList_ver5_guideline"
             app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:text="@string/sample_inspection_date"
             app:autoSizeTextType="uniform"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/resArrayList_ver65_guideline"
+            app:layout_constraintStart_toEndOf="@id/resArrayList_ver5_guideline"
             app:layout_constraintTop_toBottomOf="@+id/resArrayList_res_inspection_date_text" />
 
 
@@ -212,7 +212,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.3" />
-
 
 
 
