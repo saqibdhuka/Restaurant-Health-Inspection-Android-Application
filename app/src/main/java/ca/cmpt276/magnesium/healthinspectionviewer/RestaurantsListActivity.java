@@ -7,10 +7,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-<<<<<<< HEAD
+
 import android.graphics.Color;
-=======
->>>>>>> origin/master
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;

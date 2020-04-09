@@ -71,7 +71,7 @@ public class RestaurantActivity extends AppCompatActivity {
 
 
                 // Choose favourite restaurant
-                CheckBox favourite = (CheckBox) findViewById(R.id.favourite_icon_checkbox);
+                CheckBox favourite = (CheckBox)findViewById(R.id.favourite_icon_checkbox);
                 if(currentRestaurant.getFavourite()){
                     favourite.setBackgroundResource(R.drawable.heart_checked);
                 } else {
