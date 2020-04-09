@@ -3,6 +3,7 @@ package ca.cmpt276.magnesium.healthinspectionviewer;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -65,6 +66,7 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
 
     private static final int ACTIVITY_REST_LIST_MAP_BUTTON = 100;
     private static final int ACTIVITY_REST_WINDOW = 200;
+    private static final int ACTIVITY_SEARCH_BUTTON = 300;
     private static final long MIN_TIME = 3000;
     private static final float MIN_DISTANCE = 1000;
 
@@ -114,12 +116,32 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                 // Check if we need to prompt for updates:
                 DataUpdater.notifyIfUpdateAvailable(MapScreen.this);
                 setupRestListButton();
+                setupFilterButton();
                 findViewById(R.id.mapView).setVisibility(View.VISIBLE);
                 findViewById(R.id.map_loading_layout).setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             }
         }, 500);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Only update the map if the flag has been set:
+        SharedPreferences prefs = getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        boolean needToUpdate = prefs.getBoolean(SearchActivity.SEARCH_MAPS_NEED_UPDATE, false);
+        if (needToUpdate) {
+            listFacility = new ArrayList<>();
+            inspectionList = new ArrayList<>();
+            mClusterMarkers = new ArrayList<>();
+            mMarkers = new ArrayList<>();
+            getInspection();
+            addResMarkers();
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(SearchActivity.SEARCH_MAPS_NEED_UPDATE, false);
+            edit.apply();
+        }
     }
 
 
@@ -131,6 +153,18 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
             public void onClick(View view) {
                 Intent intent = RestaurantsListActivity.makeRestaurantsListIntent(MapScreen.this);
                 startActivityForResult(intent, ACTIVITY_REST_LIST_MAP_BUTTON);
+            }
+        });
+    }
+
+    private void setupFilterButton() {
+        Button filterButton = findViewById(R.id.startSearchActivity_mapScreen);
+        filterButton.setVisibility(View.VISIBLE);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SearchActivity.getSearchActivityIntent(MapScreen.this);
+                startActivityForResult(intent, ACTIVITY_SEARCH_BUTTON);
             }
         });
     }
@@ -206,13 +240,9 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
         if (map != null) {
 
             map.setInfoWindowAdapter(new CustomInfoAdapter(MapScreen.this));
-            //Setting up needed objects
-            if (mClusterManager == null) {
-                mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
-            }
-            if (mClusterRenderer == null) {
-                mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
-            }
+            // Setting up needed objects
+            mClusterManager = new ClusterManager<ClustorMarker>(getApplicationContext(), map);
+            mClusterRenderer = new ClusterRenderer(getApplicationContext(), map, mClusterManager);
 
             mClusterManager.setRenderer(mClusterRenderer);
             map.setOnCameraIdleListener(mClusterManager);
@@ -251,6 +281,8 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
                         currentFacility
                 );
 
+                newClustorMarker.setSnippet(getText(R.string.map_marker_address) + newClustorMarker.getAddress() + "\n" +getText(R.string.map_marker_hazard) + getText(hazardLanguage(currentHazardLevel)) );
+
                 Log.d(TAG, "Adding cluster markers to manager and list of markers");
                 mClusterManager.addItem(newClustorMarker);
                 mClusterMarkers.add(newClustorMarker);
@@ -260,6 +292,15 @@ public class MapScreen extends AppCompatActivity implements OnMapReadyCallback {
             Log.d(TAG, "ClusterManager.cluster called!!");
 
         }
+    }
+
+    private int hazardLanguage(HazardRating currentHazardLevel) {
+        if (currentHazardLevel == High) {
+            return R.string.hazard_high;
+        } else if (currentHazardLevel == Moderate) {
+            return R.string.hazard_moderate;
+        }
+        return R.string.hazard_low;
     }
 
     private void moveCamera(LatLng latLng, float zoom) {

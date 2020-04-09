@@ -7,10 +7,12 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+<<<<<<< HEAD
 import android.graphics.Color;
+=======
+>>>>>>> origin/master
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -31,6 +33,9 @@ import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
+
 public class RestaurantsListActivity extends AppCompatActivity {
     private List<Facility> facilities = new ArrayList<Facility>();
     private BaseAdapter adapter;
@@ -47,7 +52,6 @@ public class RestaurantsListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurants_list);
-        //DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
@@ -58,6 +62,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
                 addRestaurants();
                 populateListView();
                 setupMapButton();
+                setupFilterButton();
                 findViewById(R.id.resList_loading_layout).setVisibility(View.GONE);
                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 //Load_checkbox();
@@ -80,12 +85,36 @@ public class RestaurantsListActivity extends AppCompatActivity {
         });
     }
 
+    // TODO ensure that this has correct back-button activity
+    private void setupFilterButton() {
+        Button filterButton = findViewById(R.id.startSearchActivity_restaurantList);
+        filterButton.setVisibility(View.VISIBLE);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = SearchActivity.getSearchActivityIntent(RestaurantsListActivity.this);
+                startActivity(intent);
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         // Check if we need to prompt for updates:
         DataUpdater.notifyIfUpdateAvailable(RestaurantsListActivity.this);
         populateListView();
+
+        // Check if we need to update the data:
+        SharedPreferences prefs = getSharedPreferences(SearchActivity.SEARCH_PREFSFILE, 0);
+        boolean needToUpdate = prefs.getBoolean(SearchActivity.SEARCH_RESTLIST_NEED_UPDATE, false);
+        if (needToUpdate) {
+            addRestaurants();
+            populateListView();
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(SearchActivity.SEARCH_RESTLIST_NEED_UPDATE, false);
+            edit.apply();
+        }
     }
 
     private void populateListView() {
@@ -157,7 +186,7 @@ public class RestaurantsListActivity extends AppCompatActivity {
                         hazardIcon.setImageResource(R.drawable.high_hazard_level);
                         break;
                 }
-                hazardText.setText(restaurantRating.toString());
+                hazardText.setText(getText(hazardLanguage(restaurantRating)));
 
                 // Set the number of issues as of the last inspection:
                 TextView numIssues = convertView.findViewById(R.id.resArrayList_res_issue_num);
@@ -191,6 +220,15 @@ public class RestaurantsListActivity extends AppCompatActivity {
                     Intent intent = RestaurantActivity.makeRestaurantIntent(RestaurantsListActivity.this, position);
                     startActivityForResult(intent, ACTIVITY_REST_WINDOW);
         });
+    }
+
+    private int hazardLanguage(HazardRating currentHazardLevel) {
+        if (currentHazardLevel == High) {
+            return R.string.hazard_high;
+        } else if (currentHazardLevel == Moderate) {
+            return R.string.hazard_moderate;
+        }
+        return R.string.hazard_low;
     }
 
     private void addRestaurants() {

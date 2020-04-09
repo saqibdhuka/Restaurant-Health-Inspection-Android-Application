@@ -1,6 +1,10 @@
 package ca.cmpt276.magnesium.restaurantmodel;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
+
+import ca.cmpt276.magnesium.healthinspectionviewer.R;
 
 /**
  * SFU CMPT 276
@@ -59,24 +63,24 @@ public class Violation {
     }
 
 
-    public String getViolationNature() {
-        String returnString = "N/A";
+    public String getViolationNature(Context context) {
+        String returnString = context.getResources().getString(R.string.vioNature_NA);
         if ((violationCode > 100) && (violationCode < 105)) {
-            returnString = "Regulatory";
+            returnString = context.getResources().getString(R.string.vioNature_regulatory);;
         } else if ((violationCode > 200) && (violationCode < 212)) {
-            returnString = "Food";
+            returnString = context.getResources().getString(R.string.vioNature_food);;
         } else if ((violationCode > 300) && (violationCode < 304)) {
-            returnString = "Sanitization";
+            returnString = context.getResources().getString(R.string.vioNature_sanitization);;
         } else if ((violationCode > 303) && (violationCode < 306)) {
-            returnString = "Pests";
+            returnString = context.getResources().getString(R.string.vioNature_pests);;
         } else if ((violationCode > 305) && (violationCode < 311)) {
-            returnString = "Sanitization";
+            returnString = context.getResources().getString(R.string.vioNature_sanitization);
         } else if ((violationCode > 310) && (violationCode < 316)) {
-            returnString = "Facility";
+            returnString = context.getResources().getString(R.string.vioNature_facility);
         } else if ((violationCode > 400) && (violationCode < 405)) {
-            returnString = "Employee";
+            returnString = context.getResources().getString(R.string.vioNature_employee);
         } else if ((violationCode > 500) && (violationCode < 503)) {
-            returnString = "Operator";
+            returnString = context.getResources().getString(R.string.vioNature_operator);
         }
 
         return returnString;

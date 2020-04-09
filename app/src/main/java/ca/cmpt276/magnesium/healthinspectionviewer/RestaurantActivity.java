@@ -27,6 +27,9 @@ import ca.cmpt276.magnesium.restaurantmodel.HazardRating;
 import ca.cmpt276.magnesium.restaurantmodel.InspectionReport;
 import ca.cmpt276.magnesium.restaurantmodel.ReadingCSVFacility;
 
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.High;
+import static ca.cmpt276.magnesium.restaurantmodel.HazardRating.Moderate;
+
 public class RestaurantActivity extends AppCompatActivity {
 
     private final static String EXTRA_REST_ID = "RestaurantActivity_restaurantID";
@@ -220,10 +223,10 @@ public class RestaurantActivity extends AppCompatActivity {
                     }
                 }
 
-                ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_hazard_lv)).setText(inspection.getHazardRating().toString());
+                ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_hazard_lv)).setText(getText(hazardLanguage(inspection.getHazardRating())));
                 ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_noncrit)).setText(inspection.getNumNonCritical() + "");
                 ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_crit)).setText(inspection.getNumCritical() + "");
-                ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_date)).setText(inspection.getInspectionDateString());
+                ((TextView) convertView.findViewById(R.id.inspectionArrayList_inspection_date)).setText(inspection.getInspectionDateString(RestaurantActivity.this));
 
                 return convertView;
             }
@@ -238,6 +241,15 @@ public class RestaurantActivity extends AppCompatActivity {
                                     restaurantID);
                     startActivity(intent);
                 });
+    }
+
+    private int hazardLanguage(HazardRating currentHazardLevel) {
+        if (currentHazardLevel == High) {
+            return R.string.hazard_high;
+        } else if (currentHazardLevel == Moderate) {
+            return R.string.hazard_moderate;
+        }
+        return R.string.hazard_low;
     }
 
     private void addTestInspection() {
