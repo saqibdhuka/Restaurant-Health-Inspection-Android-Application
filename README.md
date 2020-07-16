@@ -1,9 +1,20 @@
 # CMPT 276 - Team Magnesium Term Project
 
 ## Project Information
+Android application that takes information from the Surrey government website and showcases the restaurants on the map with their inspection history so that users may know what their favorite restaurant's inspections have been. 
+The project had three iterations with each one having different roles assigned to different members of the group.
+Each iteration included user stories and was due within 1.5 weeks.
 
-As a team, we are expected to implement the features requested in the 'user stories' page.
-The end result should be a useful Android app to view health inspection report data, and one that works well on various screen sizes.
+## Iteration 1 Roles
+
+### [Product Owner](https://www.mountaingoatsoftware.com/agile/scrum/roles/product-owner) - Justin
+
+### [Scrum Master](https://www.mountaingoatsoftware.com/agile/scrum/roles/scrummaster) - Minh
+
+### Repo Manager -  Devon
+
+### Team Member - Saqib
+
 
 ## Iteration 2 Roles
 
@@ -14,6 +25,18 @@ The end result should be a useful Android app to view health inspection report d
 ### Repo Manager -  Saqib
 
 ### Team Member - Justin
+
+
+## Iteration 3 Roles
+
+### [Product Owner](https://www.mountaingoatsoftware.com/agile/scrum/roles/product-owner) - Saqib
+
+### [Scrum Master](https://www.mountaingoatsoftware.com/agile/scrum/roles/scrummaster) - Minh
+
+### Repo Manager -  Justoin
+
+### Team Member - Devon
+
 
 ## Git Rules
 
@@ -55,8 +78,3 @@ After all reviewers have given the request the green light, reviewer should ment
 
 All code must comply with Dr. Fraser's [Java Style Guide](https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/course-info/styleguide).
 
-
-## Useful Links
-
-[CMPT 276  - Project Page](https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/project)
-[CMPT 276  - Project User Stories](https://opencoursehub.cs.sfu.ca/bfraser/grav-cms/cmpt276/project/itr1)
